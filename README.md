@@ -38,29 +38,29 @@
 <a id="terminy"></a>
 ## TERMINY I WYMAGANIA
 1. [x] 07.03.2025 - **Zatwierdzenie wyboru tematu projektu oraz jego zakresu**
-* Do tego terminu grupy studentów powinni zdecydować się na konkretny temat 
-  - [x] Wybór musi być uzgodniony i zaakceptowany przez prowadzącego 
-  - [x] Przy zgłoszeniu należy podać 
-    * [x] [Imiona i nazwiska](#autorzy) 
-    * [x] [Numery albumów](#autorzy)
-    * [x] [Temat pracy](#wymagania)
-  - [x] [Dodatkowo przygotować krótki opis aplikacji](#opis)
+   * Do tego terminu grupy studentów powinni zdecydować się na konkretny temat 
+     - [x] Wybór musi być uzgodniony i zaakceptowany przez prowadzącego 
+     - [x] Przy zgłoszeniu należy podać 
+       * [x] [Imiona i nazwiska](#autorzy) 
+       * [x] [Numery albumów](#autorzy)
+       * [x] [Temat pracy](#wymagania)
+     - [x] [Dodatkowo przygotować krótki opis aplikacji](#opis)
 
 2. [ ] 04.04.2025 - **Przedstawienie planu realizacji (20 % oceny)**
-* W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
-  - [x] [Plan realizacji projektu](#plan)
-  - [x] [Listę wykorzystanych technologii](#dane) 
-  - [x] [Listę wykorzystywanych bibliotek](#technologie)
-  - [x] [Przyjętą architekturę projektu](#architektura)
-  - [ ] Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
-  - [ ] Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
-  - [ ] Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
+   * W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
+     - [x] [Plan realizacji projektu](#plan)
+     - [x] [Listę wykorzystanych technologii](#dane) 
+     - [x] [Listę wykorzystywanych bibliotek](#technologie)
+     - [x] [Przyjętą architekturę projektu](#architektura)
+     - [ ] Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
+     - [ ] Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
+     - [ ] Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
 
 3. [ ] 09.05.2025 - **Implementacja projektu (30 % oceny)**
-* Do tego terminu należy zaprezentować postęp projektu w oparciu o utworzoną dokumentacje. Wymagane jest oddanie:
-   - [ ] Filmu z funkcjonowania aplikacji
-   - [ ] Archiwum projektu w formacie .zip
-   - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
+   * Do tego terminu należy zaprezentować postęp projektu w oparciu o utworzoną dokumentacje. Wymagane jest oddanie:
+      - [ ] Filmu z funkcjonowania aplikacji
+      - [ ] Archiwum projektu w formacie .zip
+      - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
 
 4. [ ] 13.06.2025 - **Dostarczenie kompletnego projektu (50 % oceny)**
 * Na tym etapie zespół ma za zadanie 
