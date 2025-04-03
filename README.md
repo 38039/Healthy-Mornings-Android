@@ -41,3 +41,15 @@ każdego nowego poziomu użytkownik otrzyma nagrody, takie jak opcje personaliza
 zmiana motywu kolorystycznego, ikon czy tła), dodatkowe funkcje lub unikalne odznaki
 motywacyjne. System ten ma na celu zachęcenie do regularnego korzystania z aplikacji oraz
 budowanie pozytywnych nawyków poprzez element grywalizacji.
+
+## Struktura Aplikacji
+```bash
+com.nforge.healtymornings
+├── ui            # Interfejs użytkownika (aktywnosci i fragmenty)
+├── model         # Klasy reprezentujące dane (np. Task, User)
+├── data          # Obsługa bazy danych (SQLite / Room)
+├── repository    # Logika zarządzania danymi
+├── viewmodel     # MVVM (opcjonalne, do zarządzania stanem)
+├── utils         # Funkcje pomocnicze
+├── services      # Serwisy np. powiadomienia
+```
