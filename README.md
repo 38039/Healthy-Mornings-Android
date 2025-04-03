@@ -7,7 +7,7 @@
 - [Wymagania projektowe](#wymagania)
 - [Terminy i wymagania](#terminy)
 - [Opis działania](#opis)
-- [Dane techniczne](#dane)
+- [Dane techniczne i wykorzystywane technologie](#dane)
 - [Struktura aplikacji](#struktura)
 
 <a id="autorzy"></a>
@@ -79,11 +79,24 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 - Nazwa Aplikacji: **Healthy Mornings**
 - Nazwa Pakietu: **com.nforge.healthymornings**
 - Język Programowania: **Java**
+- Środowisko programistyczne IDE: **Android Studio**
+- Język konfiguracji kompilacji: **Gradle Kotlin DSL**
 - Framework: **Android SDK 34**
-- Baza Danych: **PostgreSQL (lokalnie i na serwerze)**
-- Dostęp do Bazy Danych: **JDBC**
-- Zarządzanie UI: **Android ViewModel**
-- Język konfiguracji kompilacji: **Kotlin DSL**
+- Baza Danych: **PostgreSQL**
+    * Sama Baza Danych realizowana jest na potrzeby innego projektu
+    * Planowanym jest jej integracja z Healthy Mornings najpierw lokalnie a potem poprzez serwer
+- Zarządzanie UI i interakcja z użytkownikiem: 
+  * **Android Jetpack (ViewModel)** - Zarządzanie UI
+  * **Material Design** - Nowoczesne komponenty interfejsu
+  * **RecyclerView** - Dynamiczne listy zadań
+  * **ViewBinding** - Ułatwienie obsługi widoków
+- Obsługa sieci i synchronizacja:
+    * **Retrofit** - Zaawansowana obsługa API
+    * **Firebase Cloud Messaging** - Obługa powiadomień push
+    * **Spring Boot/JDBC** - Obsługa serwera Bazy Danych
+- Obsługa uprawnień użytkownika: **Permissions API**
+- Obsługa zadań w tle: **Android WorkManager**
+
 
 <a id="struktura"></a>
 ## Struktura Aplikacji
