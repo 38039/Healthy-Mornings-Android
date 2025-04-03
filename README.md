@@ -198,6 +198,8 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 - Język konfiguracji kompilacji: **Gradle Kotlin DSL**
 - Framework: **Android SDK 34**
 
+| Kategoria                     | Nazwa                      |
+|-------------------------------|----------------------------|
 | Nazwa Aplikacji               | Healthy Mornings           |
 | Nazwa Pakietu                 | com.nforge.healthymornings |
 | Język Programowania           | Java                       |
