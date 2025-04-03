@@ -1,22 +1,12 @@
-# PROJEKT “HEALTHY MORNINGS” - APLIKACJA MOBILNA
-**Programowanie Systemów Mobilnych II**
-
+# HEALTHY MORNINGS - APLIKACJA MOBILNA
+**Programowanie Systemów Mobilnych II - Projekt zaliczeniowy**
+[!] Zawartość README.md stanowi także dokumentację projektu.
 
 ## OSOBY ZAANGAŻOWANE W PROJEKT
-| Imię / Nazwisko | Indeks | Semestr |
-| ------------ | ----- | ----- |
-| Miłosz Fedorczak | 38039 | Semestr Letni 2024/25 |
-| Szymon Pietruszka | 37719 | Semestr Letni 2024/25 |
----
-
-
-## DANE TECHNICZNE APLIKACJI
- - **Nazwa Aplikacji:** Healthy Mornings
- - **Nazwa Pakietu:** com.nforge.healthymornings
- - **Język programowania:** Java
- - **Minimalne SDK:** API 34
- - **Język konfiguracji kompilacji:** Kotlin DSL
-
+| Pełne Imię        | Indeks | Semestr               |
+|-------------------|--------|-----------------------|
+| Miłosz Fedorczak  | 38039  | Semestr Letni 2024/25 |
+| Szymon Pietruszka | 37719  | Semestr Letni 2024/25 |
 
 ## OPIS DZIAŁANIA APLIKACJI
 Aplikacja mobilna „Heatly Mornings”, przeznaczona dla smartfonów z systemem Android,
@@ -45,6 +35,12 @@ zmiana motywu kolorystycznego, ikon czy tła), dodatkowe funkcje lub unikalne od
 motywacyjne. System ten ma na celu zachęcenie do regularnego korzystania z aplikacji oraz
 budowanie pozytywnych nawyków poprzez element grywalizacji.
 
+## DANE TECHNICZNE APLIKACJI
+- **Nazwa Aplikacji:** Healthy Mornings
+- **Nazwa Pakietu:** com.nforge.healthymornings
+- **Język programowania:** Java
+- **Minimalne SDK:** API 34
+- **Język konfiguracji kompilacji:** Kotlin DSL
 
 ## Struktura Aplikacji
 ```bash
