@@ -8,7 +8,7 @@
 - [Terminy i wymagania](#terminy)
 - [Opis działania](#opis)
 - [Dane techniczne i wykorzystywane technologie](#dane)
-- [Struktura aplikacji](#struktura)
+- [Struktura projektu](#struktura)
 
 <a id="autorzy"></a>
 ## OSOBY ZAANGAŻOWANE W PROJEKT
@@ -96,10 +96,11 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
     * **Spring Boot/JDBC** - Obsługa serwera Bazy Danych
 - Obsługa uprawnień użytkownika: **Permissions API**
 - Obsługa zadań w tle: **Android WorkManager**
+- Architektura aplikacji: **MVVM**
 
 
 <a id="struktura"></a>
-## Struktura Aplikacji
+## STRUKTURA PROJEKTU (MVVM)
 ```bash
 com.nforge.healtymornings
 ├── ui            # Interfejs użytkownika (aktywnosci i fragmenty)
