@@ -7,6 +7,7 @@
 - [Wymagania projektowe](#wymagania)
 - [Terminy i wymagania](#terminy)
 - [Opis działania](#opis)
+- [Architektura projektu](#architektura)
 - [Dane techniczne i wykorzystywane technologie](#dane)
 - [Struktura projektu](#struktura)
 
@@ -74,6 +75,17 @@ zmiana motywu kolorystycznego, ikon czy tła), dodatkowe funkcje lub unikalne od
 motywacyjne. System ten ma na celu zachęcenie do regularnego korzystania z aplikacji oraz
 budowanie pozytywnych nawyków poprzez element grywalizacji.
 
+<a id="architektura"></a>
+## ARCHITEKTURA PROJEKTU
+**Model KLIENT-SERVER z BAZĄ DANYCH w chmurze**
+- **FRONTEND**
+    * Aplikacja Mobilna uruchamiana na smartfonie
+- **BACKEND**
+    * Serwer z Bazą Danych
+- **BAZA DANYCH**
+    * Lokalna (dev) - PostgreSQL z JDBC
+    * Zdalna (docelowa) - PostgreSQL z API REST
+
 <a id="dane"></a>
 ## DANE TECHNICZNE I WYKORZYSTYWANE TECHNOLOGIE
 - Nazwa Aplikacji: **Healthy Mornings**
@@ -97,7 +109,6 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 - Obsługa uprawnień użytkownika: **Permissions API**
 - Obsługa zadań w tle: **Android WorkManager**
 - Architektura aplikacji: **MVVM**
-
 
 <a id="struktura"></a>
 ## STRUKTURA PROJEKTU (MVVM)
