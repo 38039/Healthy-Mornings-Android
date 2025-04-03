@@ -42,9 +42,10 @@
 
 2. [ ] 04.04.2025 - **Przedstawienie planu realizacji (20 % oceny)**
 * W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
-  - [ ] Plan realizacji projektu
-  - [ ] Listę wykorzystanych technologii oraz bibliotek
-  - [ ] Przyjętą architekturę projektu
+  - [x] [Plan realizacji projektu](#plan)
+  - [x] [Listę wykorzystanych technologii](#dane) 
+  - [x] [Listę wykorzystywanych bibliotek](#technologie)
+  - [x] [Przyjętą architekturę projektu](#architektura)
   - [ ] Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
   - [ ] Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
   - [ ] Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
