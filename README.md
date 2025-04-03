@@ -63,7 +63,14 @@
    - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
 
 4. [ ] 13.06.2025 - **Dostarczenie kompletnego projektu (50 % oceny)**
-* Na tym etapie zespół ma za zadanie dostarczyć kompletną aplikację wraz z dokumentacją i przedstawić szczegółowy wkład poszczególnych osób w realizację projektu. Wymagane oddanie filmu, archiwum projektu oraz pliku PDF z opisem aplikacji
+   * Na tym etapie zespół ma za zadanie 
+   - [ ] Dostarczyć kompletną aplikację
+   - [ ] Dostarczyć dokumentacje 
+   - [ ] Przedstawić szczegółowy wkład poszczególnych osób w realizację projektu
+   - [ ] Wymagane oddanie 
+     * [ ] Filmu
+     * [ ] Archiwum projektu 
+     * [ ] Pliku PDF z opisem aplikacji
 
 
 <a id="opis"></a>
@@ -98,9 +105,10 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 <a id="architektura"></a>
 ## ARCHITEKTURA PROJEKTU
 **Model KLIENT-SERVER z BAZĄ DANYCH w chmurze**
-- **FRONTEND**
+- **FRONTEND (KLIENT)**
     * Aplikacja Mobilna
-- **BACKEND**
+    * Aplikacja Desktopowa
+- **BACKEND (SERVER)**
     * Serwer z Bazą Danych
 - **BAZA DANYCH**
     * Lokalna (dev) - PostgreSQL z JDBC
