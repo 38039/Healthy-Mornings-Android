@@ -203,7 +203,7 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 | Framework                     | Android SDK 34             |
 
 <a id="technologie"></a>
-## WYKORZYSTYWANE TECHNOLOGIE
+## WYKORZYSTYWANE BIBLIOTEKI / TECHNOLOGIE
 - Baza Danych: **PostgreSQL**
     * Sama Baza Danych realizowana jest na potrzeby innego projektu
     * Planowanym jest jej integracja z Healthy Mornings najpierw lokalnie a potem poprzez serwer
