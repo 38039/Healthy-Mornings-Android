@@ -2,12 +2,20 @@
 **Programowanie Systemów Mobilnych II - Projekt zaliczeniowy**
 [!] Zawartość README.md stanowi także dokumentację projektu.
 
+## SPIS TREŚCI
+- [Osoby zaangażowane](#autorzy)
+- [Opis działania](#opis)
+- [Dane techniczne](#dane)
+- [Struktura aplikacji](#struktura)
+
+<a id="autorzy"></a>
 ## OSOBY ZAANGAŻOWANE W PROJEKT
 | Pełne Imię        | Indeks | Semestr               |
 |-------------------|--------|-----------------------|
 | Miłosz Fedorczak  | 38039  | Semestr Letni 2024/25 |
 | Szymon Pietruszka | 37719  | Semestr Letni 2024/25 |
 
+<a id="opis"></a>
 ## OPIS DZIAŁANIA APLIKACJI
 Aplikacja mobilna „Heatly Mornings”, przeznaczona dla smartfonów z systemem Android,
 zostanie zaprojektowana tak, aby zapewnić użytkownikowi możliwość realizacji zarówno
@@ -35,6 +43,7 @@ zmiana motywu kolorystycznego, ikon czy tła), dodatkowe funkcje lub unikalne od
 motywacyjne. System ten ma na celu zachęcenie do regularnego korzystania z aplikacji oraz
 budowanie pozytywnych nawyków poprzez element grywalizacji.
 
+<a id="dane"></a>
 ## DANE TECHNICZNE APLIKACJI
 - **Nazwa Aplikacji:** Healthy Mornings
 - **Nazwa Pakietu:** com.nforge.healthymornings
@@ -42,6 +51,7 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 - **Minimalne SDK:** API 34
 - **Język konfiguracji kompilacji:** Kotlin DSL
 
+<a id="struktura"></a>
 ## Struktura Aplikacji
 ```bash
 com.nforge.healtymornings
