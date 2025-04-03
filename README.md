@@ -10,7 +10,8 @@
 - [Opis działania aplikacji](#opis)
 - [Architektura projektu](#architektura)
 - [Plan realizacji projektu](#plan)
-- [Dane techniczne i wykorzystywane technologie](#dane)
+- [Dane techniczne](#dane)
+- [Wykorzystywane technologie](#technologie)
 - [Struktura aplikacji](#struktura)
 
 
@@ -190,14 +191,7 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 
 
 <a id="dane"></a>
-## DANE TECHNICZNE I WYKORZYSTYWANE TECHNOLOGIE
-- Nazwa Aplikacji: **Healthy Mornings**
-- Nazwa Pakietu: **com.nforge.healthymornings**
-- Język Programowania: **Java**
-- Środowisko programistyczne IDE: **Android Studio**
-- Język konfiguracji kompilacji: **Gradle Kotlin DSL**
-- Framework: **Android SDK 34**
-
+## DANE TECHNICZNE
 | Kategoria                     | Nazwa                      |
 |-------------------------------|----------------------------|
 | Nazwa Aplikacji               | Healthy Mornings           |
@@ -207,6 +201,8 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 | Język konfiguracji kompilacji | Gradle Kotlin DSL          |
 | Framework                     | Android SDK 34             |
 
+<a id="technologie"></a>
+## WYKORZYSTYWANE TECHNOLOGIE
 - Baza Danych: **PostgreSQL**
     * Sama Baza Danych realizowana jest na potrzeby innego projektu
     * Planowanym jest jej integracja z Healthy Mornings najpierw lokalnie a potem poprzez serwer
