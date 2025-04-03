@@ -1,5 +1,6 @@
 # HEALTHY MORNINGS - APLIKACJA MOBILNA
 **Programowanie Systemów Mobilnych II - Projekt zaliczeniowy**
+### ℹ️ Zawartość README stanowi dokumentację projektu
 
 ## SPIS TREŚCI
 - [Osoby zaangażowane](#autorzy)
@@ -8,7 +9,6 @@
 - [Opis działania](#opis)
 - [Dane techniczne](#dane)
 - [Struktura aplikacji](#struktura)
-ℹ️ Zawartość README stanowi dokumentację projektu
 
 <a id="autorzy"></a>
 ## OSOBY ZAANGAŻOWANE W PROJEKT
@@ -20,11 +20,11 @@
 <a id="wymagania"></a>
 ## WYMAGANIA PROJEKTOWE
 1. *Projekt może zostać zrealizowany w maksymalnie 3 osobowych grupach*
-    * ✅ Nad projektem pracuje **grupa dwuosobowa**
+    * [x] Nad projektem pracuje **grupa dwuosobowa**
 2. *Technologia Android (Java lub Kotlin) lub iOS (Swift)*
-    * ✅ Projekt jest bazowany na technologii **Android** (w języku **Java**)
+    * [x] Projekt jest bazowany na technologii **Android** (w języku **Java**)
 3. *Użycie systemu kontroli wersji GIT*
-    * ✅ Projekt zawiera system kontroli wersji **GIT** (oraz posiada zdalne repozytorium na platformie **GITHUB**)
+    * [x] Projekt zawiera system kontroli wersji **GIT** (oraz posiada zdalne repozytorium na platformie **GITHUB**)
 
 <a id="terminy"></a>
 ## TERMINY I WYMAGANIA
@@ -32,17 +32,17 @@
 * Do tego terminu grupy studentów powinni zdecydować się na konkretny temat. Wybór musi być uzgodniony i zaakceptowany przez prowadzącego. Przy zgłoszeniu należy podać imiona i nazwiska, numery albumów, temat pracy. Dodatkowo przygotować krótki opis aplikacji - 2 strony w formacie PDF. W przypadku niektórych projektów konieczne może być doprecyzowanie zakresu.
 2. [ ] 04.04.2025 - **Przedstawienie planu realizacji**
   * W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
-    - Plan realizacji projektu
-    - Listę wykorzystanych technologii oraz bibliotek
-    - Przyjętą architekturę projektu
-    - Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
-    - Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
-    - Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
+    - [ ] Plan realizacji projektu
+    - [ ] Listę wykorzystanych technologii oraz bibliotek
+    - [ ] Przyjętą architekturę projektu
+    - [ ] Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
+    - [ ] Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
+    - [ ] Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
 3. [ ] 09.05.2025 - **Implementacja projektu**
    * Do tego terminu należy zaprezentować postęp projektu w oparciu o utworzoną dokumentacje. Wymagane jest oddanie:
-     1. Filmu z funkcjonowania aplikacji
-     2. Archiwum projektu w formacie .zip
-     3. Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
+    - [ ] Filmu z funkcjonowania aplikacji
+    - [ ] Archiwum projektu w formacie .zip
+    - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
 4. [ ] 13.06.2025 - **Dostarczenie kompletnego projektu**
    * Na tym etapie zespół ma za zadanie dostarczyć kompletną aplikację wraz z dokumentacją i przedstawić szczegółowy wkład poszczególnych osób w realizację projektu. Wymagane oddanie filmu, archiwum projektu oraz pliku PDF z opisem aplikacji
 
