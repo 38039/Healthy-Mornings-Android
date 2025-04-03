@@ -75,12 +75,15 @@ motywacyjne. System ten ma na celu zachęcenie do regularnego korzystania z apli
 budowanie pozytywnych nawyków poprzez element grywalizacji.
 
 <a id="dane"></a>
-## DANE TECHNICZNE APLIKACJI
-- **Nazwa Aplikacji:** Healthy Mornings
-- **Nazwa Pakietu:** com.nforge.healthymornings
-- **Język programowania:** Java
-- **Minimalne SDK:** API 34
-- **Język konfiguracji kompilacji:** Kotlin DSL
+## DANE TECHNICZNE I WYKORZYSTYWANE TECHNOLOGIE
+- Nazwa Aplikacji: **Healthy Mornings**
+- Nazwa Pakietu: **com.nforge.healthymornings**
+- Język Programowania: **Java**
+- Framework: **Android SDK 34**
+- Baza Danych: **PostgreSQL (lokalnie i na serwerze)**
+- Dostęp do Bazy Danych: **JDBC**
+- Zarządzanie UI: **Android ViewModel**
+- Język konfiguracji kompilacji: **Kotlin DSL**
 
 <a id="struktura"></a>
 ## Struktura Aplikacji
