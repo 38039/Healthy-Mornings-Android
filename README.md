@@ -40,22 +40,22 @@
 * Do tego terminu grupy studentów powinni zdecydować się na konkretny temat. Wybór musi być uzgodniony i zaakceptowany przez prowadzącego. Przy zgłoszeniu należy podać imiona i nazwiska, numery albumów, temat pracy. Dodatkowo przygotować krótki opis aplikacji - 2 strony w formacie PDF. W przypadku niektórych projektów konieczne może być doprecyzowanie zakresu.
 
 2. [ ] 04.04.2025 - **Przedstawienie planu realizacji (20 % oceny)**
-  * W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
-    - [ ] Plan realizacji projektu
-    - [ ] Listę wykorzystanych technologii oraz bibliotek
-    - [ ] Przyjętą architekturę projektu
-    - [ ] Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
-    - [ ] Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
-    - [ ] Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
+* W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
+  - [ ] Plan realizacji projektu
+  - [ ] Listę wykorzystanych technologii oraz bibliotek
+  - [ ] Przyjętą architekturę projektu
+  - [ ] Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
+  - [ ] Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
+  - [ ] Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
 
 3. [ ] 09.05.2025 - **Implementacja projektu (30 % oceny)**
-   * Do tego terminu należy zaprezentować postęp projektu w oparciu o utworzoną dokumentacje. Wymagane jest oddanie:
-    - [ ] Filmu z funkcjonowania aplikacji
-    - [ ] Archiwum projektu w formacie .zip
-    - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
+* Do tego terminu należy zaprezentować postęp projektu w oparciu o utworzoną dokumentacje. Wymagane jest oddanie:
+   - [ ] Filmu z funkcjonowania aplikacji
+   - [ ] Archiwum projektu w formacie .zip
+   - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
 
 4. [ ] 13.06.2025 - **Dostarczenie kompletnego projektu (50 % oceny)**
-   * Na tym etapie zespół ma za zadanie dostarczyć kompletną aplikację wraz z dokumentacją i przedstawić szczegółowy wkład poszczególnych osób w realizację projektu. Wymagane oddanie filmu, archiwum projektu oraz pliku PDF z opisem aplikacji
+* Na tym etapie zespół ma za zadanie dostarczyć kompletną aplikację wraz z dokumentacją i przedstawić szczegółowy wkład poszczególnych osób w realizację projektu. Wymagane oddanie filmu, archiwum projektu oraz pliku PDF z opisem aplikacji
 
 
 <a id="opis"></a>
@@ -197,6 +197,14 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 - Środowisko programistyczne IDE: **Android Studio**
 - Język konfiguracji kompilacji: **Gradle Kotlin DSL**
 - Framework: **Android SDK 34**
+
+| Nazwa Aplikacji               | Healthy Mornings           |
+| Nazwa Pakietu                 | com.nforge.healthymornings |
+| Język Programowania           | Java                       |
+| Środowisko programistyczne    | Android Studio             |
+| Język konfiguracji kompilacji | Gradle Kotlin DSL          |
+| Framework                     | Android SDK 34             |
+
 - Baza Danych: **PostgreSQL**
     * Sama Baza Danych realizowana jest na potrzeby innego projektu
     * Planowanym jest jej integracja z Healthy Mornings najpierw lokalnie a potem poprzez serwer
