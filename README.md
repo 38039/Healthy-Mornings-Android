@@ -6,13 +6,13 @@
 - [Osoby zaangażowane](#autorzy)
 - [Wymagania projektowe](#wymagania)
 - [Terminy i wymagania](#terminy)
-- [Opis działania](#opis)
+- [Opis działania aplikacji](#opis)
 - [Architektura projektu](#architektura)
 - [Dane techniczne i wykorzystywane technologie](#dane)
-- [Struktura projektu](#struktura)
+- [Struktura aplikacji](#struktura)
 
 <a id="autorzy"></a>
-## OSOBY ZAANGAŻOWANE W PROJEKT
+## OSOBY ZAANGAŻOWANE
 | Pełne Imię        | Indeks | Semestr               |
 |-------------------|--------|-----------------------|
 | Miłosz Fedorczak  | 38039  | Semestr Letni 2024/25 |
@@ -79,7 +79,7 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 ## ARCHITEKTURA PROJEKTU
 **Model KLIENT-SERVER z BAZĄ DANYCH w chmurze**
 - **FRONTEND**
-    * Aplikacja Mobilna uruchamiana na smartfonie
+    * Aplikacja Mobilna
 - **BACKEND**
     * Serwer z Bazą Danych
 - **BAZA DANYCH**
@@ -108,15 +108,15 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
     * **Spring Boot/JDBC** - Obsługa serwera Bazy Danych
 - Obsługa uprawnień użytkownika: **Permissions API**
 - Obsługa zadań w tle: **Android WorkManager**
-- Architektura aplikacji: **MVVM**
+- Struktura aplikacji: **MVVM**
 
 <a id="struktura"></a>
-## STRUKTURA PROJEKTU (MVVM)
+## STRUKTURA APLIKACJI (MVVM)
 ```bash
 com.nforge.healtymornings
 ├── ui            # Interfejs użytkownika (aktywnosci i fragmenty)
 ├── model         # Klasy reprezentujące dane (np. Task, User)
-├── data          # Obsługa bazy danych (SQLite / Room)
+├── data          # Obsługa bazy danych (Spring Boot)
 ├── repository    # Logika zarządzania danymi
 ├── viewmodel     # MVVM (opcjonalne, do zarządzania stanem)
 ├── utils         # Funkcje pomocnicze
