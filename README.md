@@ -4,6 +4,7 @@
 
 ## SPIS TREŚCI
 - [Osoby zaangażowane](#autorzy)
+- [Wymagania projektowe](#wymagania)
 - [Opis działania](#opis)
 - [Dane techniczne](#dane)
 - [Struktura aplikacji](#struktura)
@@ -14,6 +15,15 @@
 |-------------------|--------|-----------------------|
 | Miłosz Fedorczak  | 38039  | Semestr Letni 2024/25 |
 | Szymon Pietruszka | 37719  | Semestr Letni 2024/25 |
+
+<a id="wymagania"></a>
+## WYMAGANIA PROJEKTOWE
+- projekt może zostać zrealizowany w maksymalnie 3 osobowych grupach
+    * ✅ Nad projektem pracuje **grupa dwuosobowa**
+- technologia Android (Java lub Kotlin) lub iOS (Swift)
+    * ✅ Projekt jest bazowany na technologii **Android** (w języku **Java**)
+- użycie systemu kontroli wersji GIT
+    * ✅ Projekt zawiera system kontroli wersji **GIT** (oraz posiada zdalne repozytorium na platformie **GITHUB**)
 
 <a id="opis"></a>
 ## OPIS DZIAŁANIA APLIKACJI
