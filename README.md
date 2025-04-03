@@ -63,14 +63,14 @@
    - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
 
 4. [ ] 13.06.2025 - **Dostarczenie kompletnego projektu (50 % oceny)**
-   * Na tym etapie zespół ma za zadanie 
-   - [ ] Dostarczyć kompletną aplikację
-   - [ ] Dostarczyć dokumentacje 
-   - [ ] Przedstawić szczegółowy wkład poszczególnych osób w realizację projektu
-   - [ ] Wymagane oddanie 
-     * [ ] Filmu
-     * [ ] Archiwum projektu 
-     * [ ] Pliku PDF z opisem aplikacji
+* Na tym etapie zespół ma za zadanie 
+  - [ ] Dostarczyć kompletną aplikację
+  - [ ] Dostarczyć dokumentacje 
+  - [ ] Przedstawić szczegółowy wkład poszczególnych osób w realizację projektu
+  - [ ] Wymagane oddanie 
+    * [ ] Filmu
+    * [ ] Archiwum projektu 
+    * [ ] Pliku PDF z opisem aplikacji
 
 
 <a id="opis"></a>
