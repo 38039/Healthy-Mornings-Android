@@ -38,7 +38,13 @@
 <a id="terminy"></a>
 ## TERMINY I WYMAGANIA
 1. [x] 07.03.2025 - **Zatwierdzenie wyboru tematu projektu oraz jego zakresu**
-* Do tego terminu grupy studentów powinni zdecydować się na konkretny temat. Wybór musi być uzgodniony i zaakceptowany przez prowadzącego. Przy zgłoszeniu należy podać imiona i nazwiska, numery albumów, temat pracy. Dodatkowo przygotować krótki opis aplikacji - 2 strony w formacie PDF. W przypadku niektórych projektów konieczne może być doprecyzowanie zakresu.
+* Do tego terminu grupy studentów powinni zdecydować się na konkretny temat 
+  - [x] Wybór musi być uzgodniony i zaakceptowany przez prowadzącego 
+  - [x] Przy zgłoszeniu należy podać 
+    * [x] [Imiona i nazwiska](#autorzy) 
+    * [x] [Numery albumów](#autorzy)
+    * [x] [Temat pracy](#wymagania)
+  - [x] [Dodatkowo przygotować krótki opis aplikacji](#opis)
 
 2. [ ] 04.04.2025 - **Przedstawienie planu realizacji (20 % oceny)**
 * W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
