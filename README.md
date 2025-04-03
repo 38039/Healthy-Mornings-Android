@@ -1,5 +1,6 @@
 # PROJEKT “HEALTHY MORNINGS” - APLIKACJA MOBILNA
-Programowanie Systemów Mobilnych II
+**Programowanie Systemów Mobilnych II**
+
 
 ## OSOBY ZAANGAŻOWANE W PROJEKT
 | Imię / Nazwisko | Indeks | Semestr |
@@ -8,12 +9,14 @@ Programowanie Systemów Mobilnych II
 | Szymon Pietruszka | 37719 | Semestr Letni 2024/25 |
 ---
 
+
 ## DANE TECHNICZNE APLIKACJI
  - **Nazwa Aplikacji:** Healthy Mornings
  - **Nazwa Pakietu:** com.nforge.healthymornings
  - **Język programowania:** Java
  - **Minimalne SDK:** API 34
  - **Język konfiguracji kompilacji:** Kotlin DSL
+
 
 ## OPIS DZIAŁANIA APLIKACJI
 Aplikacja mobilna „Heatly Mornings”, przeznaczona dla smartfonów z systemem Android,
@@ -41,6 +44,7 @@ każdego nowego poziomu użytkownik otrzyma nagrody, takie jak opcje personaliza
 zmiana motywu kolorystycznego, ikon czy tła), dodatkowe funkcje lub unikalne odznaki
 motywacyjne. System ten ma na celu zachęcenie do regularnego korzystania z aplikacji oraz
 budowanie pozytywnych nawyków poprzez element grywalizacji.
+
 
 ## Struktura Aplikacji
 ```bash
