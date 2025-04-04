@@ -1,13 +1,22 @@
+#
 *.iml
+
+# GRADLE SCRIPTS
 .gradle
 /local.properties
+
+# ANDROID STUDIO (INTELLIJ IDEA)
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+
+# MACOS
 .DS_Store
+
+#
 /build
 /captures
 .externalNativeBuild
