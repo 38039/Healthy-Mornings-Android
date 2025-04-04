@@ -52,9 +52,9 @@
      - [x] [Listę wykorzystanych technologii](#dane) 
      - [x] [Listę wykorzystywanych bibliotek](#technologie)
      - [x] [Przyjętą architekturę projektu](#architektura)
-     - [ ] Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)
-     - [ ] Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups
-     - [ ] Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello
+     - [x] [Diagram klas, Diagram przypadków użycia, Schemat bazy danych (relacji + encji)](#diagramy)
+     - [x] [Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups](#interfejs)
+     - [x] [Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello](#trello)
 ---
 3. [ ] 09.05.2025 - **Implementacja projektu (30 % oceny)**
    * Do tego terminu należy zaprezentować postęp projektu w oparciu o utworzoną dokumentacje. Wymagane jest oddanie:
@@ -113,6 +113,25 @@ budowanie pozytywnych nawyków poprzez element grywalizacji.
 - **BAZA DANYCH**
     * Lokalna (dev) - PostgreSQL z JDBC
     * Zdalna (docelowa) - PostgreSQL z API REST
+
+
+<a id="diagramy"></a>
+##  DIAGRAMY
+Ilustrują strukturę oraz działanie aplikacji. Ułatwiają one zrozumienie funkcjonalności i zależności pomiędzy elementami:
+ * [diagram przypadków użycia](https://pwsztaredupl-my.sharepoint.com/:w:/g/personal/37719_student_atar_edu_pl/EbqinKLvKwpNs7HVGeJmRboBnpBxtmuHdyfVTFncYpUhRA?e=95cUoT)
+ * [diagram klas](https://pwsztaredupl-my.sharepoint.com/:w:/g/personal/37719_student_atar_edu_pl/EeuofDhrzLlBr6Ej1qLMGDIB6fXx9uuOVE2UpRcw5EOWEw?e=TGPBhN)
+
+[Schemat bazy danych](https://pwsztaredupl-my.sharepoint.com/:w:/g/personal/37719_student_atar_edu_pl/EfVXX4gJQJJPrC7zOuZYNzUBd6hNJ9HXaRRkB1C9XHyFCA?e=PuCvlZ) opisuje encje oraz relacje między nimi. Pozwala on na przechowywanie i organizowanie informacji w sposób spójny, umożliwiający ich łatwe przetwarzanie i analizę.
+
+
+<a id="interfejs"></a>
+##  INTERFEJS
+Projekt graficzny aplikacji wykonany w [Figmie](https://www.figma.com/design/qN1IrXdpBG3weqMASqAvhA/HEALTHY-MORNINGS?node-id=0-1&t=fdK453ONO3L7Ufu6-1). Przedstawia on wizualną koncepcję interfejsu użytkownika oraz układ poszczególnych elementów.
+
+
+<a id="trello"></a>
+##  TRELLO
+[Tablica](https://trello.com/invite/b/67ee3733e48c55c89dd01caa/ATTI6593999a38090379ecc2931ee600fd0f0835C881/healthy-mornings) została wykorzystana do zarządzania zadaniami w projekcie. Pokazuje aktualny postęp prac oraz zaplanowane etapy rozwoju aplikacji.
 
 
 <a id="plan"></a>
