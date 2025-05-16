@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.healthymornings">
+    package="com.nforge.healthymornings">
 
+    <!-- APPLICATION REQUIRED PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -15,7 +17,7 @@
         android:theme="@style/Theme.HealthyMornings">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.nforge.healthymornings.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,27 +27,27 @@
         </activity>
 
         <activity
-            android:name=".service.LoginActivity"
+            android:name="com.nforge.healthymornings.services.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name=".service.RegisterActivity"
+            android:name="com.nforge.healthymornings.services.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name=".task.TaskListActivity"
+            android:name="com.nforge.healthymornings.ui.TaskListActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name=".task.TaskEditActivity"
+            android:name="com.nforge.healthymornings.ui.TaskEditActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name=".task.TaskTODOActivity"
+            android:name="com.nforge.healthymornings.ui.TaskTODOActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name=".task.GratulationActivity"
+            android:name="com.nforge.healthymornings.ui.GratulationActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings"/>
     </application>
