@@ -14,7 +14,7 @@ public class User {
     private double weight = 0;
     //private boolean isAdmin = false;
 
-    public User(
+    public User (
             String name,
             String surname,
             String gender,

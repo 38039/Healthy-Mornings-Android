@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                                     .toString()
                                     .trim();
 
-        userEmail = "38039@student.atar.edu.pl";
-        userPassword = "123";
+        //userEmail = "38039@student.atar.edu.pl";
+        //userPassword = "123";
 
 
         // Zabezpieczenie przed brakiem danych do logowania

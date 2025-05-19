@@ -3,15 +3,20 @@ package com.nforge.healthymornings.data;
 // ANDROID
 import android.os.StrictMode;
 import android.util.Log;
-import android.widget.Toast;
 
 // JDBC
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 
 public class DatabaseConnectivityJDBC {
-    Connection databaseConnection = null;
+    Connection databaseConnection = null;   // Przechowuje połączenie z bazą danych
+    PreparedStatement sqlStatement = null;  // Przechowuje zapytanie do bazy danych
+    ResultSet sqlResponse = null;           // Przechowuje odpowiedź z bazy danych
+    boolean wasQueryBefore = false;         // Przechowuje informację czy zapytanie było już wcześniej wykonane
+
 
     // Domyślne dane naszego prywatnego serwera z bazą danych
     String databaseConnectionURL = null,
@@ -23,7 +28,7 @@ public class DatabaseConnectivityJDBC {
             databaseSchema = "application";
 
 
-    // Programista może nadpisać dane połączenia poniższą metodą
+    // Programista może nadpisać dane połączenia poniższym setterem
     public void provideDatabaseConnectionDetails (
             String providedName,
             String providedIpAddress,
@@ -38,6 +43,15 @@ public class DatabaseConnectivityJDBC {
         this.databaseUsername   = providedUsername;
         this.databasePassword   = providedPassword;
         this.databaseSchema     = providedSchema;
+
+        Log.v("DatabaseConnectivityJDBC", "provideDatabaseConnectionDetails(): Connection details: " +
+                        "Name: "        + databaseName          + " " +
+                        "IP Address: "  + databaseIpAddress     + " " +
+                        "Port: "        + databasePort          + " " +
+                        "Username: "    + databaseUsername      + " " +
+                        "Password: "    + databasePassword      + " " +
+                        "Schema: "      + databaseSchema
+                );
     }
 
     // Utworzenie połączenia z bazą danych przez JDBC
@@ -47,10 +61,8 @@ public class DatabaseConnectivityJDBC {
         StrictMode.setThreadPolicy(policy);
 
         try {
-
             // Używamy PostgreSQL jako naszej bazy danych
             Class.forName("org.postgresql.Driver");
-
 
             // Konkatenacja URL'a (widziałem wersję z danymi logowania, ale tu nie działa prawdopodobnie przez hash)
             databaseConnectionURL =
@@ -60,14 +72,65 @@ public class DatabaseConnectivityJDBC {
                             + databaseName
                             + "?currentSchema=" + databaseSchema;
 
+            Log.v("DatabaseConnectivityJDBC ", "CONNECTION URL: " + databaseConnectionURL);
 
+
+            // Utworzenie połączenia z bazą danych
             databaseConnection = DriverManager.getConnection(
                     databaseConnectionURL,
                     databaseUsername,
                     databasePassword
             );
 
-        } catch (Exception connectionException) { Log.e("DatabaseConnectivityJDBC", "establishDatabaseConnection(): " + connectionException.getMessage()); }
+        } catch (Exception connectionException) {
+            Log.e("DatabaseConnectivityJDBC", "establishDatabaseConnection(): " + connectionException.getMessage());
+            return null;
+        }
+
         return databaseConnection;
     }
+
+    public ResultSet executeSQLQuery(String query, String[] arguments) {
+        try {
+            // Utworzenie zapytania
+            sqlStatement = databaseConnection.prepareStatement(query);
+            Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query: " + query);
+
+            // Nadpisanie parametrów zapytania
+            for (int i = 1; i <= arguments.length; i++) {
+                sqlStatement.setString(i, arguments[i - 1]);
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL argument: " + arguments[i - 1]);
+            }
+
+            // Wykonaj / zaktualizuj zapytanie
+            if (!wasQueryBefore) {
+                sqlResponse = sqlStatement.executeQuery();
+                wasQueryBefore = true;
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query executed");
+            }
+            sqlStatement.executeUpdate();
+            Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query updated");
+
+        } catch (Exception sqlException) {
+            Log.e("DatabaseConnectivityJDBC", "executeSQLQuery(): " + sqlException.getMessage());
+            return null;
+        }
+
+        return sqlResponse;
+    }
+
+    // Czyszczenie i zamykanie otwartych połączeń
+    public boolean closeConnection() {
+        try {
+            databaseConnection.close();
+            sqlStatement.close();
+            sqlResponse.close();
+            Log.v("DatabaseConnectivityJDBC", "closeConnection(): Connection closed");
+            return true;
+        } catch (Exception connectionCloseException) {
+            Log.e("DatabaseConnectivityJDBC", "closeConnection(): " + connectionCloseException.getMessage());
+            return false;
+        }
+    }
+
 }
