@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                                     .toString()
                                     .trim();
 
-        //userEmail = "38039@student.atar.edu.pl";
-        //userPassword = "123";
+        userEmail = "38039@student.atar.edu.pl";
+        userPassword = "123";
 
 
         // Zabezpieczenie przed brakiem danych do logowania
@@ -73,16 +73,29 @@ public class LoginActivity extends AppCompatActivity {
         try {
             // Nawiązanie połączenia z bazą danych Healthy Mornings
             DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
-            databaseConnection = databaseConnector.establishDatabaseConnection();
+            //databaseConnection = databaseConnector.establishDatabaseConnection();
 
             // Konstruowanie zapytania do bazy danych (W sposób zapobiegający SQL Injection)
-            String SQLQuery = "SELECT * FROM users WHERE email = ? AND password = ?";
-            PreparedStatement selectUserStatement = databaseConnection.prepareStatement(SQLQuery);
-            selectUserStatement.setString(1, userEmail);
-            selectUserStatement.setString(2, userPassword);
+            //String SQLQuery = "SELECT * FROM users WHERE email = ? AND password = ?";
+            //PreparedStatement selectUserStatement = databaseConnection.prepareStatement(SQLQuery);
+            //selectUserStatement.setString(1, userEmail);
+            //selectUserStatement.setString(2, userPassword);
+
+            databaseConnector.establishDatabaseConnection();
+            ResultSet selectUserResults = databaseConnector.executeSQLQuery(
+                    "SELECT * FROM users WHERE email = ? AND password = ?",
+                    new String[]{userEmail, userPassword}
+            );
+
+
+            //ResultSet selectUserResults = databaseConnector.executeSQLQuery(
+            //        "INSERT INTO user_tasks (id_user, id_task, status) VALUES (?, ?, ?::task_status)",
+            //        new Object[]{1, 1, "pending"}
+            //);
+            // TODO: executeSQLQuery(): No results were returned by the query.
 
             // Odpowiedź z bazy danych
-            ResultSet selectUserResults = selectUserStatement.executeQuery();
+            //ResultSet selectUserResults = selectUserStatement.executeQuery();
 
 
             if (selectUserResults.next()) {
@@ -109,9 +122,10 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             // Zamykanie połączenia
-            selectUserStatement.close();
-            selectUserResults.close();
-            databaseConnection.close();
+            //selectUserStatement.close();
+            //selectUserResults.close();
+            //databaseConnection.close();
+            databaseConnector.closeConnection();
 
         } catch (Exception loginException) {
             Log.e("LoginActivity", "loginAction(): " + loginException.getMessage());

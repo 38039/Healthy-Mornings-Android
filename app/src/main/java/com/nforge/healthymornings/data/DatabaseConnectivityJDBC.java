@@ -90,7 +90,7 @@ public class DatabaseConnectivityJDBC {
         return databaseConnection;
     }
 
-    public ResultSet executeSQLQuery(String query, String[] arguments) {
+    public ResultSet executeSQLQuery(String query, Object[] arguments) {
         try {
             // Utworzenie zapytania
             sqlStatement = databaseConnection.prepareStatement(query);
@@ -98,24 +98,26 @@ public class DatabaseConnectivityJDBC {
 
             // Nadpisanie parametrów zapytania
             for (int i = 1; i <= arguments.length; i++) {
-                sqlStatement.setString(i, arguments[i - 1]);
-                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL argument: " + arguments[i - 1]);
+                sqlStatement.setObject(i, arguments[i - 1]);
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL argument: " + arguments[i - 1].toString());
             }
 
             // Wykonaj / zaktualizuj zapytanie
-            if (!wasQueryBefore) {
-                sqlResponse = sqlStatement.executeQuery();
-                wasQueryBefore = true;
-                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query executed");
+            if (wasQueryBefore) {
+                sqlStatement.executeUpdate();
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query updated");
+                return sqlResponse;
             }
-            sqlStatement.executeUpdate();
-            Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query updated");
+
+            sqlResponse = sqlStatement.executeQuery();
+            Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query executed");
 
         } catch (Exception sqlException) {
             Log.e("DatabaseConnectivityJDBC", "executeSQLQuery(): " + sqlException.getMessage());
             return null;
         }
 
+        wasQueryBefore = true;
         return sqlResponse;
     }
 
