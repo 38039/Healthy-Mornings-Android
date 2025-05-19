@@ -46,7 +46,7 @@
        * [x] [Temat pracy](#wymagania)
      - [x] [Dodatkowo przygotować krótki opis aplikacji](#opis)
 ---
-2. [ ] 04.04.2025 - **Przedstawienie planu realizacji (20 % oceny)**
+2. [x] 04.04.2025 - **Przedstawienie planu realizacji (20 % oceny)**
    * W ramach tego etapu zespół projektowy ma za zadanie przedstawić:
      - [x] [Plan realizacji projektu](#plan)
      - [x] [Listę wykorzystanych technologii](#dane) 
@@ -141,15 +141,15 @@ Projekt graficzny aplikacji wykonany w [Figmie](https://www.figma.com/design/qN1
 **Cel:** Opracowanie koncepcji aplikacji, wymagań i architektury
 1. **Analiza wymagań**
     * [x] Określenie funkcjonalności aplikacji
-    * [ ] Zdefiniowanie użytkowników systemu
+    * [x] Zdefiniowanie użytkowników systemu
     * [x] Identyfikacja przypadków użycia
 2. **Projektowanie bazy danych**
-    * [ ] Model ERD bazy PostgreSQL
-    * [ ] Struktura tabel
-    * [ ] Relacje między tabelami
+    * [x] Model ERD bazy PostgreSQL
+    * [x] Struktura tabel
+    * [x] Relacje między tabelami
 3. **Projektowanie UI/UX**
     * [x] Makiety ekranów aplikacji
-    * [ ] Przepływ użytkownika
+    * [x] Przepływ użytkownika
 4. **Wybór technologii**
     * [x] Zintegrowane środowisko programistyczne
     * [x] Biblioteki i API projektu
@@ -159,17 +159,17 @@ Projekt graficzny aplikacji wykonany w [Figmie](https://www.figma.com/design/qN1
 **Cel:** Stworzenie API i logiki aplikacji
 1. **Konfiguracja środowiska**
     * [x] Instalacja PostgreSQL, Spring Boot, Android Studio
-    * [ ] Konfiguracja JDBC i połączenia z bazą
+    * [x] Konfiguracja JDBC i połączenia z bazą
 2. **Implementacja systemu użytkowników**
-    * [ ] Rejestracja 
-    * [ ] Logowanie 
+    * [x] Rejestracja 
+    * [x] Logowanie 
     * [ ] Aautoryzacja
     * [ ] Obsługa konta
     * [ ] Role użytkowników
 3. **Obsługa zadań**
-    * [ ] Dodawanie zadań 
-    * [ ] Edycja zadań 
-    * [ ] Usuwanie zadań
+    * [x] Dodawanie zadań 
+    * [x] Edycja zadań 
+    * [x] Usuwanie zadań
     * [ ] Śledzenie postępu użytkownika
 4. **System poziomów i nagród**
     * [ ] Algorytm naliczania punktów
@@ -190,16 +190,16 @@ Projekt graficzny aplikacji wykonany w [Figmie](https://www.figma.com/design/qN1
     * [x] Przygotowanie Wirtualnego Emulowanego Urządzenia do testów
 2. **Implementacja ekranów**
     * [ ] **Ekrany ogólnodostępne**
-      1. [ ] Login
-      2. [ ] Rejestracja
+      1. [x] Login
+      2. [x] Rejestracja
       3. [ ] Porady
     * [ ] **Ekrany zalogowanego użytkownika**
       1. [ ] Konto
-      2. [ ] Lista zadań
+      2. [x] Lista zadań
       3. [ ] Statystyki
-    * [ ] **Ekrany ograniczone czasowo**
-      1. [ ] Task 
-      2. [ ] TODO
+    * [x] **Ekrany ograniczone czasowo**
+      1. [x] Task 
+      2. [x] TODO
 3. **Obsługa nawigacji**
     * [ ] System FragmentManager
     * [ ] Przełączanie ekranów w zależności od statusu logowania
@@ -243,7 +243,7 @@ Projekt graficzny aplikacji wykonany w [Figmie](https://www.figma.com/design/qN1
 - Zarządzanie UI i interakcja z użytkownikiem: 
   * **Android Jetpack (ViewModel)** - Zarządzanie UI
   * **Material Design** - Nowoczesne komponenty interfejsu
-  * **RecyclerView** - Dynamiczne listy zadań
+  * **ListView** - Dynamiczne listy zadań
   * **ViewBinding** - Ułatwienie obsługi widoków
 - Obsługa sieci i synchronizacja:
     * **Retrofit** - Zaawansowana obsługa API

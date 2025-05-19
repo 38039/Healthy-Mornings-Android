@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".services.LoginActivity">
+    tools:context=".ui.LoginActivity">
 
     <TextView
         android:id="@+id/title"
@@ -99,7 +99,7 @@
                 android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/object"
-                android:onClick="RegisterAction"
+                android:onClick="goToRegisterActivity"
                 android:text="Register"
                 android:textColor="@color/words"
                 android:textSize="18sp"
@@ -107,15 +107,4 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158" />
 </androidx.constraintlayout.widget.ConstraintLayout>

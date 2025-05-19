@@ -17,7 +17,7 @@
         android:theme="@style/Theme.HealthyMornings">
 
         <activity
-            android:name="com.nforge.healthymornings.ui.MainActivity"
+            android:name="com.nforge.healthymornings.ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +26,9 @@
             </intent-filter>
         </activity>
 
+        <!-- <activity android:name="com.nforge.healthymornings.ui.LoginActivity" android:exported="false" android:theme="@style/Theme.HealthyMornings" /> -->
         <activity
-            android:name="com.nforge.healthymornings.services.LoginActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name="com.nforge.healthymornings.services.RegisterActivity"
+            android:name="com.nforge.healthymornings.ui.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
@@ -42,6 +39,11 @@
             android:name="com.nforge.healthymornings.ui.TaskEditActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name="com.nforge.healthymornings.ui.TaskAddActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
+
         <activity
             android:name="com.nforge.healthymornings.ui.TaskTODOActivity"
             android:exported="false"

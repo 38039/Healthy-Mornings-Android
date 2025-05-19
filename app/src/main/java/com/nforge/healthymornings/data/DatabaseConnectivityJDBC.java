@@ -3,16 +3,27 @@ package com.nforge.healthymornings.data;
 // ANDROID
 import android.os.StrictMode;
 import android.util.Log;
+import android.widget.Toast;
+
 // JDBC
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+
 public class DatabaseConnectivityJDBC {
     Connection databaseConnection = null;
-    String databaseConnectionURL = null, databaseName = "", databaseIpAddress = "", databasePort = "", databaseUsername = "", databasePassword = "", databaseSchema = "";
+
+    // Domyślne dane naszego prywatnego serwera z bazą danych
+    String databaseConnectionURL = null,
+            databaseName = "healthy_mornings",
+            databaseIpAddress = "136.244.87.135",
+            databasePort = "5432",
+            databaseUsername = "application_jdbc_connection",
+            databasePassword = "123",
+            databaseSchema = "application";
 
 
-    // Enkapsulacja danych
+    // Programista może nadpisać dane połączenia poniższą metodą
     public void provideDatabaseConnectionDetails (
             String providedName,
             String providedIpAddress,
@@ -31,14 +42,17 @@ public class DatabaseConnectivityJDBC {
 
     // Utworzenie połączenia z bazą danych przez JDBC
     public Connection establishDatabaseConnection() {
-        // Strict Mode
+        // Strict Mode (Wymagane do poprawnego działania JDBC pod Androidem)
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         try {
-            Class.forName("org.postgresql.Driver"); //Driver
 
-            // Konkatenacja URL'a bazy danych pod drivera
+            // Używamy PostgreSQL jako naszej bazy danych
+            Class.forName("org.postgresql.Driver");
+
+
+            // Konkatenacja URL'a (widziałem wersję z danymi logowania, ale tu nie działa prawdopodobnie przez hash)
             databaseConnectionURL =
                     "jdbc:postgresql://"
                             + databaseIpAddress  + ":"
@@ -46,14 +60,14 @@ public class DatabaseConnectivityJDBC {
                             + databaseName
                             + "?currentSchema=" + databaseSchema;
 
+
             databaseConnection = DriverManager.getConnection(
                     databaseConnectionURL,
                     databaseUsername,
                     databasePassword
             );
 
-        } catch (Exception ex) { Log.e("DatabaseConnectivityJDBC", "Błąd: " + ex.getMessage()); }
-
+        } catch (Exception connectionException) { Log.e("DatabaseConnectivityJDBC", "establishDatabaseConnection(): " + connectionException.getMessage()); }
         return databaseConnection;
     }
 }

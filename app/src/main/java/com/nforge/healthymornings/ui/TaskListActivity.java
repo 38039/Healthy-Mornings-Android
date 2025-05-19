@@ -1,13 +1,17 @@
 package com.nforge.healthymornings.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nforge.healthymornings.R;
@@ -24,44 +28,57 @@ import java.util.Locale;
 public class TaskListActivity extends AppCompatActivity
 {
     Connection connect;
-    TextView taskList, deadlineTask;
+    TextView deadlineTask;
+    ListView taskList;
     int userId;
-    ArrayList<String> taskListArray = new ArrayList<>();
+    ArrayList<String> taskNameList = new ArrayList<>();
+    ArrayList<Integer> taskIdList = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+        SharedPreferences sharedPreferences = getSharedPreferences("Healthy Mornings Shared Preferences", Context.MODE_PRIVATE);
 
-        taskList = findViewById(R.id.taskList);
+        taskList = findViewById(R.id.TasksList);
         deadlineTask = findViewById(R.id.deadlineTaskText);
+        Button taskAdd = findViewById(R.id.GoToAddTaskActivityButton);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskNameList);
+        taskList.setAdapter(adapter);
+
         userId = sharedPreferences.getInt("userId", -1);
-        if (userId != -1)
-        {
-            loadUserTasks(userId);
-        }
-        else
-        {
-            Toast.makeText(this, "User data could not be found", Toast.LENGTH_SHORT).show();
-        }
+        Log.v("TaskListActivity", "userId: " + userId);
 
-        taskList.setOnClickListener(new View.OnClickListener()
-        {
+        loadUserTasks(userId);
+
+        taskAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(TaskListActivity.this, TaskEditActivity.class);
-                intent.putStringArrayListExtra("task_list", taskListArray);
-                intent.putExtra("id_user", userId);
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskListActivity.this, TaskAddActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
-        deadlineTask.setOnClickListener(new View.OnClickListener()
-        {
+        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int index, long listObjectId) {
+                Log.v("HelloListView", "You clicked Item: " + listObjectId + " at position:" + index);
+
+                Intent intent = new Intent(TaskListActivity.this, TaskEditActivity.class);
+                intent.putExtra("task_id", taskIdList.get(index));
+                intent.putExtra("task_name", taskNameList.get(index));
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        deadlineTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -74,7 +91,7 @@ public class TaskListActivity extends AppCompatActivity
                 if (hour >= 4 && hour <= 9)
                 {
                     Intent intent = new Intent(TaskListActivity.this, TaskTODOActivity.class);
-                    intent.putStringArrayListExtra("task_list", taskListArray);
+                    intent.putStringArrayListExtra("task_list", taskNameList);
                     intent.putExtra("id_user", userId);
                     startActivity(intent);
                 }
@@ -92,22 +109,29 @@ public class TaskListActivity extends AppCompatActivity
             if (connect != null)
             {
                 String query =
-                        "SELECT t.name FROM USER_TASKS ut " +
+                        "SELECT t.name, t.id_task FROM USER_TASKS ut " +
                                 "JOIN TASKS t ON ut.id_task = t.id_task " +
                                 "WHERE ut.id_user = " + userId;
 
                 Statement st = connect.createStatement();
                 ResultSet rs = st.executeQuery(query);
-                StringBuilder builder = new StringBuilder("List Tasks\n\n");
-                taskListArray.clear();
+                taskNameList.clear();
+                taskIdList.clear();
 
                 while (rs.next())
                 {
                     String taskName = rs.getString("name");
-                    taskListArray.add(taskName);
-                    builder.append(taskName).append("\n");
+                    Log.v("TaskListActivity", "taskName: " + taskName);
+                    Integer taskId = rs.getInt("id_task");
+                    Log.v("TaskListActivity", "taskId: " + taskId);
+                    taskNameList.add(taskName);
+                    taskIdList.add(taskId);
                 }
-                taskList.setText(builder.toString());
+                adapter.notifyDataSetChanged();
+
+                rs.close();
+                st.close();
+                connect.close();
             }
             else
             {
@@ -121,13 +145,10 @@ public class TaskListActivity extends AppCompatActivity
         }
     }
 
+    // ?
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
-        if (userId != -1)
-        {
-            loadUserTasks(userId);
-        }
+        if (userId != -1) loadUserTasks(userId);
     }
 }
