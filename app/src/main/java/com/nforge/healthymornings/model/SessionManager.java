@@ -5,51 +5,74 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import static android.content.Context.MODE_PRIVATE;
-
+// HEALTHY MORNINGS
 import com.nforge.healthymornings.data.DatabaseConnectivityJDBC;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 
 public class SessionManager {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private final SharedPreferences         sessionPreferences;
+    private final SharedPreferences.Editor  sessionPreferencesEditor;
 
     public SessionManager(Activity activity) {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences("Healthy Mornings Shared Preferences", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        sessionPreferences          = activity.getSharedPreferences(
+                "Healthy Mornings Shared Preferences",
+                android.content.Context.MODE_PRIVATE);
+        sessionPreferencesEditor    = sessionPreferences.edit();
     }
 
+    // Zapisywanie identyfikatora użytkownika
+    public boolean saveUser(int userId) {
+        sessionPreferencesEditor.putInt("USER_DATABASE_ID", userId);
+        sessionPreferencesEditor.putBoolean("IS_USER_LOGGED_IN", true);
 
-    public void saveUser(int userId) {
-        editor.putInt("USER_DATABASE_ID", userId);
-        editor.apply();
+        Log.v("SessionManager", "saveUser(): USER ID: "
+                + sessionPreferences.getInt("USER_DATABASE_ID", -1));
+        Log.v("SessionManager", "saveUser(): IS USER LOGGED IN: "
+                + sessionPreferences.getBoolean("IS_USER_LOGGED_IN", false));
+
+        return sessionPreferencesEditor.commit();
     }
 
-    public User getUser() {
-        DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
-        Connection databaseConnection = databaseConnector.establishDatabaseConnection();
-
+    // Zwracanie danych użytkownika na podstawie jego identyfikatora
+    public UserData getUser() {
         try {
-            int userId = sharedPreferences.getInt("USER_DATABASE_ID", -1);
-            if (userId == -1) throw new Exception("USER_DATABASE_ID == -1 User not found");
+            // Sprawdzanie czy użytkownik jest zalogowany
+            if (sessionPreferences.getInt("USER_DATABASE_ID", -1) == -1)
+                throw new Exception("UŻYTKOWNIK NIE JEST ZALOGOWANY");
 
-            String SQLQuery = "SELECT * FROM users WHERE id_user = ?";
-            PreparedStatement selectUserStatement = databaseConnection.prepareStatement(SQLQuery);
-            selectUserStatement.setInt(1, userId);
+            // Nawiązanie połączenia z bazą
+            DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
 
-            ResultSet selectUserResults = selectUserStatement.executeQuery();
+            // Szukanie użytkownika w bazie
+            java.sql.ResultSet retrievedUserData = databaseConnector.executeSQLQuery(
+                    "SELECT * FROM users WHERE id_user = ?",
+                    new Object[] { Integer.parseInt(sessionPreferences.getString("USER_DATABASE_ID", "-1")) }
+            );
 
-        } catch(Exception e) { Log.e("SessionManager", "getUser(): " + e.getMessage());}
+            // Zwracanie danych użytkownika
+            if (retrievedUserData.next()) {
+                return new UserData(
+                        retrievedUserData.getString("name"),
+                        retrievedUserData.getString("surname"),
+                        retrievedUserData.getString("gender"),
+                        retrievedUserData.getString("username"),
+                        retrievedUserData.getString("email"),
+                        retrievedUserData.getString("bio"),
+                        retrievedUserData.getDate("birth_date"),
+                        retrievedUserData.getDouble("height"),
+                        retrievedUserData.getDouble("weight"),
+                        retrievedUserData.getBoolean("is_admin")
+                );
+            } else throw new Exception("UŻYTKOWNIK NIE ISTNIEJE W BAZIE DANYCH");
+        } catch(Exception e) { Log.e("SessionManager", "getUser(): " + e.getMessage()); }
 
         return null;
     }
 
-    public void clearSession() {
-        editor.clear();
-        editor.apply();
+    // Czyszczenie pamięci trwałej aplikacji
+    public boolean clearSession() {
+        sessionPreferencesEditor.clear();
+        return sessionPreferencesEditor.commit();
     }
 }

@@ -15,20 +15,17 @@ public class DatabaseConnectivityJDBC {
     Connection databaseConnection = null;   // Przechowuje połączenie z bazą danych
     PreparedStatement sqlStatement = null;  // Przechowuje zapytanie do bazy danych
     ResultSet sqlResponse = null;           // Przechowuje odpowiedź z bazy danych
-
-
-    // Domyślne dane naszego prywatnego serwera z bazą danych
-    String databaseConnectionURL = null,
-            databaseName = "healthy_mornings",
-            databaseIpAddress = "136.244.87.135",
-            databasePort = "5432",
-            databaseUsername = "application_jdbc_connection",
-            databasePassword = "123",
-            databaseSchema = "application";
+    String databaseConnectionURL = null;    // Przechowuje URL dla drivera JDBC
+    String databaseName;
+    String databaseIpAddress;
+    String databasePort;
+    String databaseUsername;
+    String databasePassword;
+    String databaseSchema;
 
 
     // Programista może nadpisać dane połączenia poniższym setterem
-    public void provideDatabaseConnectionDetails (
+    public DatabaseConnectivityJDBC (
             String providedName,
             String providedIpAddress,
             String providedPort,
@@ -43,14 +40,33 @@ public class DatabaseConnectivityJDBC {
         this.databasePassword   = providedPassword;
         this.databaseSchema     = providedSchema;
 
-        Log.v("DatabaseConnectivityJDBC", "provideDatabaseConnectionDetails(): Connection details: " +
-                        "Name: "        + databaseName          + " " +
-                        "IP Address: "  + databaseIpAddress     + " " +
-                        "Port: "        + databasePort          + " " +
-                        "Username: "    + databaseUsername      + " " +
-                        "Password: "    + databasePassword      + " " +
-                        "Schema: "      + databaseSchema
-                );
+        Log.v("DatabaseConnectivityJDBC", "provideDatabaseConnectionDetails(): CONNECTION DETAILS: \n" +
+                "DATABASE NAME: "        + databaseName          + "\n" +
+                "HOST IP ADDRESS: "      + databaseIpAddress     + "\n" +
+                "DATABASE PORT: "        + databasePort          + "\n" +
+                "DATABASE USERNAME: "    + databaseUsername      + "\n" +
+                "DATABASE PASSWORD: "    + databasePassword      + "\n" +
+                "DATABASE SCHEMA: "      + databaseSchema
+        );
+    }
+
+    // Domyślne dane naszego prywatnego serwera z bazą danych
+    public DatabaseConnectivityJDBC () {
+        this.databaseName       = "healthy_mornings";
+        this.databaseIpAddress  = "136.244.87.135";
+        this.databasePort       = "5432";
+        this.databaseUsername   = "application_jdbc_connection";
+        this.databasePassword   = "123";
+        this.databaseSchema     = "application";
+
+        Log.v("DatabaseConnectivityJDBC", "provideDatabaseConnectionDetails(): CONNECTION DETAILS: \n" +
+                "DATABASE NAME: "        + databaseName          + "\n" +
+                "HOST IP ADDRESS: "      + databaseIpAddress     + "\n" +
+                "DATABASE PORT: "        + databasePort          + "\n" +
+                "DATABASE USERNAME: "    + databaseUsername      + "\n" +
+                "DATABASE PASSWORD: "    + databasePassword      + "\n" +
+                "DATABASE SCHEMA: "      + databaseSchema
+        );
     }
 
     // Utworzenie połączenia z bazą danych przez JDBC
@@ -94,30 +110,30 @@ public class DatabaseConnectivityJDBC {
         try {
             // Utworzenie zapytania
             sqlStatement = databaseConnection.prepareStatement(query);
-            Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query: " + query);
+            Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL QUERY: " + query);
 
             // Nadpisanie parametrów zapytania
             for (int i = 1; i <= arguments.length; i++) {
                 sqlStatement.setObject(i, arguments[i - 1]);
-                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL argument: " + arguments[i - 1].toString());
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL ARGUMENT: " + arguments[i - 1].toString());
             }
 
             // Wykonaj / zaktualizuj zapytanie
             if (query.contains("INSERT") || query.contains("UPDATE") || query.contains("DELETE")) {
                 sqlStatement.executeUpdate();
-                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): Table updated");
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): CONTENT UPDATED");
                 return null;
             } else {
                 sqlResponse = sqlStatement.executeQuery();
-                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query executed");
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL QUERY EXECUTED");
             }
+
+            return sqlResponse;
 
         } catch (Exception sqlException) {
             Log.e("DatabaseConnectivityJDBC", "executeSQLQuery(): " + sqlException.getMessage());
             return null;
         }
-
-        return sqlResponse;
     }
 
     // Czyszczenie i zamykanie otwartych połączeń
@@ -126,7 +142,7 @@ public class DatabaseConnectivityJDBC {
             databaseConnection.close();
             sqlStatement.close();
             sqlResponse.close();
-            Log.v("DatabaseConnectivityJDBC", "closeConnection(): Connection closed");
+            Log.v("DatabaseConnectivityJDBC", "closeConnection(): CONNECTION CLOSED");
             return true;
 
         } catch (Exception connectionCloseException) {

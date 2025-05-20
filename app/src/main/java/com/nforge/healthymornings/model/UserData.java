@@ -1,27 +1,27 @@
 package com.nforge.healthymornings.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
-public class User {
+public class UserData {
     private String name = null;
     private String surname = null;
     private String gender = null;
     private String username = null;
     private String email = null;
     private String bio = null;
-    private LocalDate birthDate = null;
+    private Date birthDate = null;
     private double height = 0;
     private double weight = 0;
-    //private boolean isAdmin = false;
+    private boolean isAdmin = false;
 
-    public User (
+    public UserData(
             String name,
             String surname,
             String gender,
             String username,
             String email,
             String bio,
-            LocalDate birthDate,
+            Date birthDate,
             double height,
             double weight,
             boolean isAdmin
@@ -35,17 +35,47 @@ public class User {
         this.birthDate = birthDate;
         this.height = height;
         this.weight = weight;
-        //this.isAdmin = isAdmin;
+        this.isAdmin = isAdmin;
     }
 
-    public String getName()         { return name;      }
-    public String getSurname()      { return surname;   }
-    public String getGender()       { return gender;    }
-    public String getUsername()     { return username;  }
-    public String getEmail()        { return email;     }
-    public String getBio()          { return bio;       }
-    public LocalDate getBirthDate() { return birthDate; }
-    public double getHeight()       { return height;    }
-    public double getWeight()       { return weight;    }
-    //public boolean getIsAdmin() { return isAdmin; }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
 }
