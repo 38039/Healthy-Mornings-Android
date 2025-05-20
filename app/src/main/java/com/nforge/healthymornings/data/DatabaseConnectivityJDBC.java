@@ -15,7 +15,6 @@ public class DatabaseConnectivityJDBC {
     Connection databaseConnection = null;   // Przechowuje połączenie z bazą danych
     PreparedStatement sqlStatement = null;  // Przechowuje zapytanie do bazy danych
     ResultSet sqlResponse = null;           // Przechowuje odpowiedź z bazy danych
-    boolean wasQueryBefore = false;         // Przechowuje informację czy zapytanie było już wcześniej wykonane
 
 
     // Domyślne dane naszego prywatnego serwera z bazą danych
@@ -90,6 +89,7 @@ public class DatabaseConnectivityJDBC {
         return databaseConnection;
     }
 
+    // Wykonywanie zapytań do bazy danych i zwracanie odpowiedzi z niej
     public ResultSet executeSQLQuery(String query, Object[] arguments) {
         try {
             // Utworzenie zapytania
@@ -103,21 +103,20 @@ public class DatabaseConnectivityJDBC {
             }
 
             // Wykonaj / zaktualizuj zapytanie
-            if (wasQueryBefore) {
+            if (query.contains("INSERT") || query.contains("UPDATE") || query.contains("DELETE")) {
                 sqlStatement.executeUpdate();
-                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query updated");
-                return sqlResponse;
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): Table updated");
+                return null;
+            } else {
+                sqlResponse = sqlStatement.executeQuery();
+                Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query executed");
             }
-
-            sqlResponse = sqlStatement.executeQuery();
-            Log.v("DatabaseConnectivityJDBC", "executeSQLQuery(): SQL query executed");
 
         } catch (Exception sqlException) {
             Log.e("DatabaseConnectivityJDBC", "executeSQLQuery(): " + sqlException.getMessage());
             return null;
         }
 
-        wasQueryBefore = true;
         return sqlResponse;
     }
 
@@ -129,6 +128,7 @@ public class DatabaseConnectivityJDBC {
             sqlResponse.close();
             Log.v("DatabaseConnectivityJDBC", "closeConnection(): Connection closed");
             return true;
+
         } catch (Exception connectionCloseException) {
             Log.e("DatabaseConnectivityJDBC", "closeConnection(): " + connectionCloseException.getMessage());
             return false;

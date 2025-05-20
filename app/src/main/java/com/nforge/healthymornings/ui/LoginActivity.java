@@ -20,10 +20,6 @@ import com.nforge.healthymornings.data.DatabaseConnectivityJDBC;
 
 
 public class LoginActivity extends AppCompatActivity {
-    Connection databaseConnection = null;
-    String ConnectionResult = "";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,31 +69,15 @@ public class LoginActivity extends AppCompatActivity {
         try {
             // Nawiązanie połączenia z bazą danych Healthy Mornings
             DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
-            //databaseConnection = databaseConnector.establishDatabaseConnection();
-
-            // Konstruowanie zapytania do bazy danych (W sposób zapobiegający SQL Injection)
-            //String SQLQuery = "SELECT * FROM users WHERE email = ? AND password = ?";
-            //PreparedStatement selectUserStatement = databaseConnection.prepareStatement(SQLQuery);
-            //selectUserStatement.setString(1, userEmail);
-            //selectUserStatement.setString(2, userPassword);
-
             databaseConnector.establishDatabaseConnection();
+
+            // Utworzenie zapytania do bazy danych
             ResultSet selectUserResults = databaseConnector.executeSQLQuery(
                     "SELECT * FROM users WHERE email = ? AND password = ?",
                     new String[]{userEmail, userPassword}
             );
 
-
-            //ResultSet selectUserResults = databaseConnector.executeSQLQuery(
-            //        "INSERT INTO user_tasks (id_user, id_task, status) VALUES (?, ?, ?::task_status)",
-            //        new Object[]{1, 1, "pending"}
-            //);
-            // TODO: executeSQLQuery(): No results were returned by the query.
-
             // Odpowiedź z bazy danych
-            //ResultSet selectUserResults = selectUserStatement.executeQuery();
-
-
             if (selectUserResults.next()) {
                int userId = selectUserResults.getInt("id_user");
                Toast.makeText(this, "Hi " + userId, Toast.LENGTH_SHORT).show();
@@ -121,11 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(this, "Niepoprawne dane logowania", Toast.LENGTH_SHORT).show();
             }
 
-            // Zamykanie połączenia
-            //selectUserStatement.close();
-            //selectUserResults.close();
-            //databaseConnection.close();
-            databaseConnector.closeConnection();
+            if(!databaseConnector.closeConnection())
+                throw new Exception("Połączenie z bazą danych nie zostało poprawnie zamknięte");
 
         } catch (Exception loginException) {
             Log.e("LoginActivity", "loginAction(): " + loginException.getMessage());
