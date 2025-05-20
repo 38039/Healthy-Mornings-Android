@@ -42,24 +42,26 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginButtonClick(View view) {
 
         // Rzutowanie danych emaila z xml'a do zmiennej tekstowej
-        String   userEmail          = emailTextView
-                                    .getText()
-                                    .toString()
-                                    .trim();
+        String   accountLoginEmail      = emailTextView
+                                        .getText()
+                                        .toString()
+                                        .trim();
 
         // Rzutowanie danych hasła z xml'a do zmiennej tekstowej
         // TODO: BCRYPT
-        String   userPassword       = passwordTextView
-                                    .getText()
-                                    .toString()
-                                    .trim();
+        String   accountLoginPassword   = passwordTextView
+                                        .getText()
+                                        .toString()
+                                        .trim();
 
-        userEmail = "38039@student.atar.edu.pl";
-        userPassword = "123";
+        accountLoginEmail = "38039@student.atar.edu.pl";
+        accountLoginPassword = "123";
 
 
         // Zabezpieczenie przed brakiem danych do logowania
-        if (userEmail.isEmpty() || userPassword.isEmpty()) {
+        if (    accountLoginEmail.isEmpty() ||
+                accountLoginPassword.isEmpty()  )
+        {
             Toast.makeText(this, "Proszę wypełnić wszystkie pola", Toast.LENGTH_SHORT).show();
             Log.w("LoginActivity", "loginAction(): BRAKUJĄCE DANE LOGOWANIA");
             return;
@@ -67,20 +69,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
         try {
+            // TODO: Przerzucić połączenia i zapytania do bazy do SessionManagera, i przekazywać mu tylko argumenty logowania w celu pozbycia się SQL'owego kodu z Activities
+
             // Nawiązanie połączenia z bazą danych Healthy Mornings
             DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
             databaseConnector.establishDatabaseConnection();
 
+
             // Sprawdzanie czy użytkownik istnieje w bazie
-            java.sql.ResultSet retrievedUserData = databaseConnector.executeSQLQuery(
+            java.sql.ResultSet userCredentialsFromDatabase = databaseConnector.executeSQLQuery(
                     "SELECT * FROM users WHERE email = ? AND password = ?",
-                    new String[]{userEmail, userPassword}
+                    new String[]{accountLoginEmail, accountLoginPassword}
             );
 
             // Przekazywanie danych logowania do menadżera sesji
-            if ( retrievedUserData.next() ) {
+            if ( userCredentialsFromDatabase.next() ) {
                 SessionManager userLoginSession = new SessionManager(this);
-                if( !userLoginSession.saveUser(retrievedUserData.getInt("id_user")) )
+                if( !userLoginSession.saveUser(userCredentialsFromDatabase.getInt("id_user")) )
                     throw new Exception("NIE UDAŁO SIĘ ZAPISAĆ DANYCH LOGOWANIA DO SESJI");
 
                goToTaskListActivity(view);

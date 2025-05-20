@@ -21,8 +21,8 @@ public class SessionManager {
     }
 
     // Zapisywanie identyfikatora użytkownika
-    public boolean saveUser(int userId) {
-        sessionPreferencesEditor.putInt("USER_DATABASE_ID", userId);
+    public boolean saveUser(int passedUserID) {
+        sessionPreferencesEditor.putInt("USER_DATABASE_ID", passedUserID);
         sessionPreferencesEditor.putBoolean("IS_USER_LOGGED_IN", true);
 
         Log.v("SessionManager", "saveUser(): USER ID: "

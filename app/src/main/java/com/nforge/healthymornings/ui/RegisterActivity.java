@@ -12,8 +12,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-// JDBC
-import java.sql.*;
+// JAVA
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 // HEALTHY MORNINGS
@@ -21,14 +20,13 @@ import com.nforge.healthymornings.R;
 import com.nforge.healthymornings.data.DatabaseConnectivityJDBC;
 
 
-
 public class RegisterActivity extends AppCompatActivity {
-    TextView newAccountUsernameTextView, newAccountEmailTextView, newAccountPasswordTextView, newAccountPasswordConfirmationTextView;
-    Connection connect;
+    TextView newAccountUsernameTextView;
+    TextView newAccountEmailTextView;
+    TextView newAccountPasswordTextView;
+    TextView newAccountPasswordConfirmationTextView;
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
-
-
 
 
     @Override
@@ -38,14 +36,17 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         initDatePicker();
 
-        newAccountUsernameTextView = findViewById(R.id.NewAccountUsernameTextView);
-        newAccountEmailTextView = findViewById(R.id.NewAccountEmailTextView);
-        newAccountPasswordTextView = findViewById(R.id.NewAccountPasswordTextView);
-        newAccountPasswordConfirmationTextView = findViewById(R.id.NewAccountPasswordConfirmationTextView);
-        dateButton = findViewById(R.id.DateOfBirthButton);
-        dateButton.setText(getTodaysDate());
+        newAccountUsernameTextView              = findViewById(R.id.NewAccountUsernameTextView);
+        newAccountEmailTextView                 = findViewById(R.id.NewAccountEmailTextView);
+        newAccountPasswordTextView              = findViewById(R.id.NewAccountPasswordTextView);
+        newAccountPasswordConfirmationTextView  = findViewById(R.id.NewAccountPasswordConfirmationTextView);
+        dateButton                              = findViewById(R.id.DateOfBirthButton);
 
 
+        // TODO: Spróbować pozbyć się metody getTodaysDate() gdyż to musi być zwracane tylko raz
+        dateButton.setText(
+                getTodaysDate()
+        );
     }
 
     private String getTodaysDate() {
@@ -60,9 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                String date = Integer.toString(year)
-                                + "-" + Integer.toString(month+1)
-                                + "-" + Integer.toString(day);
+                String date = year + "-" + (month+1) + "-" + day;
                 dateButton.setText(date);
             }
         };
@@ -83,71 +82,95 @@ public class RegisterActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    public void CreateAccount(View v)
-    {
-        String newAccountUsername = newAccountUsernameTextView.getText().toString().trim();
-        String newAccountEmail = newAccountEmailTextView.getText().toString().trim();
-        String newAccountPassword = newAccountPasswordTextView.getText().toString().trim();
-        String confirmPassword = newAccountPasswordConfirmationTextView.getText().toString().trim();
+    public void goToLoginActivity(View view) {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
-        if (newAccountUsername.isEmpty() || newAccountEmail.isEmpty() || newAccountPassword.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+    public void onRegisterButtonClick(View v) {
+
+        // Rzutowanie danych nazwy konta z xml'a do zmiennej tekstowej
+        String accountRegisterUsername  = newAccountUsernameTextView
+                                        .getText()
+                                        .toString()
+                                        .trim();
+
+        // Rzutowanie danych emaila z xml'a do zmiennej tekstowej
+        String accountRegisterEmail     = newAccountEmailTextView
+                                        .getText()
+                                        .toString()
+                                        .trim();
+
+        // Rzutowanie danych hasła z xml'a do zmiennej tekstowej
+        String accountRegisterPassword  = newAccountPasswordTextView
+                                        .getText()
+                                        .toString()
+                                        .trim();
+
+        // Rzutowanie danych potwierdzenia hasła z xml'a do zmiennej tekstowej
+        String accountConfirmPassword   = newAccountPasswordConfirmationTextView
+                                        .getText()
+                                        .toString()
+                                        .trim();
+
+
+        // Zabezpieczenie przed brakiem danych do rejestracji
+        if (    accountRegisterUsername.isEmpty() ||
+                accountRegisterEmail.isEmpty()    ||
+                accountRegisterPassword.isEmpty() ||
+                accountConfirmPassword.isEmpty()    )
+        {
+            Toast.makeText(this, "Proszę wypełnić wszystkie pola", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Aplikacja odmówi rejestracji użytkownikowi poniżej 12-13 lat
         if (datePickerDialog.getDatePicker().getYear() > 2012) {
             Toast.makeText(this, "Proszę wybrać poprawną datę urodzenia", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!newAccountPassword.equals(confirmPassword))
-        {
-            Toast.makeText(this, "The passwords are not the same", Toast.LENGTH_SHORT).show();
+        // Aplikacja sprawdzi czy hasła są takie same
+        if (!accountRegisterPassword.equals(accountConfirmPassword)) {
+            Toast.makeText(this, "Proszę podać takie same hasła", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        try
-        {
-            DatabaseConnectivityJDBC databaseConnectivityJDBC = new DatabaseConnectivityJDBC();
-            connect = databaseConnectivityJDBC.establishDatabaseConnection();
 
-                String query = "INSERT INTO users (username, email, password, date_of_birth, is_admin, level) VALUES (?, ?, ?, ?, ?, ?)";
-                PreparedStatement stmt = connect.prepareStatement(query);
-                stmt.setString(1, newAccountUsername);
-                stmt.setString(2, newAccountEmail);
-                stmt.setString(3, newAccountPassword);
+        try {
+            // TODO: Przerzucić połączenia i zapytania do bazy do SessionManagera, i przekazywać mu tylko argumenty rejestracji w celu pozbycia się SQL'owego kodu z Activities
 
-                GregorianCalendar gregorianCalendar = new GregorianCalendar(
-                        datePickerDialog.getDatePicker().getYear(),
-                        datePickerDialog.getDatePicker().getMonth(),
-                        datePickerDialog.getDatePicker().getDayOfMonth()
-                );
-                java.util.Date utilDate = gregorianCalendar.getTime();
-                Date selectedDate = new java.sql.Date(utilDate.getTime());
+            DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
 
-                stmt.setDate(4, selectedDate);
+            // TODO: Usprawnić ten szajs
+            GregorianCalendar gregorianCalendar = new GregorianCalendar(
+                    datePickerDialog.getDatePicker().getYear(),
+                    datePickerDialog.getDatePicker().getMonth(),
+                    datePickerDialog.getDatePicker().getDayOfMonth()
+            );
+            java.util.Date utilDate = gregorianCalendar.getTime();
+            java.sql.Date selectedDate = new java.sql.Date(utilDate.getTime());
 
+            databaseConnector.executeSQLQuery(
+                    "INSERT INTO users (username, email, password, date_of_birth, is_admin, level) VALUES (?, ?, ?, ?, ?, ?)",
+                    new Object[]{
+                            accountRegisterUsername,            // USERNAME
+                            accountRegisterEmail,               // EMAIL
+                            accountRegisterPassword,            // PASSWORD
+                            selectedDate,                       // BIRTH DATE
+                            false,                              // IS_ADMIN
+                            1                                   // LEVEL
+                    }
+            );
 
-                stmt.setBoolean(5, false);
-                stmt.setInt(6, 1);
-
-                int result = stmt.executeUpdate();
-
-                if(result <= 0) {
-                    Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Toast.makeText(this, "Registration completed successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                finish();
+        } catch (Exception registrationException) {
+            Toast.makeText(this, "Użytkownik nie został zarejestrowany", Toast.LENGTH_SHORT).show();
+            Log.e("RegisterActivity", "onRegisterButtonClick(): " + registrationException.getMessage());
         }
-        catch (Exception e)
-        {
-            Log.e("Register", "Registration error: " + e.getMessage());
-            Toast.makeText(this, "Registration error", Toast.LENGTH_SHORT).show();
-        }
+
+        Toast.makeText(this, "Rejestracja przebiegła poprawnie", Toast.LENGTH_SHORT).show();
+        goToLoginActivity(this.getCurrentFocus());
     }
-
-
 }

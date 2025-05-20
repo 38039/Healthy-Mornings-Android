@@ -11,7 +11,7 @@
         android:layout_width="356dp"
         android:layout_height="44dp"
         android:backgroundTint="@color/button"
-        android:onClick="CreateAccount"
+        android:onClick="onRegisterButtonClick"
         android:text="Register"
         android:textColor="@color/words"
         android:textSize="18sp"
