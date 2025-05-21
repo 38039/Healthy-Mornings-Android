@@ -1,4 +1,4 @@
-package com.nforge.healthymornings.ui;
+package com.nforge.healthymornings.view;
 
 // ANDROID
 import android.content.Intent;
@@ -12,7 +12,7 @@ import java.sql.*;
 
 // HEALTHY MORNINGS
 import com.nforge.healthymornings.R;
-import com.nforge.healthymornings.data.DatabaseConnectivityJDBC;
+import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
 
 
 

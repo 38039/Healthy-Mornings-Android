@@ -1,4 +1,4 @@
-package com.nforge.healthymornings.ui;
+package com.nforge.healthymornings.view;
 
 // ANDROID
 import android.app.AlertDialog;
@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 // HEALTHY MORNINGS
 import com.nforge.healthymornings.R;
-import com.nforge.healthymornings.data.DatabaseConnectivityJDBC;
+import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
 
 
 public class RegisterActivity extends AppCompatActivity {

@@ -1,5 +1,9 @@
-plugins { alias(libs.plugins.android.application) }
+// Plugins
+plugins {
+    alias(libs.plugins.android.application)
+}
 
+// Android SDK
 android {
     namespace   = "com.nforge.healthymornings"
     compileSdk  = 35
@@ -29,9 +33,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    buildFeatures { viewBinding = true }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 }
 
+// Libraries
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -39,7 +47,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation("org.postgresql:postgresql:42.2.9")
+    implementation("org.postgresql:postgresql:42.2.9") // JDBC ma problemy integracyjne z androidem przy nowszych wersjach biblioteki
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

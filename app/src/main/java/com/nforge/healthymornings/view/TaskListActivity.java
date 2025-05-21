@@ -1,4 +1,4 @@
-package com.nforge.healthymornings.ui;
+package com.nforge.healthymornings.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nforge.healthymornings.R;
-import com.nforge.healthymornings.data.DatabaseConnectivityJDBC;
+import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

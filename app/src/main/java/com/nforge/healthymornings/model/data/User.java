@@ -1,8 +1,10 @@
-package com.nforge.healthymornings.model;
+// Model danych użytkownika w oparciu o encję "users"
+package com.nforge.healthymornings.model.data;
 
 import java.sql.Date;
 
-public class UserData {
+public class User {
+    private int id_user = 0;
     private String name = null;
     private String surname = null;
     private String gender = null;
@@ -14,7 +16,8 @@ public class UserData {
     private double weight = 0;
     private boolean isAdmin = false;
 
-    public UserData(
+    public User(
+            int id_user,
             String name,
             String surname,
             String gender,
@@ -26,6 +29,7 @@ public class UserData {
             double weight,
             boolean isAdmin
     ) {
+        this.id_user = id_user;
         this.name = name;
         this.surname = surname;
         this.gender = gender;
@@ -38,6 +42,9 @@ public class UserData {
         this.isAdmin = isAdmin;
     }
 
+    public int getIdUser() {
+        return id_user;
+    }
 
     public String getName() {
         return name;

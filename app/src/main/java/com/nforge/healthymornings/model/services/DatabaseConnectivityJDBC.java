@@ -1,4 +1,6 @@
-package com.nforge.healthymornings.data;
+// Obsługa połączenia z bazą danych przez JDBC
+
+package com.nforge.healthymornings.model.services;
 
 // ANDROID
 import android.os.StrictMode;
@@ -98,8 +100,13 @@ public class DatabaseConnectivityJDBC {
             );
 
         } catch (Exception connectionException) {
-            Log.e("DatabaseConnectivityJDBC", "establishDatabaseConnection(): " + connectionException.getMessage());
-            return null;
+            try {
+                databaseConnection.close();
+                Log.e("DatabaseConnectivityJDBC", "establishDatabaseConnection(): " + connectionException.getMessage());
+                return null;
+            } catch (Exception connectionCloseException) {
+                Log.e("DatabaseConnectivityJDBC", "establishDatabaseConnection(): " + connectionCloseException.getMessage());
+            }
         }
 
         return databaseConnection;
@@ -133,6 +140,13 @@ public class DatabaseConnectivityJDBC {
         } catch (Exception sqlException) {
             Log.e("DatabaseConnectivityJDBC", "executeSQLQuery(): " + sqlException.getMessage());
             return null;
+        } finally {
+            try {
+//                sqlResponse.close(); // BUG
+//                sqlStatement.close();
+            } catch (Exception sqlResourceCloseException) {
+                Log.e("DatabaseConnectivityJDBC", "executeSQLQuery(): " + sqlResourceCloseException.getMessage());
+            }
         }
     }
 
