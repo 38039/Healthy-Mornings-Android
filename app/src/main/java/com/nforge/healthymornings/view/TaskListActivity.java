@@ -1,154 +1,92 @@
 package com.nforge.healthymornings.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.nforge.healthymornings.R;
-import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
+import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
-public class TaskListActivity extends AppCompatActivity
-{
-    Connection connect;
+public class TaskListActivity extends AppCompatActivity {
+    private TaskListViewmodel viewModel;
     TextView deadlineTask;
-    ListView taskList;
-    int userId;
-    ArrayList<String> taskNameList = new ArrayList<>();
-    ArrayList<Integer> taskIdList = new ArrayList<>();
+    ListView tasksListView;
     ArrayAdapter<String> adapter;
+    Button addTaskButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
-        SharedPreferences sharedPreferences = getSharedPreferences("Healthy Mornings Shared Preferences", Context.MODE_PRIVATE);
+        viewModel = new ViewModelProvider(this).get(TaskListViewmodel.class);
 
-        taskList = findViewById(R.id.TasksList);
-        deadlineTask = findViewById(R.id.deadlineTaskText);
-        Button taskAdd = findViewById(R.id.GoToAddTaskActivityButton);
+        deadlineTask  = findViewById(R.id.deadlineTaskText);
+        addTaskButton = findViewById(R.id.GoToAddTaskActivityButton);
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                Objects.requireNonNull(viewModel.taskTitles.getValue()));
+        viewModel.populateAdapterWithTasks(adapter);
+
+        tasksListView = findViewById(R.id.TasksList);
+        tasksListView.setAdapter(adapter);
 
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskNameList);
-        taskList.setAdapter(adapter);
-
-        userId = sharedPreferences.getInt("userId", -1);
-        Log.v("TaskListActivity", "userId: " + userId);
-
-        loadUserTasks(userId);
-
-        taskAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TaskListActivity.this, TaskAddActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        // Listener na dodawanie nowego zadania
+        addTaskButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, TaskAddActivity.class));
+            finish();
         });
 
-        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int index, long listObjectId) {
-                Log.v("HelloListView", "You clicked Item: " + listObjectId + " at position:" + index);
+        // Listener na wybór zadania
+        tasksListView.setOnItemClickListener((parent, view, index, id) -> {
+            Integer selectedTaskID    = Objects.requireNonNull( viewModel.taskIdentifiers.getValue() ).get(index);
+            String  selectedTaskTitle = viewModel.taskTitles.getValue().get(index);
 
-                Intent intent = new Intent(TaskListActivity.this, TaskEditActivity.class);
-                intent.putExtra("task_id", taskIdList.get(index));
-                intent.putExtra("task_name", taskNameList.get(index));
+            Log.v("TaskListActivity", "setOnItemClickListener(): [Indeks wybranego zadania]: " + selectedTaskID);
+            Log.v("TaskListActivity", "setOnItemClickListener(): [Nazwa wybranego zadania]: "  + selectedTaskTitle);
 
-                startActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(this, TaskEditActivity.class);
+            intent.putExtra("Task ID", selectedTaskID);
+            intent.putExtra("Task Name", selectedTaskTitle);
+            startActivity(intent);
+            finish();
         });
 
-        deadlineTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                long millis = System.currentTimeMillis();
-                Date date = new Date(millis);
-                SimpleDateFormat hourFormat = new SimpleDateFormat("H", Locale.getDefault());
-                int hour = Integer.parseInt(hourFormat.format(date));
 
-                //hour = 5;
-                if (hour >= 4 && hour <= 9)
-                {
-                    Intent intent = new Intent(TaskListActivity.this, TaskTODOActivity.class);
-                    intent.putStringArrayListExtra("task_list", taskNameList);
-                    intent.putExtra("id_user", userId);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
 
-    private void loadUserTasks(int userId)
-    {
-        try
-        {
-            DatabaseConnectivityJDBC databaseConnectivityJDBC = new DatabaseConnectivityJDBC();
-            connect = databaseConnectivityJDBC.establishDatabaseConnection();
+//        deadlineTask.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                long millis = System.currentTimeMillis();
+//                Date date = new Date(millis);
+//                SimpleDateFormat hourFormat = new SimpleDateFormat("H", Locale.getDefault());
+//                int hour = Integer.parseInt(hourFormat.format(date));
+//
+//                //hour = 5;
+//                if (hour >= 4 && hour <= 9)
+//                {
+//                    Intent intent = new Intent(TaskListActivity.this, TaskTODOActivity.class);
+//                    intent.putStringArrayListExtra("task_list", taskNames);
+//                    intent.putExtra("id_user", userId);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+        // Wyświetlanie dzisiejszej daty
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis());
+        deadlineTask.setText(today);
 
-            if (connect != null)
-            {
-                String query =
-                        "SELECT t.name, t.id_task FROM USER_TASKS ut " +
-                                "JOIN TASKS t ON ut.id_task = t.id_task " +
-                                "WHERE ut.id_user = " + userId;
-
-                Statement st = connect.createStatement();
-                ResultSet rs = st.executeQuery(query);
-                taskNameList.clear();
-                taskIdList.clear();
-
-                while (rs.next())
-                {
-                    String taskName = rs.getString("name");
-                    Log.v("TaskListActivity", "taskName: " + taskName);
-                    Integer taskId = rs.getInt("id_task");
-                    Log.v("TaskListActivity", "taskId: " + taskId);
-                    taskNameList.add(taskName);
-                    taskIdList.add(taskId);
-                }
-                adapter.notifyDataSetChanged();
-
-                rs.close();
-                st.close();
-                connect.close();
-            }
-            else
-            {
-                Toast.makeText(this, "No connection to the database", Toast.LENGTH_SHORT).show();
-            }
-        }
-        catch (Exception e)
-        {
-            Log.e("SQL Error", "Query error: " + e.getMessage());
-            Toast.makeText(this, "Error downloading tasks", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // ?
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (userId != -1) loadUserTasks(userId);
     }
 }

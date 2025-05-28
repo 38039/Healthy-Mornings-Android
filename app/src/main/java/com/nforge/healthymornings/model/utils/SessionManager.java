@@ -1,16 +1,10 @@
-// Obsługa sesji w SharedPreferences
-
+// Tworzy sesję aplikacji niezależną od jej stanu, poprzez przechowywanie danych w pamięci trwałej
 package com.nforge.healthymornings.model.utils;
 
 // ANDROID
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-
-// HEALTHY MORNINGS
-import com.nforge.healthymornings.model.data.User;
-import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
 
 
 public class SessionManager {
@@ -25,21 +19,24 @@ public class SessionManager {
     }
 
     // Zapisywanie identyfikatora użytkownika do sesji
-    public boolean saveUser(int passedUserID) {
-        sessionPreferencesEditor.putInt("USER_DATABASE_ID", passedUserID);
+    public boolean saveUserSession(int userDatabaseID) {
+        sessionPreferencesEditor.putInt("USER_DATABASE_ID", userDatabaseID);
         sessionPreferencesEditor.putBoolean("IS_USER_LOGGED_IN", true);
-
-        Log.v("SessionManager", "saveUser(): USER ID: "
-                + sessionPreferences.getInt("USER_DATABASE_ID", -1));
-        Log.v("SessionManager", "saveUser(): IS USER LOGGED IN: "
-                + sessionPreferences.getBoolean("IS_USER_LOGGED_IN", false));
 
         return sessionPreferencesEditor.commit();
     }
 
     // Zwracanie identyfikatora użytkownika z sesji
-    public int getUserID() {
+    public int getUserSession() {
         return sessionPreferences.getInt("USER_DATABASE_ID", -1);
+    }
+
+    // Logowanie danych na temat sesji
+    public void getSessionInfo() {
+        Log.v("SessionManager", "getSessionInfo(): USER ID: "
+                + sessionPreferences.getInt("USER_DATABASE_ID", -1));
+        Log.v("SessionManager", "getSessionInfo(): IS USER LOGGED IN: "
+                + sessionPreferences.getBoolean("IS_USER_LOGGED_IN", false));
     }
 
     // Czyszczenie pamięci trwałej aplikacji

@@ -1,61 +1,122 @@
 // Logika dostępu do danych użytkownika
 package com.nforge.healthymornings.model.repository;
 
-// ANDROID
-import android.app.Application;
-import android.content.Context;
 import android.util.Log;
+import android.content.Context;
 
-// HEALTHY MORNINGS
+import java.sql.Date;
+import java.sql.ResultSet;
+
 import com.nforge.healthymornings.model.data.User;
 import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
 import com.nforge.healthymornings.model.utils.SessionManager;
 
 
 public class UserRepository {
-    DatabaseConnectivityJDBC databaseConncetor = null;
-    java.sql.ResultSet retrievedUserData = null;
-    SessionManager sessionHandler = null;
-    private final Context context;
+    private final Context               currentApplicationContext;
+    private DatabaseConnectivityJDBC    databaseConnector       = null;
+    private SessionManager              sessionHandler          = null;
+    private ResultSet                   retrievedUserData       = null; // Nie powinien być zamykany
 
     public UserRepository(Context context) {
-        this.context = context.getApplicationContext();
+        this.currentApplicationContext = context.getApplicationContext();
     }
+
 
     public boolean authenticateUser(String email, String password) {
         try {
-            databaseConncetor = new DatabaseConnectivityJDBC();
-            databaseConncetor.establishDatabaseConnection();
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
 
-            retrievedUserData = databaseConncetor.executeSQLQuery(
+            retrievedUserData = databaseConnector.executeSQLQuery(
                     "SELECT * FROM users WHERE email = ? AND password = ?",
                     new Object[]{email, password}
             );
 
-            if (retrievedUserData != null && retrievedUserData.next()) {
-                sessionHandler = new SessionManager(context);
-                if(!sessionHandler.saveUser( retrievedUserData.getInt("id_user") ))
-                    throw new Exception("NIE UDAŁO SIĘ ZAPISAĆ SESJI");
-                return true;
-            }
 
-        } catch (Exception authenticationException) {
-            Log.e("UserRepository", "authenticateUser(): " + authenticationException.getMessage());
-        } finally {
-            try {
-                retrievedUserData.close();
-                databaseConncetor.closeConnection();
-            } catch (Exception e) {} // TODO
+            // Zapis do sesji
+            if (retrievedUserData != null && retrievedUserData.next()) {
+                sessionHandler = new SessionManager(currentApplicationContext);
+
+                // Sesja ma żyć na czas trwania działania aplikacji, potem być czyszczona
+                if ( !sessionHandler.clearSession() )
+                    throw new Exception("Nie udało się wyczyścić sesji aplikacji");
+                Log.v("UserRepository", "authenticateUser(): Wyczyszczono sesję aplikacji");
+
+                int userID = retrievedUserData.getInt("id_user");
+                if(!sessionHandler.saveUserSession( userID ))
+                    throw new Exception("Nie udało się zapisać sesji");
+                Log.v("UserRepository", "authenticateUser(): Zapisano sesję aplikacji");
+
+                sessionHandler.getSessionInfo();
+
+                return true;
+            } else throw new Exception("Użytkownik nie istnieje w bazie danych");
+
         }
+        catch (Exception authenticationException) {
+            Log.e("UserRepository", "authenticateUser(): " + authenticationException.getMessage());
+        } finally { databaseConnector.closeConnection(); }
 
         return false;
     }
+
+    public boolean doesUserExistInDatabase(String email, String username) {
+        try {
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
+
+            retrievedUserData = databaseConnector.executeSQLQuery(
+                    "SELECT * FROM users WHERE email = ? OR username = ?",
+                    new Object[]{email, username}
+            );
+
+            if(retrievedUserData != null && retrievedUserData.next()) {
+                Log.v("UserRepository", "doesUserExistInDatabase(): Użytkownik istnieje w bazie danych");
+                return true;
+            }
+
+        } catch (Exception userExistsException) {
+            Log.w("UserRepository", "doesUserExistInDatabase(): " + userExistsException.getMessage());
+        } finally { databaseConnector.closeConnection(); }
+
+        return false;
+    }
+
+    public boolean saveUserCredentials(String username, String email, String password, Date date_of_birth) {
+        try {
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
+
+            // Wpisz użytkownika do bazy danych
+            databaseConnector.executeSQLQuery(
+                    "INSERT INTO users (username, email, password, date_of_birth, is_admin, level) VALUES (?, ?, ?, ?, ?, ?)",
+                    new Object[]{
+                            username,
+                            email,
+                            password,
+                            date_of_birth,
+                            false, // IS_ADMIN
+                            1      // LEVEL
+                    }
+            );
+
+            return true;
+        } catch (Exception registrationException) {
+            Log.e("UserRepository", "registerUserCredentialsInsideDatabase(): " + registrationException.getMessage());
+        } finally { databaseConnector.closeConnection(); }
+
+        return false;
+    }
+
+
+
 
     // Zwracanie danych użytkownika na podstawie jego identyfikatora
     public User getUser() {
         try {
             // Sprawdzanie czy użytkownik jest zalogowany
-            if(sessionHandler.getUserID() == -1)
+            if(sessionHandler.getUserSession() == -1)
                 throw new Exception("UŻYTKOWNIK NIE JEST ZALOGOWANY");
 
             // Nawiązanie połączenia z bazą
@@ -63,9 +124,9 @@ public class UserRepository {
             databaseConnector.establishDatabaseConnection();
 
             // Szukanie użytkownika w bazie
-            java.sql.ResultSet retrievedUserData = databaseConnector.executeSQLQuery(
+            retrievedUserData = databaseConnector.executeSQLQuery(
                     "SELECT * FROM users WHERE id_user = ?",
-                    new Object[]{sessionHandler.getUserID()}
+                    new Object[]{sessionHandler.getUserSession()}
             );
 
             // Zwracanie danych użytkownika

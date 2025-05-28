@@ -18,7 +18,7 @@
         android:background="@drawable/rounded"
         android:backgroundTint="@color/object"
         android:gravity="center"
-        android:text="Edit Tasks"
+        android:text="@string/edit_task_text_view"
         android:textColor="@color/words"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -36,7 +36,9 @@
         android:layout_marginEnd="15dp"
         android:background="@drawable/rounded"
         android:backgroundTint="@color/object"
-        android:hint="Provide a new name"
+        android:hint="@string/task_name_text_view"
+        android:inputType="text"
+        android:importantForAutofill="no"
         android:padding="16dp"
         android:textColor="@color/words"
         android:textColorHint="@color/words"
@@ -54,7 +56,9 @@
         android:layout_marginEnd="15dp"
         android:background="@drawable/rounded"
         android:backgroundTint="@color/object"
-        android:hint="Provide a new category"
+        android:hint="@string/task_category_text_view"
+        android:importantForAutofill="no"
+        android:inputType="text"
         android:padding="16dp"
         android:textColor="@color/words"
         android:textColorHint="@color/words"
@@ -63,38 +67,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerText" />
 
-    <Button
-        android:id="@+id/DeleteTaskButton"
-        android:layout_width="157dp"
-        android:layout_height="48dp"
-        android:backgroundTint="@color/object"
-        android:text="Usuń"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.924" />
-
-    <Button
-        android:id="@+id/EditTaskButton"
-        android:layout_width="144dp"
-        android:layout_height="48dp"
-        android:text="Zapisz"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923" />
 
     <EditText
         android:id="@+id/TaskDescriptionTextView"
         android:layout_width="375dp"
         android:layout_height="60dp"
         android:ems="10"
-        android:hint="Provide a new description"
+        android:hint="@string/task_description_text_view"
+        android:importantForAutofill="no"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +88,8 @@
         android:layout_width="373dp"
         android:layout_height="72dp"
         android:ems="10"
-        android:hint="Provide a new points reward"
+        android:hint="@string/task_points_text_number"
+        android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,5 +97,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.734" />
+
+    <Button
+        android:id="@+id/DeleteTaskButton"
+        android:layout_width="157dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/object"
+        android:text="@string/delete_task_button_text"
+        android:onClick="onDeleteTaskButtonClick"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.924" />
+
+    <Button
+        android:id="@+id/EditTaskButton"
+        android:layout_width="144dp"
+        android:layout_height="48dp"
+        android:text="@string/edit_task_button_text"
+        android:onClick="onSaveTaskButtonClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.923" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

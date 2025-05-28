@@ -8,16 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 // JAVA
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 // HEALTHY MORNINGS
 import com.nforge.healthymornings.R;
-import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
+import com.nforge.healthymornings.viewmodel.RegisterViewmodel;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -27,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView newAccountPasswordConfirmationTextView;
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
+    private RegisterViewmodel userRegisterViewmodel;
 
 
     @Override
@@ -36,34 +37,47 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         initDatePicker();
 
+        userRegisterViewmodel = new ViewModelProvider(this).get(RegisterViewmodel.class);
+
         newAccountUsernameTextView              = findViewById(R.id.NewAccountUsernameTextView);
         newAccountEmailTextView                 = findViewById(R.id.NewAccountEmailTextView);
         newAccountPasswordTextView              = findViewById(R.id.NewAccountPasswordTextView);
         newAccountPasswordConfirmationTextView  = findViewById(R.id.NewAccountPasswordConfirmationTextView);
         dateButton                              = findViewById(R.id.DateOfBirthButton);
+        dateButton.setText( getTodaysDate() );
 
 
-        // TODO: Spróbować pozbyć się metody getTodaysDate() gdyż to musi być zwracane tylko raz
-        dateButton.setText(
-                getTodaysDate()
-        );
+        // Listener nasłuchujący czy użytkownik się zarejestrował
+        userRegisterViewmodel.getRegisterResultLiveData().observe(this, success -> {
+            if (success != null && !success.isEmpty()) {
+                Toast.makeText(this, "Rejestracja przebiegła pomyślnie!", Toast.LENGTH_SHORT).show();
+                Log.v("RegisterViewModel", "registerUser(): Użytkownik został pomyślnie zarejestrowany");
+                goToLoginActivity(this.getCurrentFocus());
+            }
+        });
+
+        // Listener nasłuchujący czy wystąpił błąd podczas rejestracji
+        userRegisterViewmodel.getRegisterErrorLiveData().observe(this, error -> {
+            if (error != null && !error.isEmpty()) {
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                Log.w("RegisterViewModel", "registerUser(): " + error);
+            }
+        });
     }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
 
-        return      cal.get(Calendar.YEAR)        + "-"
-                + ( cal.get(Calendar.MONTH) + 1 ) + "-"
-                +   cal.get(Calendar.DAY_OF_MONTH) ;
+        return      cal.get(Calendar.DAY_OF_MONTH) + "-"
+                + ( cal.get(Calendar.MONTH) + 1 )  + "-"
+                +   cal.get(Calendar.YEAR);
+
     }
 
     private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                String date = year + "-" + (month+1) + "-" + day;
-                dateButton.setText(date);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, day) -> {
+            String date = day + "-" + (month+1) + "-" + year;
+            dateButton.setText(date);
         };
 
         Calendar cal = Calendar.getInstance();
@@ -78,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
     }
 
+
     public void openDatePicker(View view) {
         datePickerDialog.show();
     }
@@ -87,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 
     public void onRegisterButtonClick(View v) {
 
@@ -114,63 +130,23 @@ public class RegisterActivity extends AppCompatActivity {
                                         .toString()
                                         .trim();
 
+        // Wspaniały hack bez którego data przestawia się na rok 3k. Jebać javę
+        GregorianCalendar gregorianCalendar = new GregorianCalendar(
+                datePickerDialog.getDatePicker().getYear(),
+                datePickerDialog.getDatePicker().getMonth(),
+                datePickerDialog.getDatePicker().getDayOfMonth()
+        );
+        java.util.Date utilDate = gregorianCalendar.getTime();
+        java.sql.Date selectedDate = new java.sql.Date(
+                utilDate.getTime()
+        );
 
-        // Zabezpieczenie przed brakiem danych do rejestracji
-        if (    accountRegisterUsername.isEmpty() ||
-                accountRegisterEmail.isEmpty()    ||
-                accountRegisterPassword.isEmpty() ||
-                accountConfirmPassword.isEmpty()    )
-        {
-            Toast.makeText(this, "Proszę wypełnić wszystkie pola", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Aplikacja odmówi rejestracji użytkownikowi poniżej 12-13 lat
-        if (datePickerDialog.getDatePicker().getYear() > 2012) {
-            Toast.makeText(this, "Proszę wybrać poprawną datę urodzenia", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Aplikacja sprawdzi czy hasła są takie same
-        if (!accountRegisterPassword.equals(accountConfirmPassword)) {
-            Toast.makeText(this, "Proszę podać takie same hasła", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
-        try {
-            // TODO: Przerzucić połączenia i zapytania do bazy do SessionManagera, i przekazywać mu tylko argumenty rejestracji w celu pozbycia się SQL'owego kodu z Activities
-
-            DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
-            databaseConnector.establishDatabaseConnection();
-
-            // TODO: Usprawnić ten szajs
-            GregorianCalendar gregorianCalendar = new GregorianCalendar(
-                    datePickerDialog.getDatePicker().getYear(),
-                    datePickerDialog.getDatePicker().getMonth(),
-                    datePickerDialog.getDatePicker().getDayOfMonth()
-            );
-            java.util.Date utilDate = gregorianCalendar.getTime();
-            java.sql.Date selectedDate = new java.sql.Date(utilDate.getTime());
-
-            databaseConnector.executeSQLQuery(
-                    "INSERT INTO users (username, email, password, date_of_birth, is_admin, level) VALUES (?, ?, ?, ?, ?, ?)",
-                    new Object[]{
-                            accountRegisterUsername,            // USERNAME
-                            accountRegisterEmail,               // EMAIL
-                            accountRegisterPassword,            // PASSWORD
-                            selectedDate,                       // BIRTH DATE
-                            false,                              // IS_ADMIN
-                            1                                   // LEVEL
-                    }
-            );
-
-        } catch (Exception registrationException) {
-            Toast.makeText(this, "Użytkownik nie został zarejestrowany", Toast.LENGTH_SHORT).show();
-            Log.e("RegisterActivity", "onRegisterButtonClick(): " + registrationException.getMessage());
-        }
-
-        Toast.makeText(this, "Rejestracja przebiegła poprawnie", Toast.LENGTH_SHORT).show();
-        goToLoginActivity(this.getCurrentFocus());
+        userRegisterViewmodel.registerUser(
+                accountRegisterUsername,
+                accountRegisterEmail,
+                accountRegisterPassword,
+                accountConfirmPassword,
+                selectedDate,
+                datePickerDialog);
     }
 }

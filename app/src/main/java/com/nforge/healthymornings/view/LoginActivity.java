@@ -1,3 +1,4 @@
+// Klasa do activity_login_user
 package com.nforge.healthymornings.view;
 
 // ANDROID
@@ -12,12 +13,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 // HEALTHY MORNINGS
 import com.nforge.healthymornings.R;
-import com.nforge.healthymornings.viewmodel.UserViewModel;
+import com.nforge.healthymornings.viewmodel.LoginViewmodel;
 
 
 public class LoginActivity extends AppCompatActivity {
+    LoginViewmodel userLoginViewmodel;
     TextView emailTextView, passwordTextView;
-    UserViewModel userLoginViewModel;
 
 
     @Override
@@ -25,35 +26,37 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        userLoginViewmodel = new ViewModelProvider(this).get(LoginViewmodel.class);
+
         emailTextView      = findViewById(R.id.emailText   );
         passwordTextView   = findViewById(R.id.passwordText);
 
-        userLoginViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        userLoginViewModel.getLoginResultLiveData().observe(this, success -> {
-            if (success) {
+        // Listener nasłuchujący czy użytkownik się zalogował
+        userLoginViewmodel.getLoginResultLiveData().observe(this, success -> {
+            if ( success != null && !success.isEmpty() ) {
                 Toast.makeText(this, "Zalogowano pomyślnie!", Toast.LENGTH_SHORT).show();
-                Log.v("UserViewModel", "getLoginResultLiveData(): UŻYTKOWNIK ZOSTAŁ POMYŚLNIE ZALOGOWANY");
+                Log.v("LoginViewModel", "loginUser(): Użytkownik został pomyślnie zalogowany");
                 goToTaskListActivity();
             }
         });
 
-        userLoginViewModel.getLoginErrorLiveData().observe(this, error -> {
+        // Listener nasłuchujący czy wystąpił błąd podczas logowania
+        userLoginViewmodel.getLoginErrorLiveData().observe(this, error -> {
             if (error != null && !error.isEmpty()) {
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-                Log.w("UserViewModel", "getLoginErrorLiveData(): " + error);
+                Log.w("LoginViewModel", "loginUser(): " + error);
             }
         });
 
     }
 
 
-    public void goToRegisterActivity() {
+    public void goToRegisterActivity(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
         finish();
     }
-
 
     public void goToTaskListActivity() {
         Intent intent = new Intent(LoginActivity.this, TaskListActivity.class);
@@ -62,8 +65,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    // Obsługa przycisku logowania
     public void onLoginButtonClick(View view) {
-
         // Rzutowanie danych emaila z xml'a do zmiennej tekstowej
         String   accountLoginEmail      = emailTextView
                                         .getText()
@@ -76,17 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                         .toString()
                                         .trim();
 
-        accountLoginEmail = "38039@student.atar.edu.pl";
-        accountLoginPassword = "123";
-
-
-        // Zabezpieczenie przed brakiem danych do logowania
-        if ( accountLoginEmail.isEmpty() || accountLoginPassword.isEmpty() ) {
-            Toast.makeText(this, "Proszę wypełnić wszystkie pola", Toast.LENGTH_SHORT).show();
-            Log.w("LoginActivity", "loginAction(): BRAKUJĄCE DANE LOGOWANIA");
-            return;
-        }
-
-        userLoginViewModel.loginUser(accountLoginEmail, accountLoginPassword);
+        // Przekazanie danych do view modelu
+        userLoginViewmodel.loginUser(accountLoginEmail, accountLoginPassword);
     }
 }
