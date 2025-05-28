@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".task.taskListActivity">
+    tools:context=".view.TaskListActivity">
 
     <TextView
         android:id="@+id/headerText"
@@ -50,6 +50,7 @@
         android:layout_width="335dp"
         android:layout_height="62dp"
         android:text="Dodaj zadanie"
+        android:onClick="addNewTask"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

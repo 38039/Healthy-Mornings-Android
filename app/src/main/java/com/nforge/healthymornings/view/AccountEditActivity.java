@@ -1,4 +1,4 @@
-package com.nforge.healthymornings.ui;
+package com.nforge.healthymornings.view;
 
 import android.os.Bundle;
 import android.widget.EditText;

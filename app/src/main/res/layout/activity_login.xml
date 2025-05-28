@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.LoginActivity">
+    tools:context=".view.LoginActivity">
 
     <TextView
         android:id="@+id/title"
@@ -83,19 +83,19 @@
                 android:textColor="@color/title" />
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/LoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/button"
-                android:onClick="LoginAction"
+                android:onClick="onLoginButtonClick"
                 android:text="Login"
                 android:textColor="@color/words"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/register"
+                android:id="@+id/RegisterButton"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/object"

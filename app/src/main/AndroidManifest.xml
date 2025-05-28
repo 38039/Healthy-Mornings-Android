@@ -17,7 +17,7 @@
         android:theme="@style/Theme.HealthyMornings">
 
         <activity
-            android:name="com.nforge.healthymornings.ui.LoginActivity"
+            android:name="com.nforge.healthymornings.view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,28 +28,28 @@
 
         <!-- <activity android:name="com.nforge.healthymornings.ui.LoginActivity" android:exported="false" android:theme="@style/Theme.HealthyMornings" /> -->
         <activity
-            android:name="com.nforge.healthymornings.ui.RegisterActivity"
+            android:name="com.nforge.healthymornings.view.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name="com.nforge.healthymornings.ui.TaskListActivity"
+            android:name="com.nforge.healthymornings.view.TaskListActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name="com.nforge.healthymornings.ui.TaskEditActivity"
+            android:name="com.nforge.healthymornings.view.TaskEditActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name="com.nforge.healthymornings.ui.TaskAddActivity"
+            android:name="com.nforge.healthymornings.view.TaskAddActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
 
         <activity
-            android:name="com.nforge.healthymornings.ui.TaskTODOActivity"
+            android:name="com.nforge.healthymornings.view.TaskTODOActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
         <activity
-            android:name="com.nforge.healthymornings.ui.GratulationActivity"
+            android:name="com.nforge.healthymornings.view.GratulationActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings"/>
     </application>
