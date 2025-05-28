@@ -3,53 +3,38 @@ package com.nforge.healthymornings.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.nforge.healthymornings.R;
-import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
-
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Objects;
+import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
+import com.nforge.healthymornings.databinding.ActivityTaskListBinding;
+
 
 public class TaskListActivity extends AppCompatActivity {
     private TaskListViewmodel viewModel;
-    TextView deadlineTask;
-    ListView tasksListView;
-    ArrayAdapter<String> adapter;
-    Button addTaskButton;
+    private ActivityTaskListBinding binding;
+    private ArrayAdapter<String> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list);
+        binding = ActivityTaskListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         viewModel = new ViewModelProvider(this).get(TaskListViewmodel.class);
-
-        deadlineTask  = findViewById(R.id.deadlineTaskText);
-        addTaskButton = findViewById(R.id.GoToAddTaskActivityButton);
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+        adapter   = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
                 Objects.requireNonNull(viewModel.taskTitles.getValue()));
+
         viewModel.populateAdapterWithTasks(adapter);
-
-        tasksListView = findViewById(R.id.TasksList);
-        tasksListView.setAdapter(adapter);
-
-
-        // Listener na dodawanie nowego zadania
-        addTaskButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, TaskAddActivity.class));
-            finish();
-        });
+        binding.TasksList.setAdapter(adapter);
 
         // Listener na wybór zadania
-        tasksListView.setOnItemClickListener((parent, view, index, id) -> {
+        binding.TasksList.setOnItemClickListener((parent, view, index, id) -> {
             Integer selectedTaskID    = Objects.requireNonNull( viewModel.taskIdentifiers.getValue() ).get(index);
             String  selectedTaskTitle = viewModel.taskTitles.getValue().get(index);
 
@@ -86,7 +71,12 @@ public class TaskListActivity extends AppCompatActivity {
 //        });
         // Wyświetlanie dzisiejszej daty
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis());
-        deadlineTask.setText(today);
+        binding.deadlineTaskText.setText(today);
 
+    }
+
+    public void addNewTask(View view) {
+        startActivity(new Intent(this, TaskAddActivity.class));
+        finish();
     }
 }

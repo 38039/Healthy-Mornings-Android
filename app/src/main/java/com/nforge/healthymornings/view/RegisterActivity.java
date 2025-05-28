@@ -1,50 +1,36 @@
 package com.nforge.healthymornings.view;
 
-// ANDROID
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-// JAVA
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-// HEALTHY MORNINGS
-import com.nforge.healthymornings.R;
+import com.nforge.healthymornings.databinding.ActivityRegisterBinding;
 import com.nforge.healthymornings.viewmodel.RegisterViewmodel;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    TextView newAccountUsernameTextView;
-    TextView newAccountEmailTextView;
-    TextView newAccountPasswordTextView;
-    TextView newAccountPasswordConfirmationTextView;
     private DatePickerDialog datePickerDialog;
-    private Button dateButton;
     private RegisterViewmodel userRegisterViewmodel;
+    private ActivityRegisterBinding binding;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        initDatePicker();
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         userRegisterViewmodel = new ViewModelProvider(this).get(RegisterViewmodel.class);
+        initDatePicker();
 
-        newAccountUsernameTextView              = findViewById(R.id.NewAccountUsernameTextView);
-        newAccountEmailTextView                 = findViewById(R.id.NewAccountEmailTextView);
-        newAccountPasswordTextView              = findViewById(R.id.NewAccountPasswordTextView);
-        newAccountPasswordConfirmationTextView  = findViewById(R.id.NewAccountPasswordConfirmationTextView);
-        dateButton                              = findViewById(R.id.DateOfBirthButton);
-        dateButton.setText( getTodaysDate() );
+        binding.DateOfBirthButton.setText( getTodaysDate() );
 
 
         // Listener nasłuchujący czy użytkownik się zarejestrował
@@ -77,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, day) -> {
             String date = day + "-" + (month+1) + "-" + year;
-            dateButton.setText(date);
+            binding.DateOfBirthButton.setText(date);
         };
 
         Calendar cal = Calendar.getInstance();
@@ -107,25 +93,25 @@ public class RegisterActivity extends AppCompatActivity {
     public void onRegisterButtonClick(View v) {
 
         // Rzutowanie danych nazwy konta z xml'a do zmiennej tekstowej
-        String accountRegisterUsername  = newAccountUsernameTextView
+        String accountRegisterUsername  = binding.NewAccountUsernameTextView
                                         .getText()
                                         .toString()
                                         .trim();
 
         // Rzutowanie danych emaila z xml'a do zmiennej tekstowej
-        String accountRegisterEmail     = newAccountEmailTextView
+        String accountRegisterEmail     = binding.NewAccountEmailTextView
                                         .getText()
                                         .toString()
                                         .trim();
 
         // Rzutowanie danych hasła z xml'a do zmiennej tekstowej
-        String accountRegisterPassword  = newAccountPasswordTextView
+        String accountRegisterPassword  = binding.NewAccountPasswordTextView
                                         .getText()
                                         .toString()
                                         .trim();
 
         // Rzutowanie danych potwierdzenia hasła z xml'a do zmiennej tekstowej
-        String accountConfirmPassword   = newAccountPasswordConfirmationTextView
+        String accountConfirmPassword   = binding.NewAccountPasswordConfirmationTextView
                                         .getText()
                                         .toString()
                                         .trim();

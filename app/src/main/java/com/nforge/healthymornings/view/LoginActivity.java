@@ -1,36 +1,28 @@
-// Klasa do activity_login_user
 package com.nforge.healthymornings.view;
 
-// ANDROID
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
-// HEALTHY MORNINGS
-import com.nforge.healthymornings.R;
+import com.nforge.healthymornings.databinding.ActivityLoginBinding;
 import com.nforge.healthymornings.viewmodel.LoginViewmodel;
 
 
 public class LoginActivity extends AppCompatActivity {
-    LoginViewmodel userLoginViewmodel;
-    TextView emailTextView, passwordTextView;
+    private LoginViewmodel userLoginViewmodel;
+    private ActivityLoginBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         userLoginViewmodel = new ViewModelProvider(this).get(LoginViewmodel.class);
-
-        emailTextView      = findViewById(R.id.emailText   );
-        passwordTextView   = findViewById(R.id.passwordText);
-
 
         // Listener nasłuchujący czy użytkownik się zalogował
         userLoginViewmodel.getLoginResultLiveData().observe(this, success -> {
@@ -48,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.w("LoginViewModel", "loginUser(): " + error);
             }
         });
-
     }
 
 
@@ -68,13 +59,13 @@ public class LoginActivity extends AppCompatActivity {
     // Obsługa przycisku logowania
     public void onLoginButtonClick(View view) {
         // Rzutowanie danych emaila z xml'a do zmiennej tekstowej
-        String   accountLoginEmail      = emailTextView
+        String   accountLoginEmail      = binding.emailText
                                         .getText()
                                         .toString()
                                         .trim();
 
         // Rzutowanie danych hasła z xml'a do zmiennej tekstowej
-        String   accountLoginPassword   = passwordTextView
+        String   accountLoginPassword   = binding.passwordText
                                         .getText()
                                         .toString()
                                         .trim();

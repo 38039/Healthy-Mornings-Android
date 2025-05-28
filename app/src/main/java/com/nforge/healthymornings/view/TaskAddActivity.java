@@ -7,29 +7,22 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.nforge.healthymornings.R;
+import com.nforge.healthymornings.databinding.ActivityTaskAddBinding;
 import com.nforge.healthymornings.viewmodel.TaskAddViewmodel;
 
 
 public class TaskAddActivity extends AppCompatActivity {
-    TaskAddViewmodel taskAddViewmodel;
-    TextView taskNameView, categoryTextView, descriptionTextView;
-    EditText pointsRewardView;
-    Button addButton;
+    private TaskAddViewmodel taskAddViewmodel;
+    private ActivityTaskAddBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_add);
+        binding = ActivityTaskAddBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         taskAddViewmodel = new ViewModelProvider(this).get(TaskAddViewmodel.class);
-
-        taskNameView        = findViewById(R.id.TaskNameView);
-        categoryTextView    = findViewById(R.id.CategoryTextView);
-        descriptionTextView = findViewById(R.id.DesciptionTextView);
-        pointsRewardView    = findViewById(R.id.PointsRewardView);
-        addButton           = findViewById(R.id.AddTaskButton);
-
 
         // Listener nasłuchujący czy użytkownik się zalogował
         taskAddViewmodel.getTaskAddResultLiveData().observe(this, success -> {
@@ -56,22 +49,22 @@ public class TaskAddActivity extends AppCompatActivity {
     }
 
     public void onAddTaskButtonClick(View view) {
-        String newTaskName = taskNameView
+        String newTaskName = binding.TaskNameView
                 .getText()
                 .toString()
                 .trim();
 
-        String newTaskCategory = categoryTextView
+        String newTaskCategory = binding.CategoryTextView
                 .getText()
                 .toString()
                 .trim();
 
-        String newTaskDescription = descriptionTextView
+        String newTaskDescription = binding.DesciptionTextView
                 .getText()
                 .toString()
                 .trim();
 
-        String newTaskPointsRewardStr = pointsRewardView
+        String newTaskPointsRewardStr = binding.PointsRewardView
                 .getText()
                 .toString()
                 .trim();

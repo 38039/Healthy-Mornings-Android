@@ -5,6 +5,14 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="delete_task_button_text">Usuń</string>
+    <string name="edit_task_button_text">Zapisz</string>
+    <string name="edit_task_text_view">Edytuj zadanie</string>
+    <string name="task_name_text_view">Podaj nową nazwę</string>
+    <string name="task_category_text_view">Podaj nową kategorię</string>
+    <string name="task_description_text_view">Podaj nowy opis</string>
+    <string name="task_points_text_number">Podaj nową punktację</string>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

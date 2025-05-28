@@ -7,29 +7,23 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import com.nforge.healthymornings.R;
+import com.nforge.healthymornings.databinding.ActivityTaskEditBinding;
 import com.nforge.healthymornings.viewmodel.TaskEditViewmodel;
 
 
 public class TaskEditActivity extends AppCompatActivity {
-    private TaskEditViewmodel taskEditViewmodel;
-    private EditText inputName;
-    private EditText inputCategory;
-    private EditText inputDescription;
-    private EditText inputPoints;
     private int editedTaskID;
+    private TaskEditViewmodel taskEditViewmodel;
+    private ActivityTaskEditBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_edit);
-        taskEditViewmodel = new ViewModelProvider(this).get(TaskEditViewmodel.class);
+        binding = ActivityTaskEditBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        inputName           = findViewById(R.id.TaskNameTextView);
-        inputCategory       = findViewById(R.id.TaskCategoryTextView);
-        inputDescription    = findViewById(R.id.TaskDescriptionTextView);
-        inputPoints         = findViewById(R.id.TaskPointsTextNumber);
+        taskEditViewmodel = new ViewModelProvider(this).get(TaskEditViewmodel.class);
 
         // Pobieranie danych edytowanego aktualnie zadania z pamięci krótkotrwałej
         Intent intent = getIntent();
@@ -62,10 +56,10 @@ public class TaskEditActivity extends AppCompatActivity {
         // Listener nasłuchujący czy zadanie zostało załadowane do widoku
         taskEditViewmodel.getTaskData().observe(this, task -> {
             if (task != null) {
-                inputName.setText(task.getName());
-                inputCategory.setText(task.getCategory());
-                inputDescription.setText(task.getDescription());
-                inputPoints.setText(String.valueOf(task.getReward()));
+                binding.TaskNameTextView.setText(task.getName());
+                binding.TaskCategoryTextView.setText(task.getCategory());
+                binding.TaskDescriptionTextView.setText(task.getDescription());
+                binding.TaskPointsTextNumber.setText(String.valueOf(task.getReward()));
             }
         });
     }
@@ -81,22 +75,22 @@ public class TaskEditActivity extends AppCompatActivity {
     }
 
     public void onSaveTaskButtonClick(View view) {
-        String editedTaskName = inputName
+        String editedTaskName = binding.TaskNameTextView
                 .getText()
                 .toString()
                 .trim();
 
-        String editedTaskCategory = inputCategory
+        String editedTaskCategory = binding.TaskCategoryTextView
                 .getText()
                 .toString()
                 .trim();
 
-        String editedTaskDescription = inputDescription
+        String editedTaskDescription = binding.TaskDescriptionTextView
                 .getText()
                 .toString()
                 .trim();
 
-        String editedTaskPointsRewardStr = inputPoints
+        String editedTaskPointsRewardStr = binding.TaskPointsTextNumber
                 .getText()
                 .toString();
 

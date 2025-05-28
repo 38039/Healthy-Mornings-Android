@@ -83,7 +83,7 @@
                 android:textColor="@color/title" />
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/LoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="16dp"
@@ -95,7 +95,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/register"
+                android:id="@+id/RegisterButton"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/object"
