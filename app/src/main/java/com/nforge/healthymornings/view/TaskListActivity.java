@@ -45,7 +45,6 @@ public class TaskListActivity extends AppCompatActivity {
             intent.putExtra("Task ID", selectedTaskID);
             intent.putExtra("Task Name", selectedTaskTitle);
             startActivity(intent);
-            finish();
         });
 
 
@@ -76,7 +75,6 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     public void addNewTask(View view) {
-        startActivity(new Intent(this, TaskAddActivity.class));
-        finish();
+        startActivity(new Intent(this, AccountEditActivity.class));
     }
 }

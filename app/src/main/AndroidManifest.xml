@@ -21,12 +21,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- <activity android:name="com.nforge.healthymornings.ui.LoginActivity" android:exported="false" android:theme="@style/Theme.HealthyMornings" /> -->
         <activity
             android:name="com.nforge.healthymornings.view.RegisterActivity"
             android:exported="false"
@@ -43,15 +41,19 @@
             android:name="com.nforge.healthymornings.view.TaskAddActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
-
         <activity
-            android:name="com.nforge.healthymornings.view.TaskTODOActivity"
+            android:name="com.nforge.healthymornings.view.AccountEditActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name="com.nforge.healthymornings.view.GratulationActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings"/>
+
+<!--        <activity-->
+<!--            android:name="com.nforge.healthymornings.view.TaskTODOActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.HealthyMornings" />-->
+<!--        <activity-->
+<!--            android:name="com.nforge.healthymornings.view.GratulationActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.HealthyMornings"/>-->
     </application>
 
 </manifest>

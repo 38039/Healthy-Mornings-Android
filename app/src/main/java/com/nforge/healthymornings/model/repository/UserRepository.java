@@ -14,12 +14,13 @@ import com.nforge.healthymornings.model.utils.SessionManager;
 
 public class UserRepository {
     private final Context               currentApplicationContext;
-    private DatabaseConnectivityJDBC    databaseConnector       = null;
-    private SessionManager              sessionHandler          = null;
-    private ResultSet                   retrievedUserData       = null; // Nie powinien być zamykany
+    private DatabaseConnectivityJDBC    databaseConnector;
+    private SessionManager              sessionHandler;
+    private ResultSet                   retrievedUserData; // Nie powinien być zamykany
 
     public UserRepository(Context context) {
         this.currentApplicationContext = context.getApplicationContext();
+        sessionHandler = new SessionManager(currentApplicationContext);
     }
 
 
@@ -36,7 +37,6 @@ public class UserRepository {
 
             // Zapis do sesji
             if (retrievedUserData != null && retrievedUserData.next()) {
-                sessionHandler = new SessionManager(currentApplicationContext);
 
                 // Sesja ma żyć na czas trwania działania aplikacji, potem być czyszczona
                 if ( !sessionHandler.clearSession() )
@@ -61,6 +61,7 @@ public class UserRepository {
         return false;
     }
 
+
     public boolean doesUserExistInDatabase(String email, String username) {
         try {
             databaseConnector = new DatabaseConnectivityJDBC();
@@ -82,6 +83,7 @@ public class UserRepository {
 
         return false;
     }
+
 
     public boolean saveUserCredentials(String username, String email, String password, Date date_of_birth) {
         try {
@@ -120,7 +122,7 @@ public class UserRepository {
                 throw new Exception("UŻYTKOWNIK NIE JEST ZALOGOWANY");
 
             // Nawiązanie połączenia z bazą
-            DatabaseConnectivityJDBC databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector = new DatabaseConnectivityJDBC();
             databaseConnector.establishDatabaseConnection();
 
             // Szukanie użytkownika w bazie
@@ -131,7 +133,7 @@ public class UserRepository {
 
             // Zwracanie danych użytkownika
             if (retrievedUserData != null && retrievedUserData.next()) {
-                User user = new User(
+                return new User(
                         retrievedUserData.getInt("id_user"),
                         retrievedUserData.getString("name"),
                         retrievedUserData.getString("surname"),
@@ -139,17 +141,11 @@ public class UserRepository {
                         retrievedUserData.getString("username"),
                         retrievedUserData.getString("email"),
                         retrievedUserData.getString("bio"),
-                        retrievedUserData.getDate("birth_date"),
+                        retrievedUserData.getDate("date_of_birth"),
                         retrievedUserData.getDouble("height"),
                         retrievedUserData.getDouble("weight"),
                         retrievedUserData.getBoolean("is_admin")
                 );
-
-                // Sprawdzanie czy połączenie z bazą zostało zakończone
-                if(!databaseConnector.closeConnection())
-                    throw new Exception("POŁĄCZENIE NIE ZOSTAŁO POPRAWNIE ZAKOŃCZONE");
-
-                return user;
 
             } else throw new Exception("UŻYTKOWNIK NIE ISTNIEJE W BAZIE DANYCH");
 
@@ -157,5 +153,42 @@ public class UserRepository {
             Log.e("SessionManager", "getUser(): " + e.getMessage());
             return null;
         }
+    }
+
+    public boolean changeUserCredentials (
+            String          name,
+            String          surname,
+            String          gender,
+            String          username,
+            String          email,
+            String          bio,
+            double          height,
+            double          weight
+    ) {
+        try {
+            // Sprawdzanie czy użytkownik jest zalogowany
+            if(sessionHandler.getUserSession() == -1)
+                throw new Exception("Użytkownik nie jest zalogowany");
+
+            // Nawiązanie połączenia z bazą
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
+
+            // Aktualizacja użytkownika w bazie danych
+            retrievedUserData = databaseConnector.executeSQLQuery(
+                    "UPDATE users SET name = ?, surname = ?, gender = ?, username = ?, email = ?, bio = ?, height = ?, weight = ? WHERE id_user = ?",
+                    new Object[] { name, surname, gender, username, email, bio, height, weight, sessionHandler.getUserSession() }
+            );
+
+            if ( retrievedUserData != null )
+                throw new Exception("Nie udało się zaktualizować danych użytkownika");
+
+            return true;
+
+        } catch (Exception userCredentialsEditException) {
+            Log.e("UserRepository", "changeUserCredentials(): " + userCredentialsEditException.getMessage());
+        } finally { databaseConnector.closeConnection(); }
+
+        return false;
     }
 }
