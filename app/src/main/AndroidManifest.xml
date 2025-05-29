@@ -45,6 +45,10 @@
             android:name="com.nforge.healthymornings.view.AccountEditActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name="com.nforge.healthymornings.view.PasswordEditActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
 
 <!--        <activity-->
 <!--            android:name="com.nforge.healthymornings.view.TaskTODOActivity"-->

@@ -6,6 +6,9 @@ import android.content.Context;
 
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.nforge.healthymornings.model.data.User;
 import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
@@ -62,30 +65,45 @@ public class UserRepository {
     }
 
 
-    public boolean doesUserExistInDatabase(String email, String username) {
+    // doesUserExistInDatabase() może przyjąć dowolną liczbę argumentów
+    public boolean doesUserExistInDatabase(Map<String, String> columnValueMap) {
         try {
             databaseConnector = new DatabaseConnectivityJDBC();
             databaseConnector.establishDatabaseConnection();
 
-            retrievedUserData = databaseConnector.executeSQLQuery(
-                    "SELECT * FROM users WHERE email = ? OR username = ?",
-                    new Object[]{email, username}
-            );
+            StringBuilder queryBuilder = new StringBuilder("SELECT 1 FROM users WHERE ");
+            List<Object> values = new ArrayList<>();
 
-            if(retrievedUserData != null && retrievedUserData.next()) {
-                Log.v("UserRepository", "doesUserExistInDatabase(): Użytkownik istnieje w bazie danych");
+            int count = 0;
+            for (Map.Entry<String, String> entry : columnValueMap.entrySet()) {
+                if (count > 0) {
+                    queryBuilder.append(" OR ");
+                }
+                queryBuilder.append(entry.getKey()).append(" = ?");
+                values.add(entry.getValue());
+                count++;
+            }
+
+            String query = queryBuilder.toString();
+
+            ResultSet rs = databaseConnector.executeSQLQuery(query, values.toArray());
+
+            // Jeśli znajdzie wynik, użytkownik istnieje
+            if (rs != null && rs.next()) {
+                Log.v("UserRepository", "doesUserExistInDatabase(): użytkownik istnieje.");
                 return true;
             }
 
-        } catch (Exception userExistsException) {
-            Log.w("UserRepository", "doesUserExistInDatabase(): " + userExistsException.getMessage());
+        } catch (Exception e) {
+            Log.w("UserRepository", "doesUserExistInDatabase(): Błąd - " + e.getMessage());
         } finally { databaseConnector.closeConnection(); }
 
         return false;
     }
 
 
-    public boolean saveUserCredentials(String username, String email, String password, Date date_of_birth) {
+
+    public boolean registerUserCredentials(String username, String email, String password, Date date_of_birth) {
         try {
             databaseConnector = new DatabaseConnectivityJDBC();
             databaseConnector.establishDatabaseConnection();
@@ -115,7 +133,7 @@ public class UserRepository {
 
 
     // Zwracanie danych użytkownika na podstawie jego identyfikatora
-    public User getUser() {
+    public User getUserCredentials() {
         try {
             // Sprawdzanie czy użytkownik jest zalogowany
             if(sessionHandler.getUserSession() == -1)
@@ -140,6 +158,7 @@ public class UserRepository {
                         retrievedUserData.getString("gender"),
                         retrievedUserData.getString("username"),
                         retrievedUserData.getString("email"),
+                        retrievedUserData.getString("password"),
                         retrievedUserData.getString("bio"),
                         retrievedUserData.getDate("date_of_birth"),
                         retrievedUserData.getDouble("height"),
@@ -187,6 +206,35 @@ public class UserRepository {
 
         } catch (Exception userCredentialsEditException) {
             Log.e("UserRepository", "changeUserCredentials(): " + userCredentialsEditException.getMessage());
+        } finally { databaseConnector.closeConnection(); }
+
+        return false;
+    }
+
+    // TODO: Można scalić metody changeUserCredentials i changeUserPassword
+    public boolean changeUserPassword(String password) {
+        try {
+            // Sprawdzanie czy użytkownik jest zalogowany
+            if(sessionHandler.getUserSession() == -1)
+                throw new Exception("Użytkownik nie jest zalogowany");
+
+            // Nawiązanie połączenia z bazą
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
+
+            // Aktualizacja użytkownika w bazie danych
+            retrievedUserData = databaseConnector.executeSQLQuery(
+                    "UPDATE users SET password = ? WHERE id_user = ?",
+                    new Object[] { password, sessionHandler.getUserSession() }
+            );
+
+            if ( retrievedUserData != null )
+                throw new Exception("Nie udało się zaktualizować danych użytkownika");
+
+            return true;
+
+        } catch (Exception userCredentialsEditException) {
+            Log.e("UserRepository", "changeUserPassword(): " + userCredentialsEditException.getMessage());
         } finally { databaseConnector.closeConnection(); }
 
         return false;

@@ -82,7 +82,8 @@ public class AccountEditActivity extends AppCompatActivity {
     }
 
     public void changePassword(View view) {
-
+        Intent intent = new Intent(this.getApplication(), PasswordEditActivity.class);
+        startActivity(intent);
     }
 
     public void saveChanges(View view) {

@@ -8,6 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.nforge.healthymornings.model.data.User;
 import com.nforge.healthymornings.model.repository.UserRepository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class AccountEditViewmodel extends AndroidViewModel {
     private final UserRepository userRepository;
@@ -41,7 +44,7 @@ public class AccountEditViewmodel extends AndroidViewModel {
 
     // Wczytuje dane użytkownika z repozytorium do lokalnego rekordu
     public void loadUserData() {
-        User user = userRepository.getUser();
+        User user = userRepository.getUserCredentials();
         userData.setValue(user);
     }
 
@@ -65,11 +68,6 @@ public class AccountEditViewmodel extends AndroidViewModel {
             return;
         }
 
-//        if (gender.isEmpty()) {
-//            userEditError.postValue("Proszę wybrać płeć");
-//            return;
-//        }
-
         if (username.isEmpty()) {
             userEditError.postValue("Proszę wprowadzić nowe nazwę użytkownika");
             return;
@@ -80,10 +78,11 @@ public class AccountEditViewmodel extends AndroidViewModel {
             return;
         }
 
-        if (bio.isEmpty()) {
-            userEditError.postValue("Proszę wprowadzić nowy opis");
-            return;
-        }
+        // Bio może być puste
+//        if (bio.isEmpty()) {
+//            userEditError.postValue("Proszę wprowadzić nowy opis");
+//            return;
+//        }
 
         if (height < 0 || height > 300) {
             userEditError.postValue("Proszę wprowadzić dane wzrostu z zakresu od 0 do 300");
@@ -95,10 +94,28 @@ public class AccountEditViewmodel extends AndroidViewModel {
             return;
         }
 
-        if( !userRepository.changeUserCredentials(
-                name, surname, gender, username,
-                email, bio, height, weight
-        ) ) userEditError.postValue("Wystąpił błąd podczas edycji konta użytkownika");
-        else userEditResult.postValue("Konto użytkownika zostało poprawnie edytowane");
+
+        Map<String, String> searchCriteria = new HashMap<>();
+
+        // Sprawdza czy użytkownik podał nowy username
+        if ( !username.equals(userData.getValue().getUsername()) )
+            searchCriteria.put("username", username);
+
+        // Sprawdza czy użytkownik podał nowy adres email
+        if ( !email.equals(userData.getValue().getEmail()) )
+            searchCriteria.put("email", email);
+
+        // Sprawdza czy nowa nazwa / adres email nie są już używane w bazie danych
+        if( userRepository.doesUserExistInDatabase(searchCriteria) ) {
+            userEditError.postValue("Użytkownik o podanej nazwie, bądź adresie email już istnieje");
+            return;
+        }
+
+
+         if( !userRepository.changeUserCredentials(
+                 name, surname, gender, username,
+                 email, bio, height, weight
+         ) ) userEditError.postValue("Wystąpił błąd podczas edycji konta użytkownika");
+         else userEditResult.postValue("Konto użytkownika zostało poprawnie edytowane");
     }
 }

@@ -1,15 +1,14 @@
 package com.nforge.healthymornings.viewmodel;
 
-// JAVA
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.jetbrains.annotations.NotNull;
-// ANDROID
 import android.app.Application;
 import android.app.DatePickerDialog;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-// HEALTHY MORNINGS
 import com.nforge.healthymornings.model.repository.UserRepository;
 
 
@@ -56,13 +55,17 @@ public class RegisterViewmodel extends AndroidViewModel {
         }
 
         // Weryfikacja czy użytkownik istnieje w repozytorium
-        if ( userRepository.doesUserExistInDatabase(accountRegisterEmail, accountRegisterUsername) ) {
+        Map<String, String> searchCriteria = new HashMap<>();
+        searchCriteria.put("email", accountRegisterEmail);
+        searchCriteria.put("username", accountRegisterUsername);
+
+        if ( userRepository.doesUserExistInDatabase(searchCriteria) ) {
             registerErrorLiveData.postValue("Użytkownik o podanej nazwie, bądź adresie email już istnieje");
             return;
         }
 
         // Rejestracja użytkownika w bazie danych
-        if ( !userRepository.saveUserCredentials(accountRegisterUsername, accountRegisterEmail, accountRegisterPassword, birthDate) ) {
+        if ( !userRepository.registerUserCredentials(accountRegisterUsername, accountRegisterEmail, accountRegisterPassword, birthDate) ) {
             registerErrorLiveData.postValue("Wystąpił problem z zapisem danych użytkownika do bazy danych");
             return;
         }
