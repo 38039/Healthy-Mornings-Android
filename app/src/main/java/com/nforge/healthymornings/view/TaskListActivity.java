@@ -47,27 +47,6 @@ public class TaskListActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-
-//        deadlineTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                long millis = System.currentTimeMillis();
-//                Date date = new Date(millis);
-//                SimpleDateFormat hourFormat = new SimpleDateFormat("H", Locale.getDefault());
-//                int hour = Integer.parseInt(hourFormat.format(date));
-//
-//                //hour = 5;
-//                if (hour >= 4 && hour <= 9)
-//                {
-//                    Intent intent = new Intent(TaskListActivity.this, TaskTODOActivity.class);
-//                    intent.putStringArrayListExtra("task_list", taskNames);
-//                    intent.putExtra("id_user", userId);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
         // Wyświetlanie dzisiejszej daty
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis());
         binding.deadlineTaskText.setText(today);

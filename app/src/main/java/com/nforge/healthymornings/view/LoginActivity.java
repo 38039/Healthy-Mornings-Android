@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
             if ( success != null && !success.isEmpty() ) {
                 Toast.makeText(this, "Zalogowano pomyślnie!", Toast.LENGTH_SHORT).show();
                 Log.v("LoginViewModel", "loginUser(): Użytkownik został pomyślnie zalogowany");
-                goToTaskListActivity();
+                goToMainActivity();
             }
         });
 
@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToTaskListActivity() {
-        Intent intent = new Intent(LoginActivity.this, TaskListActivity.class);
+    public void goToMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view" >
+
+    <!-- Itemy zadań   -->
+    <group
+        android:checkableBehavior="single" >
+
+        <item
+            android:id="@+id/nav_task_list"
+            android:icon="@drawable/ic_task_list"
+            android:title="@string/nav_task_list" />
+        <item
+            android:id="@+id/nav_task_add"
+            android:icon="@drawable/ic_task_add"
+            android:title="@string/nav_task_add" />
+        <item
+            android:id="@+id/nav_task_all"
+            android:icon="@drawable/ic_task_all"
+            android:title="@string/nav_task_all" />
+    </group>
+
+
+    <!-- Dodatki   -->
+    <group
+        android:title="">
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/nav_share" />
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_about_us"
+            android:title="@string/nav_about_us" />
+    </group>
+
+
+    <!-- Itemy konta   -->
+    <group
+        android:title="" >
+
+        <item
+            android:id="@+id/nav_account_edit"
+            android:icon="@drawable/ic_account_edit"
+            android:title="@string/nav_account_edit" />
+
+        <item
+            android:id="@+id/nav_password_edit"
+            android:icon="@drawable/ic_password_edit"
+            android:title="@string/nav_password_edit" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/nav_logout" />
+    </group>
+
+<!--    <item-->
+<!--        android:title="" >-->
+<!--        <menu>-->
+<!--            <item-->
+<!--                android:id="@+id/nav_logout"-->
+<!--                android:icon="@drawable/ic_logout"-->
+<!--                android:title="@string/nav_logout" />-->
+<!--        </menu>-->
+<!--    </item>-->
+</menu>

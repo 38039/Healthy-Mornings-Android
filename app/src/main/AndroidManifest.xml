@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.nforge.healthymornings">
-
     <!-- APPLICATION REQUIRED PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -15,9 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthyMornings">
-
         <activity
-            android:name="com.nforge.healthymornings.view.LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,39 +23,35 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.nforge.healthymornings.view.RegisterActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name="com.nforge.healthymornings.view.TaskListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name="com.nforge.healthymornings.view.TaskEditActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name="com.nforge.healthymornings.view.TaskAddActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name="com.nforge.healthymornings.view.AccountEditActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name="com.nforge.healthymornings.view.PasswordEditActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
 
-<!--        <activity-->
-<!--            android:name="com.nforge.healthymornings.view.TaskTODOActivity"-->
-<!--            android:exported="false"-->
-<!--            android:theme="@style/Theme.HealthyMornings" />-->
-<!--        <activity-->
-<!--            android:name="com.nforge.healthymornings.view.GratulationActivity"-->
-<!--            android:exported="false"-->
-<!--            android:theme="@style/Theme.HealthyMornings"/>-->
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name=".view.RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name=".view.TaskListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name=".view.TaskEditActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name=".view.TaskAddActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name=".view.AccountEditActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
+        <activity
+            android:name=".view.PasswordEditActivity"
+            android:exported="false"
+            android:theme="@style/Theme.HealthyMornings" />
     </application>
 
 </manifest>

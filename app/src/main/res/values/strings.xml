@@ -1,10 +1,27 @@
 <resources>
     <string name="app_name">Healthy Mornings</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+<!--    Placeholder dla navigation drawer menu-->
+    <string name="nav_title">Healthy Mornings</string>
+    <string name="nav_description">Zdrowy poranek każdego dnia!</string>
+    <string name="nav_open">Open Navigation Drawer</string>
+    <string name="nav_close">Close Navigation Drawer</string>
+    <string name="nav_task_list">Lista aktualnych zadań</string>
+    <string name="nav_task_add">Dodaj kolejne zadanie</string>
+    <string name="nav_task_all">Wyświetl ukończone zadania</string>
+    <string name="nav_about_us">Kim jesteśmy?</string>
+    <string name="nav_share">Podziel się statystykami</string>
+    <string name="nav_account_edit">Zmień ustawienia konta</string>
+    <string name="nav_password_edit">Zmień hasło do konta</string>
+    <string name="nav_logout">Wyloguj użytkownika</string>
+
+<!--    Placeholder dla task edit activity-->
     <string name="delete_task_button_text">Usuń</string>
     <string name="edit_task_button_text">Zapisz</string>
     <string name="edit_task_text_view">Edytuj zadanie</string>
@@ -18,4 +35,5 @@
         <item>female</item>
         <item>other</item>
     </string-array>
+
 </resources>
