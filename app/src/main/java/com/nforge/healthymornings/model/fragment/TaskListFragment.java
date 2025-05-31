@@ -6,15 +6,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
-import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import com.nforge.healthymornings.databinding.ActivityTaskListBinding;
+import com.nforge.healthymornings.model.data.Task;
+import com.nforge.healthymornings.model.holder.TaskAdapter;
 import com.nforge.healthymornings.view.TaskEditActivity;
 import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
 
@@ -22,7 +25,7 @@ import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
 public class TaskListFragment extends Fragment {
     private TaskListViewmodel viewModel;
     private ActivityTaskListBinding binding;
-    private ArrayAdapter<String> adapter;
+    private TaskAdapter adapter; // dodane pole
 
 
     public TaskListFragment() {}
@@ -38,25 +41,42 @@ public class TaskListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(requireActivity()).get(TaskListViewmodel.class);
-        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1,
-                Objects.requireNonNull(viewModel.taskTitles.getValue()));
 
-        viewModel.populateAdapterWithTasks(adapter);
-        binding.TasksList.setAdapter(adapter);
-
-        // Listener nasłuchujący ListView, przekazujący dane klikniętego zadania do TaskEditActivity
-        binding.TasksList.setOnItemClickListener((parent, itemView, index, id) -> {
-            Integer selectedTaskID = Objects.requireNonNull(viewModel.taskIdentifiers.getValue()).get(index);
-            String selectedTaskTitle = viewModel.taskTitles.getValue().get(index);
-
-            Log.v("TaskListFragment", "setOnItemClickListener(): [ID]: " + selectedTaskID);
-            Log.v("TaskListFragment", "setOnItemClickListener(): [Tytuł]: " + selectedTaskTitle);
-
+        // Ustaw adapter z pustą listą (tymczasowo)
+        adapter = new TaskAdapter(requireContext(), List.of(), selectedTask -> {
+            Log.v("TaskListFragment", "Kliknięto zadanie [ID]: " + selectedTask.getID());
             Intent intent = new Intent(requireContext(), TaskEditActivity.class);
-            intent.putExtra("Task ID", selectedTaskID);
-            intent.putExtra("Task Name", selectedTaskTitle);
+            intent.putExtra("Task ID", selectedTask.getID());
+            intent.putExtra("Task Name", selectedTask.getName());
             startActivity(intent);
         });
+
+        binding.TasksRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.TasksRecyclerView.setAdapter(adapter);
+
+        // Obserwuj dane z ViewModel
+        viewModel.getTasks().observe(getViewLifecycleOwner(), updatedTaskList -> {
+            adapter.setTasks(updatedTaskList);
+            adapter.notifyDataSetChanged();
+        });
+
+        // Wczytaj dane
+        viewModel.loadTasks(requireContext(), null);
+
+//        viewModel.loadTasks(requireContext(), () -> {
+//            List<Task> taskList = viewModel.tasks.getValue();
+//
+//            TaskAdapter adapter = new TaskAdapter(requireContext(), taskList, selectedTask -> {
+//                Log.v("TaskListFragment", "Kliknięto zadanie [ID]: " + selectedTask.getID());
+//                Intent intent = new Intent(requireContext(), TaskEditActivity.class);
+//                intent.putExtra("Task ID", selectedTask.getID());
+//                intent.putExtra("Task Name", selectedTask.getName());
+//                startActivity(intent);
+//            });
+//
+//            binding.TasksRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+//            binding.TasksRecyclerView.setAdapter(adapter);
+//        });
 
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis());
         binding.deadlineTaskText.setText(today);

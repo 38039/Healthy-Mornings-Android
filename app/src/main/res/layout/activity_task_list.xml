@@ -44,25 +44,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/rounded"/>
 
-    <ListView
-        android:id="@+id/TasksList"
-        android:layout_width="308dp"
-        android:layout_height="317dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.934" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TasksRecyclerView"
-        android:layout_width="369dp"
-        android:layout_height="67dp"
+        android:layout_width="362dp"
+        android:layout_height="395dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.326"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.448" />
+        app:layout_constraintVertical_bias="0.91" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

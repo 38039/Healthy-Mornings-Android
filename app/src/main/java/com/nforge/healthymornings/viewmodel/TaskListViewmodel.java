@@ -1,8 +1,7 @@
 package com.nforge.healthymornings.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,34 +11,33 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 
 import com.nforge.healthymornings.model.repository.TaskRepository;
+import com.nforge.healthymornings.model.data.Task;
 
 
 public class TaskListViewmodel extends AndroidViewModel {
     private final TaskRepository taskRepository;
-    public MutableLiveData<ArrayList<String>>   taskTitles      = new MutableLiveData<>(new ArrayList<>());
-    public MutableLiveData<ArrayList<Integer>>  taskIdentifiers = new MutableLiveData<>(new ArrayList<>());
+    public MutableLiveData<ArrayList<Task>> tasks = new MutableLiveData<>(new ArrayList<>());
+
 
     public TaskListViewmodel(@NonNull Application application) {
         super(application);
         taskRepository = new TaskRepository(application.getApplicationContext());
     }
 
-    public void populateAdapterWithTasks(ArrayAdapter<String> adapter) {
-        ArrayList<String>   taskTitlesList       = taskTitles.getValue();
-        ArrayList<Integer>  taskIdentifiersList  = taskIdentifiers.getValue();
+    public void loadTasks(Context context, Runnable onSuccess) {
+        ArrayList<Task> taskList = new ArrayList<>();
 
-        if (taskTitlesList != null && taskIdentifiersList != null) {
-
-            if ( !taskRepository.loadUserTasks(taskTitlesList, taskIdentifiersList, adapter) ) {
-                Log.e("TaskListViewModel", "populateAdapterWithTasks(): Nie udało się załadować zadań");
-                Toast.makeText(this.getApplication(), "Nie udało się załadować zadań", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            taskTitles.setValue(taskTitlesList);
-            taskIdentifiers.setValue(taskIdentifiersList);
-
-            Log.v("TaskListViewModel", "populateAdapterWithTasks(): Załadowano zadania");
+        if (!taskRepository.loadUserTasks(taskList)) {
+            Toast.makeText(context, "Nie udało się załadować zadań", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        tasks.setValue(taskList);
+        if (onSuccess != null) onSuccess.run();
+    }
+
+    public MutableLiveData<ArrayList<Task>> getTasks() {
+        return tasks;
     }
 }
+

@@ -24,15 +24,12 @@ public class TaskRepository {
         sessionHandler = new SessionManager(currentApplicationContext);
     }
 
-    // Wczytuje wszystkie zadania użytkownika (nazwy i identyfikatory) z bazy danych do listy zadań
-    public boolean loadUserTasks(
-            ArrayList<String> loadedTaskNames,
-            ArrayList<Integer> loadedTaskIdentifiers,
-            ArrayAdapter<String> adapter
-    ) {
+    // Wczytuje wszystkie zadania użytkownika ~~(nazwy i identyfikatory)~~ z bazy danych do listy zadań
+    // Przepisano na rzecz RecyclerView, od teraz wczytuje całe zadania a nie tylko ich identyfikatory
+    // W przeciwieństwie do loadTaskByID, zwraca listę zadań należących do użytkownika a nie tylko jedno zadanie
+    public boolean loadUserTasks(ArrayList<Task> taskList) {
         try {
-            loadedTaskNames.clear();
-            loadedTaskIdentifiers.clear();
+            taskList.clear();
 
             databaseConnector = new DatabaseConnectivityJDBC();
             databaseConnector.establishDatabaseConnection();
@@ -41,27 +38,36 @@ public class TaskRepository {
                 throw new Exception("Użytkownik nie jest zalogowany");
 
             retrievedTaskData = databaseConnector.executeSQLQuery(
-                    "SELECT t.name, t.id_task FROM USER_TASKS ut " +
+                    // Ewentualnie można przeciążyć konstruktor by lokalny rekord przyjmował tylko 3 argumenty
+                    "SELECT t.* FROM USER_TASKS ut " +
                             "JOIN TASKS t ON ut.id_task = t.id_task " +
-                            "WHERE ut.id_user = ?",
+                            "WHERE ut.id_user = ?;",
                     new Object[]{sessionHandler.getUserSession()}
             );
 
             if (retrievedTaskData == null) return false;
 
             while ( retrievedTaskData.next() ) {
-                Integer retrievedTaskID = retrievedTaskData.getInt("id_task");
-                Log.v("TaskRepository", "loadUserTasks() [Indeks wczytanego zadania]: " + retrievedTaskID);
 
-                String retrievedTaskTitle = retrievedTaskData.getString("name");
-                Log.v("TaskRepository", "loadUserTasks() [Nazwa wczytanego zadania]: " + retrievedTaskTitle);
+                Log.v("TaskRepository", "loadUserTasks() [Indeks wczytanego zadania]: " + retrievedTaskData.getInt("id_task") );
+                Log.v("TaskRepository", "loadUserTasks() [Kategoria wczytanego zadania]: " + retrievedTaskData.getString("category") );
+                Log.v("TaskRepository", "loadUserTasks() [Nazwa wczytanego zadania]: " + retrievedTaskData.getString("name") );
+                Log.v("TaskRepository", "loadUserTasks() [Opis wczytanego zadania]: " + retrievedTaskData.getString("description") );
+                Log.v("TaskRepository", "loadUserTasks() [Nagroda wczytanego zadania]: " + retrievedTaskData.getInt("points_reward") );
 
-                loadedTaskNames.add(retrievedTaskTitle);
-                loadedTaskIdentifiers.add(retrievedTaskID);
+                Task task = new Task(
+                        retrievedTaskData.getInt("id_task"),
+                        retrievedTaskData.getString("category"),
+                        retrievedTaskData.getString("name"),
+                        retrievedTaskData.getString("description"),
+                        retrievedTaskData.getInt("points_reward")
+                );
+
+                taskList.add(task);
             }
 
-            adapter.notifyDataSetChanged();
             return true;
+
         } catch (Exception taskLoadException) {
             Log.e("TaskRepository", "loadUserTasks(): " + taskLoadException.getMessage());
         } finally { databaseConnector.closeConnection(); }
