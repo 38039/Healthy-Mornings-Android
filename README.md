@@ -56,11 +56,11 @@
      - [x] [Główne interfejsy aplikacji (szkic ekranów) wraz z opisem, w tym celu wykorzystać Figma lub App Moqups](#interfejs)
      - [x] [Podział projektu na mniejsze podzadania, w tym celu wykorzystać Jira, Trello](#trello)
 ---
-3. [ ] 09.05.2025 - **Implementacja projektu (30 % oceny)**
+3. [x] 09.05.2025 - **Implementacja projektu (30 % oceny)**
    * Do tego terminu należy zaprezentować postęp projektu w oparciu o utworzoną dokumentacje. Wymagane jest oddanie:
-      - [ ] Filmu z funkcjonowania aplikacji
-      - [ ] Archiwum projektu w formacie .zip
-      - [ ] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
+      - [x] Filmu z funkcjonowania aplikacji
+      - [x] Archiwum projektu w formacie .zip
+      - [x] Pliku PDF zawierającego opis + screeny funkcjonalności z obecnej wersji
 ---
 4. [ ] 13.06.2025 - **Dostarczenie kompletnego projektu (50 % oceny)**
 * Na tym etapie zespół ma za zadanie 
@@ -164,7 +164,7 @@ Projekt graficzny aplikacji wykonany w [Figmie](https://www.figma.com/design/qN1
     * [x] Rejestracja 
     * [x] Logowanie 
     * [ ] Aautoryzacja
-    * [ ] Obsługa konta
+    * [x] Obsługa konta
     * [ ] Role użytkowników
 3. **Obsługa zadań**
     * [x] Dodawanie zadań 
@@ -194,17 +194,17 @@ Projekt graficzny aplikacji wykonany w [Figmie](https://www.figma.com/design/qN1
       2. [x] Rejestracja
       3. [ ] Porady
     * [ ] **Ekrany zalogowanego użytkownika**
-      1. [ ] Konto
+      1. [x] Konto
       2. [x] Lista zadań
       3. [ ] Statystyki
     * [x] **Ekrany ograniczone czasowo**
       1. [x] Task 
       2. [x] TODO
 3. **Obsługa nawigacji**
-    * [ ] System FragmentManager
-    * [ ] Przełączanie ekranów w zależności od statusu logowania
+    * [x] System FragmentManager
+    * [x] Przełączanie ekranów w zależności od statusu logowania
 4. **Implementacja systemu zadań**
-    * [ ] Wyświetlanie listy
+    * [x] Wyświetlanie listy
     * [ ] Oznaczanie zadań jako wykonane
     * [ ] Blokowanie odznaczania po czasie
 5. **Integracja z backendem**
