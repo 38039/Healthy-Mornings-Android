@@ -204,10 +204,4 @@ public class TaskTODOActivity extends AppCompatActivity
         }
     }
 
-    public void back(View view)
-    {
-        Intent intent = new Intent(TaskTODOActivity.this, TaskListActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }

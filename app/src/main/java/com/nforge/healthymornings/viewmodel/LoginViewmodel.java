@@ -51,28 +51,4 @@ public class LoginViewmodel extends AndroidViewModel {
 
         loginResultLiveData.postValue("Użytkownik został pomyślnie zalogowany");
     }
-
-
-
-
-
-
-    // Wylogowanie użytkownika
-//    public void logoutUser() {
-//        if (!sessionManager.clearSession()) {
-//            Log.e("UserViewModel", "logoutUser(): NIE UDAŁO SIĘ WYCZYŚCIĆ SESJI");
-//            Toast.makeText(this.getApplication(), "Wystąpił problem z wylogowaniem", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-
-    // Sprawdza czy użytkownik jest zalogowany
-//    public boolean isUserLoggedIn() {
-//        return userRepository.getUser() != null;
-//    }
-
-    // Zwraca dane użytkownika na podstawie jego identyfikatora
-//    public User getLoggedInUser() {
-//        return userRepository.getUser();
-//    }
 }

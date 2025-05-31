@@ -9,6 +9,7 @@ public class User {
     private final String          gender;
     private final String          username;
     private final String          email;
+    private final String          password;
     private final String          bio;
     private final java.util.Date  date_of_birth;
     private final double          height;
@@ -25,6 +26,7 @@ public class User {
             String          gender,
             String          username,
             String          email,
+            String          password,
             String          bio,
             java.util.Date  date_of_birth,
             double          height,
@@ -37,6 +39,7 @@ public class User {
         this.gender         = gender;
         this.username       = username;
         this.email          = email;
+        this.password       = password;
         this.bio            = bio;
         this.date_of_birth  = date_of_birth;
         this.height         = height;
@@ -53,6 +56,7 @@ public class User {
     public String           getGender()         { return gender;    }
     public String           getUsername()       { return username;  }
     public String           getEmail()          { return email;     }
+    public String           getPassword()       { return password;  }
     public String           getBio()            { return bio;       }
     public java.util.Date   getDate_of_birth()  { return date_of_birth; }
     public double           getHeight()         { return height;    }

@@ -37,8 +37,8 @@ public class TaskEditActivity extends AppCompatActivity {
         taskEditViewmodel.getTaskEditResultLiveData().observe(this, success -> {
             if (success != null && !success.isEmpty()) {
                 Toast.makeText(this, success, Toast.LENGTH_SHORT).show();
-                Log.v("TaskEditViewmodel", "(): " + success);
-                goToTaskListActivity();
+                Log.v("TaskEditViewmodel", "updateUserTask(): " + success);
+                finish();
             }
         });
 
@@ -46,7 +46,7 @@ public class TaskEditActivity extends AppCompatActivity {
         taskEditViewmodel.getTaskEditErrorLiveData().observe(this, error -> {
             if (error != null && !error.isEmpty()) {
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-                Log.w("TaskEditViewmodel", "(): " + error);
+                Log.w("TaskEditViewmodel", "updateUserTask(): " + error);
             }
         });
 
@@ -62,12 +62,6 @@ public class TaskEditActivity extends AppCompatActivity {
                 binding.TaskPointsTextNumber.setText(String.valueOf(task.getReward()));
             }
         });
-    }
-
-    public void goToTaskListActivity() {
-        Intent intent = new Intent(this.getApplication(), TaskListActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     public void onDeleteTaskButtonClick(View view) {
