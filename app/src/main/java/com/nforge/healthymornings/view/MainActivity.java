@@ -16,9 +16,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.nforge.healthymornings.R;
 import com.nforge.healthymornings.databinding.ActivityMainBinding;
 
+import com.nforge.healthymornings.model.fragment.AboutUsFragment;
 import com.nforge.healthymornings.model.fragment.AccountEditFragment;
 import com.nforge.healthymornings.model.fragment.PasswordEditFragment;
+import com.nforge.healthymornings.model.fragment.ShareFragment;
 import com.nforge.healthymornings.model.fragment.TaskAddFragment;
+import com.nforge.healthymornings.model.fragment.TaskAllFragment;
 import com.nforge.healthymornings.model.fragment.TaskListFragment;
 import com.nforge.healthymornings.model.repository.UserRepository;
 import com.nforge.healthymornings.model.utils.SessionManager;
@@ -66,15 +69,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.taskAddFragment)
             selectedFragment = new TaskAddFragment();
 
-//        if (id == R.id.nav_task_all)
-//            selectedFragment = new TaskAllFragment();
-//
-//        if (id == R.id.nav_about_us)
-//            selectedFragment = new AboutUsFragment();
-//
-//        if (id == R.id.nav_share)
-//            selectedFragment = new ShareFragment();
-//
+        if (item.getItemId() == R.id.taskAllFragment)
+            selectedFragment = new TaskAllFragment();
+
+        if (item.getItemId() == R.id.aboutUsFragment)
+            selectedFragment = new AboutUsFragment();
+
+        if (item.getItemId() == R.id.shareFragment)
+            selectedFragment = new ShareFragment();
+
         if (item.getItemId() == R.id.accountEditFragment)
             selectedFragment = new AccountEditFragment();
 
