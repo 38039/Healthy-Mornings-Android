@@ -45,28 +45,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/rounded"/>
 
-    <Button
-        android:id="@+id/GoToAddTaskActivityButton"
-        android:layout_width="335dp"
-        android:layout_height="62dp"
-        android:text="Dodaj zadanie"
-        android:onClick="addNewTask"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959" />
-
     <ListView
         android:id="@+id/TasksList"
-        android:layout_width="343dp"
-        android:layout_height="253dp"
+        android:layout_width="308dp"
+        android:layout_height="317dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.934" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TasksRecyclerView"

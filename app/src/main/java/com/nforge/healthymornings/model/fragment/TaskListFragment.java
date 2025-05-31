@@ -3,27 +3,27 @@ package com.nforge.healthymornings.model.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import com.nforge.healthymornings.databinding.ActivityTaskListBinding;
-import com.nforge.healthymornings.view.AccountEditActivity;
-import com.nforge.healthymornings.view.TaskEditActivity;
-import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
-
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Objects;
+import com.nforge.healthymornings.databinding.ActivityTaskListBinding;
+import com.nforge.healthymornings.view.TaskEditActivity;
+import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
+
 
 public class TaskListFragment extends Fragment {
     private TaskListViewmodel viewModel;
     private ActivityTaskListBinding binding;
     private ArrayAdapter<String> adapter;
+
 
     public TaskListFragment() {}
 
@@ -44,6 +44,7 @@ public class TaskListFragment extends Fragment {
         viewModel.populateAdapterWithTasks(adapter);
         binding.TasksList.setAdapter(adapter);
 
+        // Listener nasłuchujący ListView, przekazujący dane klikniętego zadania do TaskEditActivity
         binding.TasksList.setOnItemClickListener((parent, itemView, index, id) -> {
             Integer selectedTaskID = Objects.requireNonNull(viewModel.taskIdentifiers.getValue()).get(index);
             String selectedTaskTitle = viewModel.taskTitles.getValue().get(index);
@@ -59,10 +60,6 @@ public class TaskListFragment extends Fragment {
 
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis());
         binding.deadlineTaskText.setText(today);
-
-        binding.GoToAddTaskActivityButton.setOnClickListener(v -> {
-            startActivity(new Intent(requireContext(), AccountEditActivity.class));
-        });
     }
 
     @Override

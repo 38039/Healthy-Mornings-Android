@@ -8,15 +8,15 @@
         android:checkableBehavior="single" >
 
         <item
-            android:id="@+id/nav_task_list"
+            android:id="@+id/taskListFragment"
             android:icon="@drawable/ic_task_list"
             android:title="@string/nav_task_list" />
         <item
-            android:id="@+id/nav_task_add"
+            android:id="@+id/taskAddFragment"
             android:icon="@drawable/ic_task_add"
             android:title="@string/nav_task_add" />
         <item
-            android:id="@+id/nav_task_all"
+            android:id="@+id/taskAllFragment"
             android:icon="@drawable/ic_task_all"
             android:title="@string/nav_task_all" />
     </group>
@@ -27,11 +27,11 @@
         android:title="">
 
         <item
-            android:id="@+id/nav_share"
+            android:id="@+id/shareFragment"
             android:icon="@drawable/ic_share"
             android:title="@string/nav_share" />
         <item
-            android:id="@+id/nav_about_us"
+            android:id="@+id/aboutUsFragment"
             android:icon="@drawable/ic_about_us"
             android:title="@string/nav_about_us" />
     </group>
@@ -42,12 +42,12 @@
         android:title="" >
 
         <item
-            android:id="@+id/nav_account_edit"
+            android:id="@+id/accountEditFragment"
             android:icon="@drawable/ic_account_edit"
             android:title="@string/nav_account_edit" />
 
         <item
-            android:id="@+id/nav_password_edit"
+            android:id="@+id/passwordEditFragment"
             android:icon="@drawable/ic_password_edit"
             android:title="@string/nav_password_edit" />
         <item
@@ -55,14 +55,4 @@
             android:icon="@drawable/ic_logout"
             android:title="@string/nav_logout" />
     </group>
-
-<!--    <item-->
-<!--        android:title="" >-->
-<!--        <menu>-->
-<!--            <item-->
-<!--                android:id="@+id/nav_logout"-->
-<!--                android:icon="@drawable/ic_logout"-->
-<!--                android:title="@string/nav_logout" />-->
-<!--        </menu>-->
-<!--    </item>-->
 </menu>

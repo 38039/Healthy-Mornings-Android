@@ -8,9 +8,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.navigation.NavigationView;
 import com.nforge.healthymornings.R;
 import com.nforge.healthymornings.databinding.ActivityMainBinding;
+
+import com.nforge.healthymornings.model.fragment.TaskAddFragment;
 import com.nforge.healthymornings.model.fragment.TaskListFragment;
 
 
@@ -23,9 +27,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
+        setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+
+        // Pokaż domyślny fragment (TaskListFragment)
+        if (savedInstanceState == null)
+            loadFragment(new TaskListFragment());
 
         toggle = new ActionBarDrawerToggle(
                 this,
@@ -34,32 +42,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.nav_open,
                 R.string.nav_close
         );
-
         binding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         binding.navView.setNavigationItemSelectedListener(this);
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new TaskListFragment())
-                    .commit();
-            binding.navView.setCheckedItem(R.id.nav_task_list);
-        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment selectedFragment = null;
-        int id = item.getItemId();
 
-        if (id == R.id.nav_task_list)
+        if (item.getItemId() == R.id.taskListFragment)
             selectedFragment = new TaskListFragment();
 
-//        if (id == R.id.nav_task_add)
-//            selectedFragment = new TaskAddFragment();
-//
+        if (item.getItemId() == R.id.taskAddFragment)
+            selectedFragment = new TaskAddFragment();
+
 //        if (id == R.id.nav_task_all)
 //            selectedFragment = new TaskAllFragment();
 //
@@ -75,19 +73,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        if (id == R.id.nav_password_edit)
 //            selectedFragment = new PasswordEditFragment();
 
-        if (id == R.id.nav_logout) {
+        if (item.getItemId() == R.id.nav_logout) {
             Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
         }
 
-        if (selectedFragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, selectedFragment)
-                    .commit();
-        }
+        if (selectedFragment != null)
+            loadFragment(selectedFragment);
 
         binding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

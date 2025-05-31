@@ -9,6 +9,7 @@
 
     <application
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -32,26 +33,26 @@
             android:name=".view.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name=".view.TaskListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
+<!--        <activity-->
+<!--            android:name=".view.TaskListActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.HealthyMornings" />-->
         <activity
             android:name=".view.TaskEditActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name=".view.TaskAddActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name=".view.AccountEditActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
-        <activity
-            android:name=".view.PasswordEditActivity"
-            android:exported="false"
-            android:theme="@style/Theme.HealthyMornings" />
+<!--        <activity-->
+<!--            android:name=".view.TaskAddActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.HealthyMornings" />-->
+<!--        <activity-->
+<!--            android:name=".view.AccountEditActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.HealthyMornings" />-->
+<!--        <activity-->
+<!--            android:name=".view.PasswordEditActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.HealthyMornings" />-->
     </application>
 
 </manifest>
