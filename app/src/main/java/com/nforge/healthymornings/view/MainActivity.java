@@ -1,6 +1,8 @@
 package com.nforge.healthymornings.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -18,17 +20,21 @@ import com.nforge.healthymornings.model.fragment.AccountEditFragment;
 import com.nforge.healthymornings.model.fragment.PasswordEditFragment;
 import com.nforge.healthymornings.model.fragment.TaskAddFragment;
 import com.nforge.healthymornings.model.fragment.TaskListFragment;
+import com.nforge.healthymornings.model.repository.UserRepository;
+import com.nforge.healthymornings.model.utils.SessionManager;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding binding;
     private ActionBarDrawerToggle toggle;
+    private SessionManager sessionHandler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        sessionHandler = new SessionManager( getApplicationContext() );
 
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
@@ -76,7 +82,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             selectedFragment = new PasswordEditFragment();
 
         if (item.getItemId() == R.id.nav_logout) {
-            Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
+            UserRepository userRepository = new UserRepository(getApplicationContext());
+            if (!userRepository.logoutUser()) {
+                Toast.makeText(this, "Nie udało się wylogować użytkownika", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            Log.v("MainActivity", "onNavigationItemSelected(): Wylogowano użytkownika");
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         if (selectedFragment != null)

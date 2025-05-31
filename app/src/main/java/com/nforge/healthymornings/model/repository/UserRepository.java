@@ -49,11 +49,11 @@ public class UserRepository {
                 int userID = retrievedUserData.getInt("id_user");
                 if(!sessionHandler.saveUserSession( userID ))
                     throw new Exception("Nie udało się zapisać sesji");
+
                 Log.v("UserRepository", "authenticateUser(): Zapisano sesję aplikacji");
-
                 sessionHandler.getSessionInfo();
-
                 return true;
+
             } else throw new Exception("Użytkownik nie istnieje w bazie danych");
 
         }
@@ -62,6 +62,15 @@ public class UserRepository {
         } finally { databaseConnector.closeConnection(); }
 
         return false;
+    }
+
+    public boolean logoutUser() {
+        if (!sessionHandler.clearSession()) {
+            Log.e("UserViewModel", "logoutUser(): Nie udało się wyczyścić sesji aplikacji");
+            return false;
+        }
+
+        return true;
     }
 
 
