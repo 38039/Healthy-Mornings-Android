@@ -113,6 +113,7 @@ public class TaskAddFragment extends Fragment {
         );
     }
 
+    // Czyści binding, zapobiega wyciekowi pamięci
     @Override
     public void onDestroyView() {
         super.onDestroyView();

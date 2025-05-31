@@ -62,6 +62,7 @@ public class TaskListFragment extends Fragment {
         binding.deadlineTaskText.setText(today);
     }
 
+    // Czyści binding, zapobiega wyciekowi pamięci
     @Override
     public void onDestroyView() {
         super.onDestroyView();

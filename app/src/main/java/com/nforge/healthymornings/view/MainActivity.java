@@ -15,6 +15,7 @@ import com.nforge.healthymornings.R;
 import com.nforge.healthymornings.databinding.ActivityMainBinding;
 
 import com.nforge.healthymornings.model.fragment.AccountEditFragment;
+import com.nforge.healthymornings.model.fragment.PasswordEditFragment;
 import com.nforge.healthymornings.model.fragment.TaskAddFragment;
 import com.nforge.healthymornings.model.fragment.TaskListFragment;
 
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.accountEditFragment)
             selectedFragment = new AccountEditFragment();
 
-//        if (id == R.id.nav_password_edit)
-//            selectedFragment = new PasswordEditFragment();
+        if (item.getItemId() == R.id.passwordEditFragment)
+            selectedFragment = new PasswordEditFragment();
 
         if (item.getItemId() == R.id.nav_logout) {
             Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
