@@ -6,11 +6,14 @@ import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.nforge.healthymornings.R;
 import com.nforge.healthymornings.databinding.ActivityTaskAddBinding;
 import com.nforge.healthymornings.viewmodel.TaskAddViewmodel;
 
@@ -40,7 +43,14 @@ public class TaskAddFragment extends Fragment {
             if (success != null && !success.isEmpty()) {
                 Toast.makeText(requireContext(), success, Toast.LENGTH_SHORT).show();
                 Log.v("TaskAddViewmodel", "addTask(): " + success);
-                requireActivity().getSupportFragmentManager().popBackStack();
+//                requireActivity().getSupportFragmentManager().popBackStack();
+
+                // Manualna zamiana fragmentów jest wymagana, inaczej każdy fragment zapisywałby się na stosie
+                // co doprowadziłoby do sytuacji gdzie po cofnięciu się z fragmentu użytkownik nie powcałby do listy zadań
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, new TaskListFragment())
+                        .commit();
             }
         });
 
@@ -54,6 +64,21 @@ public class TaskAddFragment extends Fragment {
 
         // Przycisk dodania zadania
         binding.AddTaskButton.setOnClickListener(v -> onAddTaskButtonClick());
+
+        // Listener nasłuchujący czy użytkownik kliknął w przycisk cofnij
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, new TaskListFragment())
+                        .commit();
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(), callback
+        );
     }
 
     private void onAddTaskButtonClick() {

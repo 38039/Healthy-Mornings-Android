@@ -115,24 +115,10 @@
         app:layout_constraintVertical_bias="0.723" />
 
     <Button
-        android:id="@+id/ChangePasswordButton"
-        android:layout_width="142dp"
-        android:layout_height="54dp"
-        android:text="Zmień hasło"
-        android:onClick="changePassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957" />
-
-    <Button
         android:id="@+id/SaveChangesButton"
         android:layout_width="142dp"
         android:layout_height="54dp"
         android:text="Zapisz zmiany"
-        android:onClick="saveChanges"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.873"

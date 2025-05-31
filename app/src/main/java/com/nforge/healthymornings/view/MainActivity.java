@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.nforge.healthymornings.R;
 import com.nforge.healthymornings.databinding.ActivityMainBinding;
 
+import com.nforge.healthymornings.model.fragment.AccountEditFragment;
 import com.nforge.healthymornings.model.fragment.TaskAddFragment;
 import com.nforge.healthymornings.model.fragment.TaskListFragment;
 
@@ -67,9 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        if (id == R.id.nav_share)
 //            selectedFragment = new ShareFragment();
 //
-//        if (id == R.id.nav_account_edit)
-//            selectedFragment = new AccountEditFragment();
-//
+        if (item.getItemId() == R.id.accountEditFragment)
+            selectedFragment = new AccountEditFragment();
+
 //        if (id == R.id.nav_password_edit)
 //            selectedFragment = new PasswordEditFragment();
 
@@ -87,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment, fragment);
-        transaction.addToBackStack(null);
+        //  Implementacja backstacka doprowadza do sytuacji gdzie po zabiciu fragmentu użytkownik nie powcałby do listy zadań
+        //  transaction.addToBackStack(null);
         transaction.commit();
     }
 
