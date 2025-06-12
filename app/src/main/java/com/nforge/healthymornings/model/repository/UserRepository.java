@@ -112,19 +112,20 @@ public class UserRepository {
 
 
 
-    public boolean registerUserCredentials(String username, String email, String password, Date date_of_birth) {
+    public boolean registerUserCredentials(String username, String email, String password, Date date_of_birth, String gender) {
         try {
             databaseConnector = new DatabaseConnectivityJDBC();
             databaseConnector.establishDatabaseConnection();
 
             // Wpisz użytkownika do bazy danych
             databaseConnector.executeSQLQuery(
-                    "INSERT INTO users (username, email, password, date_of_birth, is_admin, level) VALUES (?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO users (username, email, password, date_of_birth, gender, is_admin, level) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     new Object[]{
                             username,
                             email,
                             password,
                             date_of_birth,
+                            gender,
                             false, // IS_ADMIN
                             1      // LEVEL
                     }

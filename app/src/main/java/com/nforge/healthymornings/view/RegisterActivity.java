@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,12 +15,14 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import com.nforge.healthymornings.databinding.ActivityRegisterBinding;
 import com.nforge.healthymornings.viewmodel.RegisterViewmodel;
+import com.nforge.healthymornings.R;
 
 
 public class RegisterActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private RegisterViewmodel userRegisterViewmodel;
     private ActivityRegisterBinding binding;
+    private Spinner genderSpinner;
 
 
     @Override
@@ -26,6 +30,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        genderSpinner = binding.genderSpinner;
+        String[] genders ={"male", "female", "other"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, genders );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        genderSpinner.setAdapter(adapter);
 
         userRegisterViewmodel = new ViewModelProvider(this).get(RegisterViewmodel.class);
         initDatePicker();
@@ -127,12 +138,15 @@ public class RegisterActivity extends AppCompatActivity {
                 utilDate.getTime()
         );
 
+        String selectedGender = genderSpinner.getSelectedItem().toString();
+
         userRegisterViewmodel.registerUser(
                 accountRegisterUsername,
                 accountRegisterEmail,
                 accountRegisterPassword,
                 accountConfirmPassword,
                 selectedDate,
+                selectedGender,
                 datePickerDialog);
     }
 }

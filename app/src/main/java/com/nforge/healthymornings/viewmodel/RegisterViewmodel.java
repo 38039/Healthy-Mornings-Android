@@ -35,7 +35,7 @@ public class RegisterViewmodel extends AndroidViewModel {
 
 
     // Logowanie użytkownika i sprawdzanie czy przebiegło ono pomyślnie
-    public void registerUser(String accountRegisterUsername, String accountRegisterEmail, String accountRegisterPassword, String accountConfirmPassword, Date birthDate, DatePickerDialog datePickerDialog) {
+    public void registerUser(String accountRegisterUsername, String accountRegisterEmail, String accountRegisterPassword, String accountConfirmPassword, Date birthDate, String selectedGender, DatePickerDialog datePickerDialog) {
         // Zabezpieczenie przed brakiem danych do rejestracji
         if ( accountRegisterUsername.isEmpty() || accountRegisterEmail.isEmpty() || accountRegisterPassword.isEmpty() || accountConfirmPassword.isEmpty() ) {
             registerErrorLiveData.postValue("Proszę podać wszystkie potrzebne informacje");
@@ -65,7 +65,7 @@ public class RegisterViewmodel extends AndroidViewModel {
         }
 
         // Rejestracja użytkownika w bazie danych
-        if ( !userRepository.registerUserCredentials(accountRegisterUsername, accountRegisterEmail, accountRegisterPassword, birthDate) ) {
+        if ( !userRepository.registerUserCredentials(accountRegisterUsername, accountRegisterEmail, accountRegisterPassword, birthDate, selectedGender) ) {
             registerErrorLiveData.postValue("Wystąpił problem z zapisem danych użytkownika do bazy danych");
             return;
         }
