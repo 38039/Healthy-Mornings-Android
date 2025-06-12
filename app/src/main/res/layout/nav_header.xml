@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
+    android:background="@color/green"
     android:gravity="bottom"
+    android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/ic_launcher_background"
     android:theme="@style/Theme.NavigationDrawerMenu"> <!-- Umieść tutaj banner -->
 
     <!-- W przyszłych wersjach można podmienić ikonę aplikacji na avatar użytkownika pobierany z bazy -->
     <ImageView
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:src="@drawable/smile" /> <!-- Umieść tutaj logo aplikacji -->
+        android:src="@drawable/logo" /> <!-- Umieść tutaj logo aplikacji -->
 
     <!-- Analogicznie sprawa wygląda z nazwą aplikacji na imię i nazwisko użytkownika-->
     <TextView
@@ -27,9 +26,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/nav_description"
         android:textColor="@color/white"
-        android:textSize="14sp"
-        android:layout_marginBottom="16dp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

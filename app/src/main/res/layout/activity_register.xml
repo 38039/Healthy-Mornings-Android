@@ -10,7 +10,7 @@
         android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Account"
+        android:text="Nowe konto"
         android:textColor="@color/title"
         android:textSize="60sp"
         android:textStyle="bold"
@@ -80,23 +80,23 @@
                 android:layout_marginTop="16dp" />
 
             <EditText
-                android:id="@+id/NewAccountPasswordConfirmationTextView"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded"
-                android:hint="confirm password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="@color/title" />
-
-            <EditText
                 android:id="@+id/NewAccountPasswordTextView"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/rounded"
-                android:hint="password"
+                android:hint="hasło"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/title" />
+
+            <EditText
+                android:id="@+id/NewAccountPasswordConfirmationTextView"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded"
+                android:hint="potwierdź"
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textColor="@color/title" />
@@ -108,7 +108,7 @@
                 android:layout_marginTop="50dp"
                 android:backgroundTint="@color/button"
                 android:onClick="onRegisterButtonClick"
-                android:text="Create"
+                android:text="Utwórz konto"
                 android:textColor="@color/words"
                 android:textSize="18sp"
                 android:textStyle="bold" />
