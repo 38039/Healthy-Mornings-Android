@@ -90,9 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Nie udało się wylogować użytkownika", Toast.LENGTH_LONG).show();
                 return false;
             }
-
+            getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().clear().apply();
             Log.v("MainActivity", "onNavigationItemSelected(): Wylogowano użytkownika");
-
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();

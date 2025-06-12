@@ -1,6 +1,7 @@
 package com.nforge.healthymornings.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -29,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             if ( success != null && !success.isEmpty() ) {
                 Toast.makeText(this, "Zalogowano pomyślnie!", Toast.LENGTH_SHORT).show();
                 Log.v("LoginViewModel", "loginUser(): Użytkownik został pomyślnie zalogowany");
+                getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().putBoolean("isLoggedIn", true).putString("userEmail", success).apply();
                 goToMainActivity();
             }
         });
