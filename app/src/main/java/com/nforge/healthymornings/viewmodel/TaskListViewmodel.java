@@ -32,7 +32,6 @@ public class TaskListViewmodel extends AndroidViewModel {
 
             if ( !taskRepository.loadUserTasks(taskTitlesList, taskIdentifiersList, adapter) ) {
                 Log.e("TaskListViewModel", "populateAdapterWithTasks(): Nie udało się załadować zadań");
-                Toast.makeText(this.getApplication(), "Nie udało się załadować zadań", Toast.LENGTH_SHORT).show();
                 return;
             }
 
