@@ -11,12 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Objects;
 import com.nforge.healthymornings.databinding.ActivityTaskListBinding;
 import com.nforge.healthymornings.view.TaskEditActivity;
-import com.nforge.healthymornings.view.TaskTODOActivity;
 import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
 import com.nforge.healthymornings.R;
 

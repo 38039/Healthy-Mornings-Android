@@ -1,6 +1,9 @@
 package com.nforge.healthymornings.model.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import java.util.List;
 public class TaskTODOFragment extends Fragment {
     private ActivityTaskTodoBinding binding;
     private TaskListViewmodel viewModel;
+    private SharedPreferences sharedPreferences;
 
     public TaskTODOFragment() {}
 
@@ -36,6 +40,8 @@ public class TaskTODOFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(TaskListViewmodel.class);
         viewModel.populateAdapterWithTasks(null);
+
+        sharedPreferences = requireContext().getSharedPreferences("task_checkbox_prefs", MODE_PRIVATE);
 
         viewModel.taskTitles.observe(getViewLifecycleOwner(), taskTitles -> {
             List<Integer> taskIds = viewModel.taskIdentifiers.getValue();
@@ -54,14 +60,25 @@ public class TaskTODOFragment extends Fragment {
                 checkBox.setText(taskTitle);
                 checkBox.setTextColor(getResources().getColor(android.R.color.black));
 
+                // Sprawdź, czy checkbox był wcześniej zaznaczony i czy minęło 24h
+                long lastCheckedTime = sharedPreferences.getLong(String.valueOf(taskId), 0);
+                long now = System.currentTimeMillis();
+                if (lastCheckedTime != 0 && now - lastCheckedTime < 12 * 60 * 60 * 1000) {
+                    checkBox.setChecked(true);
+                    checkBox.setEnabled(false);
+                }
+
                 checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if (isChecked) {
+                        // Zapisz czas zaznaczenia i zablokuj checkbox
+                        sharedPreferences.edit().putLong(String.valueOf(taskId), System.currentTimeMillis()).apply();
                         buttonView.setEnabled(false);
                     }
                 });
 
                 binding.TaskTODOList.addView(checkBox);
             }
+
         });
 
         binding.buttonBack.setOnClickListener(v -> {
