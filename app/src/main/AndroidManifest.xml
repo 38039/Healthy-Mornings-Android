@@ -41,7 +41,8 @@
             android:name=".view.TaskEditActivity"
             android:exported="false"
             android:theme="@style/Theme.HealthyMornings" />
-        <activity android:name=".view.TaskTODOActivity" />
+        <activity android:name=".view.GratulationActivity" />
+
 
         <!--        <activity-->
 <!--            android:name=".view.TaskAddActivity"-->

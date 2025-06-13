@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.nforge.healthymornings.databinding.ActivityTaskTodoBinding;
+import com.nforge.healthymornings.view.GratulationActivity;
 import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
 
 import java.util.List;
@@ -73,6 +74,9 @@ public class TaskTODOFragment extends Fragment {
                         // Zapisz czas zaznaczenia i zablokuj checkbox
                         sharedPreferences.edit().putLong(String.valueOf(taskId), System.currentTimeMillis()).apply();
                         buttonView.setEnabled(false);
+
+                        Intent intent = new Intent(requireContext(), GratulationActivity.class);
+                        startActivity(intent);
                     }
                 });
 
