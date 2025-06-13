@@ -15,7 +15,7 @@ public class User {
     private final double          height;
     private final double          weight;
     private final boolean         isAdmin;
-    private final long            pointsAmount;
+    private final long points;
 
 
     // Konstruktor
@@ -33,7 +33,7 @@ public class User {
             double          height,
             double          weight,
             boolean         isAdmin,
-            long            pointsAmount
+            long            points
     ) {
         this.id_user        = id_user;
         this.name           = name;
@@ -47,7 +47,7 @@ public class User {
         this.height         = height;
         this.weight         = weight;
         this.isAdmin        = isAdmin;
-        this.pointsAmount   = pointsAmount;
+        this.points         = points;
     }
 
 
@@ -65,5 +65,5 @@ public class User {
     public double           getHeight()         { return height;    }
     public double           getWeight()         { return weight;    }
     public boolean          getIsAdmin()        { return isAdmin;   }
-    public long             getPointsAmount()   { return pointsAmount;  }
+    public long             getPoints()         { return points;  }
 }

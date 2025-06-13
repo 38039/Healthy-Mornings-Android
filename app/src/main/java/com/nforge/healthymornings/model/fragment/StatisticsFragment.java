@@ -1,6 +1,7 @@
 package com.nforge.healthymornings.model.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,14 @@ public class StatisticsFragment extends Fragment {
 
         User currentUser = userRepository.getUserCredentials();
         if (currentUser != null) {
-            long points = currentUser.getPointsAmount();
+            long points = currentUser.getPoints();
+            Log.v("StatisticsFragment", "Punkty użytkownika: " + points);
             binding.PointsText.setText(String.valueOf(points));
         } else {
+            Log.v("StatisticsFragment", "Brak użytkownika lub dane null");
             binding.PointsText.setText("Brak danych");
         }
+
 
         viewModel.getStatisticsLiveData().observe(getViewLifecycleOwner(), statistics -> {
             if (statistics != null) {

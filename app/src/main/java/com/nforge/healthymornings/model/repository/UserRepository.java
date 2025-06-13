@@ -119,7 +119,7 @@ public class UserRepository {
 
             // Wpisz użytkownika do bazy danych
             databaseConnector.executeSQLQuery(
-                    "INSERT INTO users (username, email, password, date_of_birth, gender, is_admin, level, points_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO users (username, email, password, date_of_birth, gender, is_admin, level, points) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                     new Object[]{
                             username,
                             email,
@@ -175,7 +175,7 @@ public class UserRepository {
                         retrievedUserData.getDouble("height"),
                         retrievedUserData.getDouble("weight"),
                         retrievedUserData.getBoolean("is_admin"),
-                        retrievedUserData.getLong("points_amount")
+                        retrievedUserData.getLong("points")
                 );
 
             } else throw new Exception("UŻYTKOWNIK NIE ISTNIEJE W BAZIE DANYCH");
@@ -188,32 +188,32 @@ public class UserRepository {
 
 
     public boolean addPointsToUser(long pointsToAdd) {
-        if (sessionHandler.getUserSession() == -1) {
-            Log.e("UserRepository", "addPointsToUser(): Użytkownik nie jest zalogowany");
+            try {
+                // Sprawdzanie czy użytkownik jest zalogowany
+                if(sessionHandler.getUserSession() == -1)
+                    throw new Exception("Użytkownik nie jest zalogowany");
+
+                // Nawiązanie połączenia z bazą
+                databaseConnector = new DatabaseConnectivityJDBC();
+                databaseConnector.establishDatabaseConnection();
+
+                // Aktualizacja użytkownika w bazie danych
+                retrievedUserData = databaseConnector.executeSQLQuery(
+                        "UPDATE users SET points = points + ? WHERE id_user = ?",
+                        new Object[] { pointsToAdd, sessionHandler.getUserSession() }
+                );
+
+                if ( retrievedUserData != null )
+                    throw new Exception("Nie udało się zaktualizować danych użytkownika");
+
+                return true;
+
+            } catch (Exception userCredentialsEditException) {
+                Log.e("UserRepository", "changeUserCredentials(): " + userCredentialsEditException.getMessage());
+            } finally { databaseConnector.closeConnection(); }
+
             return false;
         }
-
-        DatabaseConnectivityJDBC databaseConnector = null;
-        try {
-            databaseConnector = new DatabaseConnectivityJDBC();
-            databaseConnector.establishDatabaseConnection();
-
-            ResultSet rs = databaseConnector.executeSQLQuery(
-                    "UPDATE users SET points_amount = points_amount + " + pointsToAdd + " WHERE id_user = " + sessionHandler.getUserSession(),
-                    new Object[]{pointsToAdd, sessionHandler.getUserSession()}
-            );
-            return true;
-
-        } catch (Exception e) {
-            Log.e("UserRepository", "addPointsToUser(): Błąd podczas aktualizacji punktów", e);
-        } finally {
-            if (databaseConnector != null) {
-                databaseConnector.closeConnection();
-            }
-        }
-        return false;
-    }
-
 
 
     public boolean changeUserCredentials (

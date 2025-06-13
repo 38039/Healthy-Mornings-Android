@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.nforge.healthymornings.databinding.ActivityTaskTodoBinding;
+import com.nforge.healthymornings.model.data.User;
 import com.nforge.healthymornings.model.repository.UserRepository;
 import com.nforge.healthymornings.view.GratulationActivity;
 import com.nforge.healthymornings.viewmodel.TaskEditViewmodel;
@@ -29,9 +31,10 @@ public class TaskTODOFragment extends Fragment {
     private TaskListViewmodel viewModel;
     private TaskEditViewmodel taskEditViewmodel;
     private SharedPreferences sharedPreferences;
+    private UserRepository userRepository;
 
-    // Dodaj zmienną do przechowywania punktów
     private int pointsForTask = 0;
+    private long points = 0;
 
     public TaskTODOFragment() {}
 
@@ -47,11 +50,18 @@ public class TaskTODOFragment extends Fragment {
 
         taskEditViewmodel = new ViewModelProvider(this).get(TaskEditViewmodel.class);
         viewModel = new ViewModelProvider(requireActivity()).get(TaskListViewmodel.class);
+        userRepository = new UserRepository(requireContext());
+
+        User currentUser = userRepository.getUserCredentials();
+        if (currentUser != null) {
+            points = currentUser.getPoints();
+            Log.v("StatisticsFragment", "Punkty użytkownika: " + points);
+        } else {
+            Log.v("StatisticsFragment", "Brak użytkownika lub dane null");
+        }
 
         viewModel.populateAdapterWithTasks(null);
-
         sharedPreferences = requireContext().getSharedPreferences("task_checkbox_prefs", MODE_PRIVATE);
-
         viewModel.taskTitles.observe(getViewLifecycleOwner(), taskTitles -> {
             List<Integer> taskIds = viewModel.taskIdentifiers.getValue();
 
@@ -88,6 +98,7 @@ public class TaskTODOFragment extends Fragment {
                         taskEditViewmodel.getTaskData().observe(getViewLifecycleOwner(), task -> {
                             if (task != null) {
                                 pointsForTask = task.getReward();
+                                userRepository.addPointsToUser(pointsForTask);
                                 Toast.makeText(requireContext(),"Zdobyto " + pointsForTask + " punktów!", Toast.LENGTH_SHORT).show();
 
                                 taskEditViewmodel.getTaskData().removeObservers(getViewLifecycleOwner());
