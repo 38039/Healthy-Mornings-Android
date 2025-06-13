@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.Objects;
 import com.nforge.healthymornings.databinding.ActivityTaskListBinding;
 import com.nforge.healthymornings.view.TaskEditActivity;
+import com.nforge.healthymornings.view.TaskTODOActivity;
 import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
 
 
@@ -58,8 +59,17 @@ public class TaskListFragment extends Fragment {
             startActivity(intent);
         });
 
-        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis());
-        binding.deadlineTaskText.setText(today);
+        binding.deadlineTaskText.setOnClickListener(v -> {
+            int currentHour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY);
+            if (currentHour >= 4 && currentHour < 9) {
+                Intent intent = new Intent(requireContext(), TaskTODOActivity.class);
+                startActivity(intent);
+            } else {
+                Log.i("TaskListFragment", "Próba uruchomienia TaskTODOActivity poza dozwolonymi godzinami (4-9 rano).");
+                android.widget.Toast.makeText(requireContext(), "Dostępne tylko od 4:00 do 9:00", android.widget.Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     // Czyści binding, zapobiega wyciekowi pamięci

@@ -19,7 +19,7 @@ import com.nforge.healthymornings.databinding.ActivityMainBinding;
 import com.nforge.healthymornings.model.fragment.AboutUsFragment;
 import com.nforge.healthymornings.model.fragment.AccountEditFragment;
 import com.nforge.healthymornings.model.fragment.PasswordEditFragment;
-import com.nforge.healthymornings.model.fragment.ShareFragment;
+import com.nforge.healthymornings.model.fragment.StatisticsFragment;
 import com.nforge.healthymornings.model.fragment.TaskAddFragment;
 import com.nforge.healthymornings.model.fragment.TaskAllFragment;
 import com.nforge.healthymornings.model.fragment.TaskListFragment;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             selectedFragment = new AboutUsFragment();
 
         if (item.getItemId() == R.id.shareFragment)
-            selectedFragment = new ShareFragment();
+            selectedFragment = new StatisticsFragment();
 
         if (item.getItemId() == R.id.accountEditFragment)
             selectedFragment = new AccountEditFragment();
