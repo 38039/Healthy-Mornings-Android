@@ -119,7 +119,7 @@ public class UserRepository {
 
             // Wpisz użytkownika do bazy danych
             databaseConnector.executeSQLQuery(
-                    "INSERT INTO users (username, email, password, date_of_birth, gender, is_admin, level) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO users (username, email, password, date_of_birth, gender, is_admin, level, points_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                     new Object[]{
                             username,
                             email,
@@ -127,7 +127,8 @@ public class UserRepository {
                             date_of_birth,
                             gender,
                             false, // IS_ADMIN
-                            1      // LEVEL
+                            1,      // LEVEL
+                            0
                     }
             );
 
@@ -173,7 +174,8 @@ public class UserRepository {
                         retrievedUserData.getDate("date_of_birth"),
                         retrievedUserData.getDouble("height"),
                         retrievedUserData.getDouble("weight"),
-                        retrievedUserData.getBoolean("is_admin")
+                        retrievedUserData.getBoolean("is_admin"),
+                        retrievedUserData.getLong("points_amount")
                 );
 
             } else throw new Exception("UŻYTKOWNIK NIE ISTNIEJE W BAZIE DANYCH");
@@ -183,6 +185,36 @@ public class UserRepository {
             return null;
         }
     }
+
+
+    public boolean addPointsToUser(long pointsToAdd) {
+        if (sessionHandler.getUserSession() == -1) {
+            Log.e("UserRepository", "addPointsToUser(): Użytkownik nie jest zalogowany");
+            return false;
+        }
+
+        DatabaseConnectivityJDBC databaseConnector = null;
+        try {
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
+
+            ResultSet rs = databaseConnector.executeSQLQuery(
+                    "UPDATE users SET points_amount = points_amount + " + pointsToAdd + " WHERE id_user = " + sessionHandler.getUserSession(),
+                    new Object[]{pointsToAdd, sessionHandler.getUserSession()}
+            );
+            return true;
+
+        } catch (Exception e) {
+            Log.e("UserRepository", "addPointsToUser(): Błąd podczas aktualizacji punktów", e);
+        } finally {
+            if (databaseConnector != null) {
+                databaseConnector.closeConnection();
+            }
+        }
+        return false;
+    }
+
+
 
     public boolean changeUserCredentials (
             String          name,
@@ -221,7 +253,6 @@ public class UserRepository {
         return false;
     }
 
-    // TODO: Można scalić metody changeUserCredentials i changeUserPassword
     public boolean changeUserPassword(String password) {
         try {
             // Sprawdzanie czy użytkownik jest zalogowany

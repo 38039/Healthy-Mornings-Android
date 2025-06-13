@@ -60,7 +60,7 @@ public class TaskListFragment extends Fragment {
 
         binding.deadlineTaskText.setOnClickListener(v -> {
             int currentHour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY);
-            if (currentHour >= 1 && currentHour < 19) {
+            if (currentHour >= 1 && currentHour < 22) {
                 requireActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()

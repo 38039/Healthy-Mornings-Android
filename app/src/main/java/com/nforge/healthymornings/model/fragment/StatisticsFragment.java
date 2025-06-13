@@ -13,10 +13,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.nforge.healthymornings.databinding.ActivityStatisticsBinding;
 import com.nforge.healthymornings.viewmodel.TaskAllViewmodel;
+import com.nforge.healthymornings.model.data.User;
+import com.nforge.healthymornings.model.repository.UserRepository;
 
 public class StatisticsFragment extends Fragment {
     private ActivityStatisticsBinding binding;
     private TaskAllViewmodel viewModel;
+    private UserRepository userRepository;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,6 +33,15 @@ public class StatisticsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(this).get(TaskAllViewmodel.class);
+        userRepository = new UserRepository(requireContext());
+
+        User currentUser = userRepository.getUserCredentials();
+        if (currentUser != null) {
+            long points = currentUser.getPointsAmount();
+            binding.PointsText.setText(String.valueOf(points));
+        } else {
+            binding.PointsText.setText("Brak danych");
+        }
 
         viewModel.getStatisticsLiveData().observe(getViewLifecycleOwner(), statistics -> {
             if (statistics != null) {
@@ -56,3 +68,4 @@ public class StatisticsFragment extends Fragment {
         binding = null;
     }
 }
+

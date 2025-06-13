@@ -17,6 +17,7 @@ public class TaskListViewmodel extends AndroidViewModel {
     private final TaskRepository taskRepository;
     public MutableLiveData<ArrayList<String>>   taskTitles      = new MutableLiveData<>(new ArrayList<>());
     public MutableLiveData<ArrayList<Integer>>  taskIdentifiers = new MutableLiveData<>(new ArrayList<>());
+    public MutableLiveData<ArrayList<Integer>> taskPoints = new MutableLiveData<>();
 
     public TaskListViewmodel(@NonNull Application application) {
         super(application);

@@ -17,7 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.nforge.healthymornings.databinding.ActivityTaskTodoBinding;
+import com.nforge.healthymornings.model.repository.UserRepository;
 import com.nforge.healthymornings.view.GratulationActivity;
+import com.nforge.healthymornings.viewmodel.TaskEditViewmodel;
 import com.nforge.healthymornings.viewmodel.TaskListViewmodel;
 
 import java.util.List;
@@ -25,7 +27,11 @@ import java.util.List;
 public class TaskTODOFragment extends Fragment {
     private ActivityTaskTodoBinding binding;
     private TaskListViewmodel viewModel;
+    private TaskEditViewmodel taskEditViewmodel;
     private SharedPreferences sharedPreferences;
+
+    // Dodaj zmienną do przechowywania punktów
+    private int pointsForTask = 0;
 
     public TaskTODOFragment() {}
 
@@ -39,13 +45,16 @@ public class TaskTODOFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        taskEditViewmodel = new ViewModelProvider(this).get(TaskEditViewmodel.class);
         viewModel = new ViewModelProvider(requireActivity()).get(TaskListViewmodel.class);
+
         viewModel.populateAdapterWithTasks(null);
 
         sharedPreferences = requireContext().getSharedPreferences("task_checkbox_prefs", MODE_PRIVATE);
 
         viewModel.taskTitles.observe(getViewLifecycleOwner(), taskTitles -> {
             List<Integer> taskIds = viewModel.taskIdentifiers.getValue();
+
             if (taskIds == null || taskTitles == null || taskIds.size() != taskTitles.size()) {
                 Toast.makeText(requireContext(), "Błąd danych z ViewModel", Toast.LENGTH_SHORT).show();
                 return;
@@ -54,26 +63,36 @@ public class TaskTODOFragment extends Fragment {
             binding.TaskTODOList.removeAllViews();
 
             for (int i = 0; i < taskTitles.size(); i++) {
-                int taskId = taskIds.get(i);
-                String taskTitle = taskTitles.get(i);
+                final int index = i;
+                int taskId = taskIds.get(index);
+                String taskTitle = taskTitles.get(index);
 
                 CheckBox checkBox = new CheckBox(requireContext());
                 checkBox.setText(taskTitle);
                 checkBox.setTextColor(getResources().getColor(android.R.color.black));
 
-                // Sprawdź, czy checkbox był wcześniej zaznaczony i czy minęło 24h
                 long lastCheckedTime = sharedPreferences.getLong(String.valueOf(taskId), 0);
                 long now = System.currentTimeMillis();
-                if (lastCheckedTime != 0 && now - lastCheckedTime < 12 * 60 * 60 * 1000) {
+                if (lastCheckedTime != 0 && now - lastCheckedTime < 1) {
                     checkBox.setChecked(true);
                     checkBox.setEnabled(false);
                 }
 
                 checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if (isChecked) {
-                        // Zapisz czas zaznaczenia i zablokuj checkbox
                         sharedPreferences.edit().putLong(String.valueOf(taskId), System.currentTimeMillis()).apply();
                         buttonView.setEnabled(false);
+
+                        taskEditViewmodel.loadTaskData(taskId);
+
+                        taskEditViewmodel.getTaskData().observe(getViewLifecycleOwner(), task -> {
+                            if (task != null) {
+                                pointsForTask = task.getReward();
+                                Toast.makeText(requireContext(),"Zdobyto " + pointsForTask + " punktów!", Toast.LENGTH_SHORT).show();
+
+                                taskEditViewmodel.getTaskData().removeObservers(getViewLifecycleOwner());
+                            }
+                        });
 
                         Intent intent = new Intent(requireContext(), GratulationActivity.class);
                         startActivity(intent);
@@ -82,13 +101,9 @@ public class TaskTODOFragment extends Fragment {
 
                 binding.TaskTODOList.addView(checkBox);
             }
-
         });
 
-        binding.buttonBack.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        });
-
+        binding.buttonBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
     }
 
     @Override
@@ -96,4 +111,10 @@ public class TaskTODOFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    // Metoda opcjonalna, jeśli chcesz gdzieś udostępnić punkty
+    public int getPointsForTask() {
+        return pointsForTask;
+    }
 }
+

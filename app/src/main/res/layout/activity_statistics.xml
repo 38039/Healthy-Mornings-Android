@@ -32,7 +32,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/Level"
+            android:id="@+id/ptext"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
@@ -40,7 +40,7 @@
             android:backgroundTint="@color/object"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Level"
+            android:text="Punkty"
             android:textColor="@color/words"
             android:textColorHint="@color/words"
             android:textSize="50sp"
@@ -55,7 +55,7 @@
             android:backgroundTint="@color/object"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Punkty"
+            android:text="liczba"
             android:textColor="@color/words"
             android:textColorHint="@color/words"
             android:textSize="20sp"
