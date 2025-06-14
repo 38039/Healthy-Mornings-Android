@@ -10,11 +10,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
+import com.nforge.healthymornings.model.data.User;
 import com.nforge.healthymornings.model.repository.TaskRepository;
+import com.nforge.healthymornings.model.repository.UserRepository;
 
 
 public class TaskListViewmodel extends AndroidViewModel {
     private final TaskRepository taskRepository;
+    private UserRepository userRepository;
     public MutableLiveData<ArrayList<String>>   taskTitles      = new MutableLiveData<>(new ArrayList<>());
     public MutableLiveData<ArrayList<Integer>>  taskIdentifiers = new MutableLiveData<>(new ArrayList<>());
     public MutableLiveData<ArrayList<Integer>> taskPoints = new MutableLiveData<>();
@@ -22,6 +25,7 @@ public class TaskListViewmodel extends AndroidViewModel {
     public TaskListViewmodel(@NonNull Application application) {
         super(application);
         taskRepository = new TaskRepository(application.getApplicationContext());
+        userRepository = new UserRepository(application.getApplicationContext());
     }
 
     public void populateAdapterWithTasks(ArrayAdapter<String> adapter) {
@@ -40,5 +44,10 @@ public class TaskListViewmodel extends AndroidViewModel {
 
             Log.v("TaskListViewModel", "populateAdapterWithTasks(): Załadowano zadania");
         }
+    }
+
+    public int getId() {
+        User user = userRepository.getUserCredentials();
+        return user.getIdUser();
     }
 }

@@ -3,7 +3,11 @@ package com.nforge.healthymornings.model.repository;
 import android.content.Context;
 import android.util.Log;
 
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.nforge.healthymornings.model.data.Statistics;
 import com.nforge.healthymornings.model.services.DatabaseConnectivityJDBC;
@@ -18,6 +22,67 @@ public class StatisticsRepository {
         Context currentApplicationContext = context.getApplicationContext();
         sessionHandler = new SessionManager(currentApplicationContext);
     }
+
+    public boolean doesUserStatisticsExistInDatabase(Map<String, Integer> columnValueMap) {
+        try {
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
+
+            StringBuilder queryBuilder = new StringBuilder("SELECT 1 FROM user_statistics WHERE ");
+            List<Object> values = new ArrayList<>();
+
+            int count = 0;
+            for (Map.Entry<String, Integer> entry : columnValueMap.entrySet()) {
+                if (count > 0) {
+                    queryBuilder.append(" OR ");
+                }
+                queryBuilder.append(entry.getKey()).append(" = ?");
+                values.add(entry.getValue());
+                count++;
+            }
+
+            String query = queryBuilder.toString();
+
+            ResultSet rs = databaseConnector.executeSQLQuery(query, values.toArray());
+
+            // Jeśli znajdzie wynik, użytkownik istnieje
+            if (rs != null && rs.next()) {
+                Log.v("StatisticsRepository", "doesUserStatisticsExistInDatabase(): statystyki użytkownika istnieja.");
+                return true;
+            }
+
+        } catch (Exception e) {
+            Log.w("StatisticsRepository", "doesUserStatisticsExistInDatabase(): Błąd - " + e.getMessage());
+        } finally { databaseConnector.closeConnection(); }
+
+        return false;
+    }
+
+
+    public boolean createUserStatistics(long id_user) {
+        try {
+            databaseConnector = new DatabaseConnectivityJDBC();
+            databaseConnector.establishDatabaseConnection();
+
+            databaseConnector.executeSQLQuery(
+                    "INSERT INTO user_statistics (id_user, tasks_active, tasks_completed) VALUES (?, ?, ?)",
+                    new Object[]{
+                            id_user,
+                            0,
+                            0
+                    }
+            );
+
+            return true;
+        } catch (Exception statisticsException) {
+            Log.e("StatisticsRepository", "createUserStatisticsInsideDatabase(): " + statisticsException.getMessage());
+        } finally {
+            databaseConnector.closeConnection();
+        }
+
+        return false;
+    }
+
 
     public Statistics getCurrentUserStatistics() {
         try {
