@@ -43,7 +43,7 @@ public class TaskListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(requireActivity()).get(TaskListViewmodel.class);
-        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1,
+        adapter = new ArrayAdapter<>(requireContext(), R.layout.list_item, R.id.textItem,
                 Objects.requireNonNull(viewModel.taskTitles.getValue()));
         statisticsRepository = new StatisticsRepository(requireContext());
 

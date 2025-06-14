@@ -61,9 +61,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#E8E8E8"
-                    android:backgroundTint="@color/background"
+                    android:backgroundTint="@color/object"
                     android:foregroundGravity="center"
-                    android:textAlignment="gravity" />
+                    android:textAlignment="gravity"
+                    android:textFilterEnabled="false" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

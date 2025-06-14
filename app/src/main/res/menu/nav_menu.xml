@@ -15,10 +15,6 @@
             android:id="@+id/taskAddFragment"
             android:icon="@drawable/ic_task_add"
             android:title="@string/nav_task_add" />
-        <item
-            android:id="@+id/taskAllFragment"
-            android:icon="@drawable/ic_task_all"
-            android:title="@string/nav_task_all" />
     </group>
 
 

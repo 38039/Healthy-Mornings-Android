@@ -69,9 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.taskAddFragment)
             selectedFragment = new TaskAddFragment();
 
-        if (item.getItemId() == R.id.taskAllFragment)
-            selectedFragment = new TaskAllFragment();
-
         if (item.getItemId() == R.id.aboutUsFragment)
             selectedFragment = new AboutUsFragment();
 

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:padding="20dp"
     tools:context=".view.TaskEditActivity">
 
 
@@ -13,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,14 +21,14 @@
         <TextView
             android:id="@+id/headerText"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="70dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/rounded"
             android:backgroundTint="@color/object"
             android:gravity="center"
             android:text="@string/edit_task_text_view"
             android:textColor="@color/words"
-            android:textSize="40sp"
+            android:textSize="50sp"
             android:textStyle="bold" />
 
         <EditText
@@ -86,7 +86,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="100dp"
             android:gravity="center|center_vertical"
             android:orientation="horizontal">
 
