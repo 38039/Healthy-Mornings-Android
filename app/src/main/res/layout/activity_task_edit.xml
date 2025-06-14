@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,122 +7,110 @@
     android:background="#FFFFFF"
     tools:context=".view.TaskEditActivity">
 
-    <TextView
-        android:id="@+id/headerText"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rounded"
-        android:backgroundTint="@color/object"
-        android:gravity="center"
-        android:text="@string/edit_task_text_view"
-        android:textColor="@color/words"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/TaskNameTextView"
-        android:layout_width="381dp"
-        android:layout_height="87dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rounded"
-        android:backgroundTint="@color/object"
-        android:hint="@string/task_name_text_view"
-        android:inputType="text"
-        android:importantForAutofill="no"
-        android:padding="16dp"
-        android:textColor="@color/words"
-        android:textColorHint="@color/words"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerText" />
-
-    <EditText
-        android:id="@+id/TaskCategoryTextView"
-        android:layout_width="380dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="144dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rounded"
-        android:backgroundTint="@color/object"
-        android:hint="@string/task_category_text_view"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:padding="16dp"
-        android:textColor="@color/words"
-        android:textColorHint="@color/words"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerText" />
-
-
-    <EditText
-        android:id="@+id/TaskDescriptionTextView"
-        android:layout_width="375dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="@string/task_description_text_view"
-        android:importantForAutofill="no"
-        android:inputType="text"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.594" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/TaskPointsTextNumber"
-        android:layout_width="373dp"
-        android:layout_height="72dp"
-        android:ems="10"
-        android:hint="@string/task_points_text_number"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.394"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.734" />
+        <TextView
+            android:id="@+id/headerText"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded"
+            android:backgroundTint="@color/object"
+            android:gravity="center"
+            android:text="@string/edit_task_text_view"
+            android:textColor="@color/words"
+            android:textSize="50sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/DeleteTaskButton"
-        android:layout_width="157dp"
-        android:layout_height="48dp"
-        android:backgroundTint="@color/object"
-        android:text="@string/delete_task_button_text"
-        android:onClick="onDeleteTaskButtonClick"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.924" />
+        <EditText
+            android:id="@+id/TaskNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded"
+            android:backgroundTint="@color/object"
+            android:hint="@string/task_name_text_view"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:padding="16dp"
+            android:textColor="@color/words"
+            android:textColorHint="@color/words"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/EditTaskButton"
-        android:layout_width="144dp"
-        android:layout_height="48dp"
-        android:text="@string/edit_task_button_text"
-        android:onClick="onSaveTaskButtonClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923" />
+        <EditText
+            android:id="@+id/TaskCategoryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded"
+            android:backgroundTint="@color/object"
+            android:hint="@string/task_category_text_view"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:padding="16dp"
+            android:textColor="@color/words"
+            android:textColorHint="@color/words"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/TaskDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="70dp"
+            android:ems="10"
+            android:hint="@string/task_description_text_view"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/TaskPointsTextNumber"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/task_points_text_number"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/DeleteTaskButton"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="40dp"
+                android:backgroundTint="@color/button"
+                android:onClick="onDeleteTaskButtonClick"
+                android:text="@string/delete_task_button_text"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/EditTaskButton"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/button"
+                android:onClick="onSaveTaskButtonClick"
+                android:text="@string/edit_task_button_text"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

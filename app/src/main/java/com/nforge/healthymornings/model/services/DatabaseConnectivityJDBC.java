@@ -109,6 +109,7 @@ public class DatabaseConnectivityJDBC {
         return databaseConnection;
     }
 
+
     // Wykonywanie zapytań do bazy danych i zwracanie odpowiedzi z niej
     public ResultSet executeSQLQuery(String query, Object[] arguments) {
         try {

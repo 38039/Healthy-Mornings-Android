@@ -15,6 +15,7 @@ public class User {
     private final double          height;
     private final double          weight;
     private final boolean         isAdmin;
+    private final long points;
 
 
     // Konstruktor
@@ -31,7 +32,8 @@ public class User {
             java.util.Date  date_of_birth,
             double          height,
             double          weight,
-            boolean         isAdmin
+            boolean         isAdmin,
+            long            points
     ) {
         this.id_user        = id_user;
         this.name           = name;
@@ -45,6 +47,7 @@ public class User {
         this.height         = height;
         this.weight         = weight;
         this.isAdmin        = isAdmin;
+        this.points         = points;
     }
 
 
@@ -62,4 +65,5 @@ public class User {
     public double           getHeight()         { return height;    }
     public double           getWeight()         { return weight;    }
     public boolean          getIsAdmin()        { return isAdmin;   }
+    public long             getPoints()         { return points;  }
 }

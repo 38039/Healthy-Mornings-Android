@@ -112,21 +112,23 @@ public class UserRepository {
 
 
 
-    public boolean registerUserCredentials(String username, String email, String password, Date date_of_birth) {
+    public boolean registerUserCredentials(String username, String email, String password, Date date_of_birth, String gender) {
         try {
             databaseConnector = new DatabaseConnectivityJDBC();
             databaseConnector.establishDatabaseConnection();
 
             // Wpisz użytkownika do bazy danych
             databaseConnector.executeSQLQuery(
-                    "INSERT INTO users (username, email, password, date_of_birth, is_admin, level) VALUES (?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO users (username, email, password, date_of_birth, gender, is_admin, level, points) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                     new Object[]{
                             username,
                             email,
                             password,
                             date_of_birth,
+                            gender,
                             false, // IS_ADMIN
-                            1      // LEVEL
+                            1,      // LEVEL
+                            0
                     }
             );
 
@@ -172,7 +174,8 @@ public class UserRepository {
                         retrievedUserData.getDate("date_of_birth"),
                         retrievedUserData.getDouble("height"),
                         retrievedUserData.getDouble("weight"),
-                        retrievedUserData.getBoolean("is_admin")
+                        retrievedUserData.getBoolean("is_admin"),
+                        retrievedUserData.getLong("points")
                 );
 
             } else throw new Exception("UŻYTKOWNIK NIE ISTNIEJE W BAZIE DANYCH");
@@ -182,6 +185,36 @@ public class UserRepository {
             return null;
         }
     }
+
+
+    public boolean addPointsToUser(long pointsToAdd) {
+            try {
+                // Sprawdzanie czy użytkownik jest zalogowany
+                if(sessionHandler.getUserSession() == -1)
+                    throw new Exception("Użytkownik nie jest zalogowany");
+
+                // Nawiązanie połączenia z bazą
+                databaseConnector = new DatabaseConnectivityJDBC();
+                databaseConnector.establishDatabaseConnection();
+
+                // Aktualizacja użytkownika w bazie danych
+                retrievedUserData = databaseConnector.executeSQLQuery(
+                        "UPDATE users SET points = points + ? WHERE id_user = ?",
+                        new Object[] { pointsToAdd, sessionHandler.getUserSession() }
+                );
+
+                if ( retrievedUserData != null )
+                    throw new Exception("Nie udało się zaktualizować danych użytkownika");
+
+                return true;
+
+            } catch (Exception userCredentialsEditException) {
+                Log.e("UserRepository", "changeUserCredentials(): " + userCredentialsEditException.getMessage());
+            } finally { databaseConnector.closeConnection(); }
+
+            return false;
+        }
+
 
     public boolean changeUserCredentials (
             String          name,
@@ -220,7 +253,6 @@ public class UserRepository {
         return false;
     }
 
-    // TODO: Można scalić metody changeUserCredentials i changeUserPassword
     public boolean changeUserPassword(String password) {
         try {
             // Sprawdzanie czy użytkownik jest zalogowany

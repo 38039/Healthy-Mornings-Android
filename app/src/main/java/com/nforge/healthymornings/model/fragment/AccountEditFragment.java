@@ -75,11 +75,6 @@ public class AccountEditFragment extends Fragment {
                 binding.HeightEditText.setText(String.valueOf(user.getHeight()));
                 binding.WeightEditText.setText(String.valueOf(user.getWeight()));
 
-                // TODO: Dodać spinnera do registerActivity na gender i usunąć tego hacka
-                int genderIndex = 2;
-                if (user.getGender() != null)
-                    genderIndex = user.getGender().equalsIgnoreCase("Female") ? 1 : 0;
-                binding.GenderSpinner.setSelection(genderIndex);
             } else Toast.makeText(getContext(), "Nie udało się załadować danych użytkownika", Toast.LENGTH_LONG).show();
         });
 

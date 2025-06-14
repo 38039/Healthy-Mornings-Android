@@ -19,7 +19,7 @@ import com.nforge.healthymornings.databinding.ActivityMainBinding;
 import com.nforge.healthymornings.model.fragment.AboutUsFragment;
 import com.nforge.healthymornings.model.fragment.AccountEditFragment;
 import com.nforge.healthymornings.model.fragment.PasswordEditFragment;
-import com.nforge.healthymornings.model.fragment.ShareFragment;
+import com.nforge.healthymornings.model.fragment.StatisticsFragment;
 import com.nforge.healthymornings.model.fragment.TaskAddFragment;
 import com.nforge.healthymornings.model.fragment.TaskAllFragment;
 import com.nforge.healthymornings.model.fragment.TaskListFragment;
@@ -69,14 +69,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.taskAddFragment)
             selectedFragment = new TaskAddFragment();
 
-        if (item.getItemId() == R.id.taskAllFragment)
-            selectedFragment = new TaskAllFragment();
-
         if (item.getItemId() == R.id.aboutUsFragment)
             selectedFragment = new AboutUsFragment();
 
         if (item.getItemId() == R.id.shareFragment)
-            selectedFragment = new ShareFragment();
+            selectedFragment = new StatisticsFragment();
 
         if (item.getItemId() == R.id.accountEditFragment)
             selectedFragment = new AccountEditFragment();
@@ -90,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Nie udało się wylogować użytkownika", Toast.LENGTH_LONG).show();
                 return false;
             }
-
+            getSharedPreferences("MyAppPrefs", MODE_PRIVATE).edit().clear().apply();
             Log.v("MainActivity", "onNavigationItemSelected(): Wylogowano użytkownika");
-
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();

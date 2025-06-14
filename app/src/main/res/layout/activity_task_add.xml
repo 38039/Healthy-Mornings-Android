@@ -1,69 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/TaskNameView"
-        android:layout_width="354dp"
-        android:layout_height="68dp"
-        android:hint="enter name"
+    <TextView
+        android:id="@+id/title5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nowe Zadanie"
+        android:textColor="@color/title"
+        android:textSize="60sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.081" />
+        app:layout_constraintVertical_bias="0.078" />
 
-    <EditText
-        android:id="@+id/CategoryTextView"
-        android:layout_width="354dp"
-        android:layout_height="68dp"
-        android:hint="enter category"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/formCard"
+        android:layout_width="0dp"
+        android:layout_height="650dp"
+        android:layout_marginTop="200dp"
+        app:cardBackgroundColor="@color/object"
+        app:cardCornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/DesciptionTextView"
-        android:layout_width="354dp"
-        android:layout_height="68dp"
-        android:hint="enter description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="586dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="50dp">
 
-    <Button
-        android:id="@+id/AddTaskButton"
-        android:layout_width="344dp"
-        android:layout_height="52dp"
-        android:onClick="onAddTaskButtonClick"
-        android:text="Add Task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.948" />
+            <EditText
+                android:id="@+id/TaskNameView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded"
+                android:backgroundTint="@color/words"
+                android:hint="nazwa"
+                android:padding="10dp" />
 
-    <EditText
-        android:id="@+id/PointsRewardView"
-        android:layout_width="369dp"
-        android:layout_height="56dp"
-        android:ems="10"
-        android:hint="enter points amount"
-        android:inputType="numberSigned"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.555" />
+            <EditText
+                android:id="@+id/CategoryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded"
+                android:backgroundTint="@color/words"
+                android:hint="kategoria"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/DesciptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded"
+                android:backgroundTint="@color/words"
+                android:hint="opis"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/PointsRewardView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded"
+                android:backgroundTint="@color/words"
+                android:hint="punkty"
+                android:inputType="numberSigned"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/AddTaskButton"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="80dp"
+                android:backgroundTint="@color/button"
+                android:onClick="onAddTaskButtonClick"
+                android:text="dodaj"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
