@@ -18,7 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.nforge.healthymornings.databinding.ActivityTaskTodoBinding;
+import com.nforge.healthymornings.model.data.Statistics;
 import com.nforge.healthymornings.model.data.User;
+import com.nforge.healthymornings.model.repository.StatisticsRepository;
 import com.nforge.healthymornings.model.repository.UserRepository;
 import com.nforge.healthymornings.view.GratulationActivity;
 import com.nforge.healthymornings.viewmodel.TaskEditViewmodel;
@@ -32,6 +34,7 @@ public class TaskTODOFragment extends Fragment {
     private TaskEditViewmodel taskEditViewmodel;
     private SharedPreferences sharedPreferences;
     private UserRepository userRepository;
+    private StatisticsRepository statisticsRepository;
 
     private int pointsForTask = 0;
     private long points = 0;
@@ -51,6 +54,8 @@ public class TaskTODOFragment extends Fragment {
         taskEditViewmodel = new ViewModelProvider(this).get(TaskEditViewmodel.class);
         viewModel = new ViewModelProvider(requireActivity()).get(TaskListViewmodel.class);
         userRepository = new UserRepository(requireContext());
+        statisticsRepository = new StatisticsRepository(requireContext());
+        Statistics currentStatistics = statisticsRepository.getCurrentUserStatistics();
 
         User currentUser = userRepository.getUserCredentials();
         if (currentUser != null) {
@@ -102,6 +107,10 @@ public class TaskTODOFragment extends Fragment {
                                 Toast.makeText(requireContext(),"Zdobyto " + pointsForTask + " punktów!", Toast.LENGTH_SHORT).show();
 
                                 taskEditViewmodel.getTaskData().removeObservers(getViewLifecycleOwner());
+
+                                short updatedCompleted = (short) (currentStatistics.getTasksCompleted() + 1);
+                                short active = currentStatistics.getTasksActive();
+                                boolean success = statisticsRepository.updateUserStatistics(active, updatedCompleted);
                             }
                         });
 
