@@ -50,4 +50,16 @@ public class TaskListViewmodel extends AndroidViewModel {
         User user = userRepository.getUserCredentials();
         return user.getIdUser();
     }
+
+    public int getTaskCount() {
+        ArrayList<String> titles = taskTitles.getValue();
+        if (titles != null) {
+            Log.v("TaskListViewModel", "getTaskCount(): " + titles.size());
+            return titles.size();
+        } else {
+            Log.v("TaskListViewModel", "getTaskCount(): titles null");
+            return 0;
+        }
+    }
+
 }

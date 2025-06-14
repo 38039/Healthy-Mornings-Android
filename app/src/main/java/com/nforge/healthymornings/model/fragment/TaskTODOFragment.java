@@ -104,13 +104,10 @@ public class TaskTODOFragment extends Fragment {
                             if (task != null) {
                                 pointsForTask = task.getReward();
                                 userRepository.addPointsToUser(pointsForTask);
-                                Toast.makeText(requireContext(),"Zdobyto " + pointsForTask + " punktów!", Toast.LENGTH_SHORT).show();
-
-                                taskEditViewmodel.getTaskData().removeObservers(getViewLifecycleOwner());
 
                                 short updatedCompleted = (short) (currentStatistics.getTasksCompleted() + 1);
-                                short active = currentStatistics.getTasksActive();
-                                boolean success = statisticsRepository.updateUserStatistics(active, updatedCompleted);
+                                short updateactive = (short)(viewModel.getTaskCount());
+                                boolean success = statisticsRepository.updateUserStatistics(updateactive, updatedCompleted);
                             }
                         });
 
